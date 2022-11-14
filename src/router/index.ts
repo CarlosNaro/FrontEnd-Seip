@@ -1,7 +1,7 @@
 import { createRouter , createWebHistory , RouteRecordRaw } from 'vue-router'
 
-
 import LoginPage from '../pages/LoginPage.vue'
+import HomePage from '../pages/HomePage.vue'
 
 const routes: Array<RouteRecordRaw>=[
     {
@@ -11,6 +11,14 @@ const routes: Array<RouteRecordRaw>=[
           path: "/",
           name: "login",
           component: LoginPage,
+    },
+    {
+        meta: {
+            title: "Select Home",
+          },
+          path: "/dashboard",
+          name: "Dashboard",
+          component: HomePage,
     }
 ]
 

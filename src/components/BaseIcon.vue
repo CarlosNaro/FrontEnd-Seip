@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-
 const props = defineProps({
   path: {
     type: String,
-    required: true,
+    requied: true,
   },
   w: {
     type: String,

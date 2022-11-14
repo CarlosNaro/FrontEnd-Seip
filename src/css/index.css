@@ -1,3 +1,18 @@
-@tailwind base;
+
+@import "tailwind/_base.css";
+@import "tailwind/_components.css";
+@import "tailwind/_utilities.css";
+
+/* @import "@/styles/_styleButtons.css"; */
+
+@import "./styles/_styleButtons.css"
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+
+
+/* Import of own design */
+
+
+/* @import "_checkbox-radio-switch.css"; */
