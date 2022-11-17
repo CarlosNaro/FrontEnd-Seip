@@ -6,7 +6,7 @@ import SectionMain from '../components/SectionMain.vue';
     <LayoutAuthenticated>
 
         <SectionMain>
-            <span>Welcome to humbrella</span>
+            <span>Welcome to Clients</span>
         </SectionMain>
 
     </LayoutAuthenticated>

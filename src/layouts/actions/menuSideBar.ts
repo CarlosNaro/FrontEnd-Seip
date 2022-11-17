@@ -1,3 +1,4 @@
+
 import {
   mdiAccountCircle,
   mdiMonitor,
@@ -19,17 +20,20 @@ import {
   
 } from "@mdi/js";
 
+
+
+
 export default [
   {
     to: "/dashboard",
     icon: mdiMonitor,
     label: "Dashboard",
   },
-  // {
-  //   to: "/client",
-  //   label: "Cliente",
-  //   icon: mdiAccountGroupOutline ,
-  // },
+  {
+    to: "/client",
+    label: "Cliente",
+    icon: mdiAccountGroupOutline ,
+  },
 
   // {
   //   to: "/product",

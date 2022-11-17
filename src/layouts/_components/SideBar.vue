@@ -17,7 +17,8 @@ const props = defineProps<{
 
 </script>
 <template>
-    <div class="">
+
+    
         <SideMenuLayer
         :menu="props.menu"
         :class="[
@@ -25,5 +26,5 @@ const props = defineProps<{
       { 'lg:hidden xl:flex': !layoutStore.state.isAsideLgActive },
     ]"
         />
-    </div>
+   
 </template>

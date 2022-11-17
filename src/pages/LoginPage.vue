@@ -1,31 +1,43 @@
 <script lang="ts" setup>
 import { mdiLock } from "@mdi/js";
 import BaseIcon from "../components/BaseIcon.vue";
+import useAuth from '../composables/useAuth' 
+import useAuthStore from '../stores/AuthStore' 
 
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+
 
 const checkUser = (rule: any, value: any, callback: any) => {
   if (!value) callback(new Error("Please input the age"));
 };
 
 const loginForm = reactive({
-  user: "carlos",
-  pass: "123",
+  username: '',
+  password: '',
 });
 
+const {createUser } = useAuth()
+
 const router = useRouter();
+
 const submit = () => {
-  if (loginForm.user == "carlos" && loginForm.pass == "123") {
-    console.log("entramos");
+  if (!loginForm.username || !loginForm.password) {
+    console.log("falta datos");
+    //createUser(loginForm)
     router.push("/dashboard");
   } else {
-    console.log(" no  entramos ");
+    console.log(" completo datos ");
+    console.log("::::::::::::::::::::")
+    router.push("/dashboard");
+
+    // useAuthStore().postUsers(loginForm)
   }
 };
 </script>
 
 <template>
+ 
   <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
@@ -46,7 +58,7 @@ const submit = () => {
             <input
               type="text"
               required
-              v-model="loginForm.user"
+              v-model="loginForm.username"
               autocomplete="user"
               class="input-forms"
               placeholder="User"
@@ -55,7 +67,7 @@ const submit = () => {
           <div>
             <label for="" class="text-gray-700">Password</label>
             <input
-              v-model="loginForm.pass"
+              v-model="loginForm.password"
               required
               type="password"
               class="input-forms"

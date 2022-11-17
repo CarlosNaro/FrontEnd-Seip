@@ -7,17 +7,11 @@ import { mdiMinus, mdiPlus } from "@mdi/js";
 import BaseIcon from "../../components/BaseIcon.vue";
 //import AsideMenuList from "@/components/AsideMenuList.vue";
 
-// const props = defineProps({
-//   item: {
-//     type: Object,
-//     required: true,
-//   },
-//   isDropdownList: Boolean,
-// });
+
 
 const props = defineProps<{
     isDropdownList: Boolean,
-    item:Array<string>
+    item:object
 }>()
 
 
@@ -54,23 +48,24 @@ const componentClass = computed(() => [
 
 // const hasDropdown = computed(() => !!props.item.menu);
 
-// const menuClick = (event) => {
-//   emit("menu-click", event, props.item);
+const menuClick = (event:any) => {
+  emit("menu-click", event, props.item);
 
-//   if (hasDropdown.value) {
-//     isDropdownActive.value = !isDropdownActive.value;
-//   }
-// };
+  if (hasDropdown.value) {
+    isDropdownActive.value = !isDropdownActive.value;
+  }
+};
 </script>
 
 <template>
   <li>
     <component
-      :is="props.item ? RouterLink : 'a'"
+      :is="props.item.to ? RouterLink : 'a'"
       v-slot="vSlot"
-      :to="props.item ?? null"
+      :to="props.item.to ?? null"
       class="flex cursor-pointer"
       :class="componentClass"
+      @click="menuClick"
       
     >
       <BaseIcon
@@ -82,8 +77,6 @@ const componentClass = computed(() => [
         :size="18"
       />
 
-      
-
       <span
         class="grow text-ellipsis line-clamp-1"
         :class="[
@@ -93,22 +86,8 @@ const componentClass = computed(() => [
         >{{ props.item.label }}</span
       >
       
-      <!-- <BaseIcon
-        v-if="hasDropdown"
-        :path="isDropdownActive ? mdiMinus : mdiPlus"
-        class="flex-none"
-        :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
-        w="w-12"
-      /> -->
+
     </component>
-    <!-- <AsideMenuList
-      v-if="hasDropdown"
-      :menu="item.menu"
-      :class="[
-        styleStore.asideMenuDropdownStyle,
-        isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden',
-      ]"
-      is-dropdown-list
-    /> -->
+
   </li>
 </template>
