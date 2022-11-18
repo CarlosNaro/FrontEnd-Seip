@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import SideMenuItem from './SideMenuItem.vue';
 
 const props = defineProps<{
@@ -22,4 +22,4 @@ const props = defineProps<{
     
     />
   </ul>
-</template>
+</template> -->

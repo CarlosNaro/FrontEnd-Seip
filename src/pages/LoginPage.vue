@@ -3,42 +3,43 @@ import { mdiLock } from "@mdi/js";
 import BaseIcon from "../components/BaseIcon.vue";
 import useAuth from '../composables/useAuth' 
 import useAuthStore from '../stores/AuthStore' 
-
+import LayoutAuthenticated from "../layouts/LayoutAuthenticated.vue";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 
 
-const checkUser = (rule: any, value: any, callback: any) => {
-  if (!value) callback(new Error("Please input the age"));
-};
 
-const loginForm = reactive({
-  username: '',
-  password: '',
-});
+// const loginForm = reactive({
+//   username: '',
+//   password: '',
+// });
 
-const {createUser } = useAuth()
+// const {createUser } = useAuth()
 
-const router = useRouter();
+// const router = useRouter();
 
-const submit = () => {
-  if (!loginForm.username || !loginForm.password) {
-    console.log("falta datos");
-    //createUser(loginForm)
-    router.push("/dashboard");
-  } else {
-    console.log(" completo datos ");
-    console.log("::::::::::::::::::::")
-    router.push("/dashboard");
+// const submit = () => {
+//   if (!loginForm.username || !loginForm.password) {
+//     console.log("falta datos");
+//     //createUser(loginForm)
+//     // router.push("/dashboard");
+//   } else {
+//     console.log(" completo datos ");
+//     console.log("::::::::::::::::::::")
+//     router.push("/dashboard");
 
-    // useAuthStore().postUsers(loginForm)
-  }
-};
+//     // useAuthStore().postUsers(loginForm)
+//   }
+// };
 </script>
 
 <template>
+
+  <div>
+    <LayoutAuthenticated/>
+  </div>
  
-  <div
+  <!-- <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div
@@ -96,5 +97,5 @@ const submit = () => {
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 </template>

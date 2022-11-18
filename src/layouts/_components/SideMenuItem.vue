@@ -50,10 +50,11 @@ const componentClass = computed(() => [
 
 const menuClick = (event:any) => {
   emit("menu-click", event, props.item);
+  
 
-  if (hasDropdown.value) {
-    isDropdownActive.value = !isDropdownActive.value;
-  }
+  // if (hasDropdown.value) {
+  //   isDropdownActive.value = !isDropdownActive.value;
+  // }
 };
 </script>
 
@@ -63,8 +64,9 @@ const menuClick = (event:any) => {
       :is="props.item.to ? RouterLink : 'a'"
       v-slot="vSlot"
       :to="props.item.to ?? null"
-      class="flex cursor-pointer"
-      :class="componentClass"
+      class="flex cursor-pointer "
+      :class="componentClass "
+      
       @click="menuClick"
       
     >
@@ -85,8 +87,7 @@ const menuClick = (event:any) => {
         ]"
         >{{ props.item.label }}</span
       >
-      
-
+    
     </component>
 
   </li>

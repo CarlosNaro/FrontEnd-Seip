@@ -19,6 +19,23 @@ const props = defineProps({
   },
 });
 
+// const props = defineProps<{
+//   // menu: Array<string>;
+//   path:String[],
+//   w: {
+//     type: String[],
+//     default: "w-6",
+//   },
+//   h: {
+//     type: String[],
+//     default: "h-6",
+//   },
+//   size: {
+//     type: [String, Number],
+//     default: 16,
+//   },
+// }>()
+
 const spanClass = computed(
   () => `inline-flex justify-center items-center ${props.w} ${props.h}`
 );

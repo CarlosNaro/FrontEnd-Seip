@@ -25,11 +25,12 @@ const logoutItem = computed(() => ({
 // const menuClick = (event, item) => {
 //   emit("menu-click", event, item);
 // };
+
 </script>
 
 <template>
   <sidebar
-    class=" lg:py-2 lg:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
+    class="  lg:py-2 lg:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
   >
     <div
       :class="asideStyle"
@@ -58,18 +59,23 @@ const logoutItem = computed(() => ({
         </button>
       </div>
 
+
+      
       <!-- data de la lista  -->
       <!-- <div class=" aside-scrollbars-[slate] " > -->
-      <div class="flex-1 overflow-y-auto overflow-x-hidden">
+      <div class=" flex-1 overflow-y-auto overflow-x-hidden ">
         <ul>
           <SideMenuItem
             v-for="(item, index) in props.menu"
             :key="index"
             :item="item"
             :is-dropdown-list="isDropdownList"
+            
           />
         </ul>
       </div>
+
+
 
       <!-- data del logaut -->
       <ul>
@@ -82,4 +88,6 @@ const logoutItem = computed(() => ({
   </sidebar>
 </template>
 
-<style></style>
+<style scoped>
+
+</style>
