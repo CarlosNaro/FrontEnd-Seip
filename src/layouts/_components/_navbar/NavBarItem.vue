@@ -109,12 +109,12 @@ const menuClick = (event:any) => {
         :path="mdiAccount"
       />
 
-      <Base-Icon v-if="item.icon" :path="item.icon" class=" transition-colors" />
+      <Base-Icon v-if="item.icon"  :path="item.icon" class=" rounded-md hover:bg-indigo-400 transition-colors" />
 
       <!-- <span class="px-2 transition-colors">{{ itemLabel }}</span> -->
 
       <span
-        class="px-2 transition-colors"
+        class="px-2 transition-colors  "
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
         >{{ itemLabel }}</span
       >
@@ -134,8 +134,5 @@ const menuClick = (event:any) => {
     >
       <NavBar-Menu-List :menu="item.menu" />
     </div>
-
-
-
   </component>
 </template>

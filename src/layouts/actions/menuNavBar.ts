@@ -12,36 +12,6 @@ import {
 } from "@mdi/js";
 
 export default [
-  // {
-  //   isDivider: true,
-  // },
-
-  // {
-
-  //   icon: mdiMenu,
-  //   label: "Sample menu",
-  //   menu: [
-  //     {
-  //       icon: mdiClockOutline,
-  //       label: "Item One",
-  //     },
-  //     {
-  //       icon: mdiCloud,
-  //       label: "Item Two",
-  //     },
-  //     {
-  //       icon: mdiCrop,
-  //       label: "Item Last",
-  //     },
-    
-      
-  //   ],
-
-
-  // },
-
-
-
 
   {
     isCurrentUser: true,
@@ -59,33 +29,8 @@ export default [
         icon: mdiEmail,
         label: "Messages",
       },
-      // {
-      //   isDivider: true,
-      // },
-      // {
-      //   icon: mdiLogout,
-      //   label: "Log Out",
-      //   isLogout: true,
-      // },
     ],
   },
-
-
-
-  // {
-  //   icon: mdiThemeLightDark,
-  //   label: "Light/Dark",
-  //   isDesktopNoLabel: true,
-  //   isToggleLightDark: true,
-  // },
-
-
-  // {
-  //   icon: mdiGithub,
-  //   label: "GitHub",
-  //   isDesktopNoLabel: true,
-  //   href: "https://github.com/justboil/admin-one-vue-tailwind",
-  // },
 
   {
     icon: mdiLogout,

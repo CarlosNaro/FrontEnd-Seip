@@ -8,10 +8,8 @@ import { useLayoutStore } from "./actions/layout";
 import { useRouter } from "vue-router";
 
 
-
 const layoutStore = useLayoutStore();
 const layoutAsidePadding = "xl:pl-60";
-
 
 const router = useRouter();
 router.beforeEach(() => {
@@ -19,10 +17,6 @@ router.beforeEach(() => {
   layoutStore.isAsideLgActive.value = false;
 
 });
-
-
-
-
 </script>
 <template>
   <div
