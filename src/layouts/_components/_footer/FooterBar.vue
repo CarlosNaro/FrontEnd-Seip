@@ -1,9 +1,19 @@
 <script setup lang="ts" > 
 import { containerMaxW } from "../../../config";
+import { reactive, ref } from "vue";
 import BaseLevel from "@/components/BaseLevel.vue";
 import JustboilLogo from "@/components/JustboilLogo.vue";
 
 const year = new Date().getFullYear();
+
+const hora = ref()
+
+setInterval(()=>{
+  const date = new Date()
+  const clock = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()
+  hora.value = clock
+},1000)
+
 </script>
 
 <template>
@@ -15,6 +25,7 @@ const year = new Date().getFullYear();
           <a  target="_blank">Developer (Naro)</a>.</b
         >
         <slot />
+        <span> {{hora}} </span>
       </div>
   </footer>
 </template>

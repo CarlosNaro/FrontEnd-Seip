@@ -12,7 +12,6 @@ import { useRouter } from "vue-router";
 const layoutStore = useLayoutStore();
 const layoutAsidePadding = "xl:pl-60";
 
-const carda = "cmaa"
 
 const router = useRouter();
 router.beforeEach(() => {
@@ -20,6 +19,7 @@ router.beforeEach(() => {
   layoutStore.isAsideLgActive.value = false;
 
 });
+
 
 
 
@@ -82,6 +82,7 @@ router.beforeEach(() => {
           class="text-blue-600"
           >Datos generales de la Empresa S.E.I.P
         </a>
+       
       </FooterBar>
     </div>
   </div>

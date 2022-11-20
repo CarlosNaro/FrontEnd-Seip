@@ -1,5 +1,4 @@
 import { createRouter , createWebHistory , RouteRecordRaw, createWebHashHistory } from 'vue-router'
-
 import LoginPage from '../pages/LoginPage.vue'
 import HomePage from '../pages/HomePage.vue'
 
@@ -33,10 +32,21 @@ const routes: Array<RouteRecordRaw>=[
 
 ]
 
-const history = createWebHistory()
+// const history = createWebHistory()
+// const router = createRouter({
+//     history,
+//     routes,
+//     scrollBehavior (to, from, savedPosition) {
+//       return savedPosition || {top:0}
+//     }
+// })
+
 const router = createRouter({
-    history,
-    routes
-})
+  history: createWebHashHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition || { top: 0 };
+  },
+});
 
 export  default router

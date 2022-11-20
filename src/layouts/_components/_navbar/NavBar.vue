@@ -3,30 +3,11 @@ import { ref } from "vue";
 import { mdiClose, mdiDotsVertical } from "@mdi/js";
 import { containerMaxW } from "../../../config";
 import menuNavBar from '../../actions/menuNavBar'
-import NavBarItemPlain from './NavBarItemPlain.vue'
 import BaseIcon from "../../../components/BaseIcon.vue";
 import NavBarMenuList from "./NavBarMenuList.vue";
 
-// import BaseIcon from "@/components/BaseIcon.vue";
-// import NavBarMenuList from "@/components/NavBarMenuList.vue";
-// import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
-
-// defineProps({
-//   menu: {
-//     type: Array,
-//     required: true,
-//   },
-// });
-
-const emit = defineEmits(["menu-click"]);
-
-const menuClick = (event:any, item:any) => {
-  emit("menu-click", event, item);
-};
 
 const isMenuNavBarActive = ref(false);
-
-const manus:Array<string> = ['carlos','juan','pedro','santiago']
 
 </script>
 
@@ -58,12 +39,8 @@ const manus:Array<string> = ['carlos','juan','pedro','santiago']
         class="max-h-screen-menu overflow-y-auto lg:overflow-visible absolute w-screen top-14 left-0 bg-gray-50  shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none "
         :class="[isMenuNavBarActive ? 'block' : 'hidden']"
       >
-
-      <!-- <ul v-for="(item,index) in manus" :key="index" >
-        {{item}}
-      </ul> -->
       
-        <NavBarMenuList :menu="menuNavBar" @menu-click="menuClick" />
+        <NavBarMenuList :menu="menuNavBar" />
       </div>
 
 
