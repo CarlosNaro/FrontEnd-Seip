@@ -9,37 +9,39 @@ import { useRouter } from "vue-router";
 
 
 
-// const loginForm = reactive({
-//   username: '',
-//   password: '',
-// });
+const loginForm = reactive({
+  username: '',
+  password: '',
+});
 
-// const {createUser } = useAuth()
+const {createUser } = useAuth()
 
-// const router = useRouter();
+const router = useRouter();
 
-// const submit = () => {
-//   if (!loginForm.username || !loginForm.password) {
-//     console.log("falta datos");
-//     //createUser(loginForm)
-//     // router.push("/dashboard");
-//   } else {
-//     console.log(" completo datos ");
-//     console.log("::::::::::::::::::::")
-//     router.push("/dashboard");
+const submit = () => {
+  if (!loginForm.username || !loginForm.password) {
+    console.log("falta datos");
+    //createUser(loginForm)
+    // router.push("/dashboard");
+  } else {
+    console.log(" completo datos ");
+    console.log("::::::::::::::::::::")
+    router.push("/dashboard");
 
-//     // useAuthStore().postUsers(loginForm)
-//   }
-// };
+    // useAuthStore().postUsers(loginForm)
+  }
+};
 </script>
 
 <template>
 
-  <div>
+  <!-- <div>
     <LayoutAuthenticated/>
   </div>
- 
-  <!-- <div
+  -->
+
+
+  <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div
@@ -97,5 +99,5 @@ import { useRouter } from "vue-router";
         </div>
       </form>
     </div>
-  </div> -->
+  </div>
 </template>

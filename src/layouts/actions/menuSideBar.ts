@@ -22,6 +22,19 @@ import {
 
 
 
+// export const arrayCollectionToObject:Array<object> =([
+//   {
+//     to: "/dashboard",
+//     icon: mdiMonitor,
+//     label: "Dashboard",
+//   },
+//   {
+//     to: "/client",
+//     label: "Cliente",
+//     icon: mdiAccountGroupOutline ,
+//   },
+// ]);
+// export default arrayCollectionToObject
 
 export default [
   {

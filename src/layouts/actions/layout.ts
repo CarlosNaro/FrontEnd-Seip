@@ -1,29 +1,16 @@
-import { reactive } from 'vue'
+import { reactive, ref } from "vue";
 
+const isAsideMobileExpanded = ref()
+const isAsideLgActive = ref()
+export const useLayoutStore = () => {
+  // const isAsideMobileExpanded = ref()
+  // const isAsideLgActive = ref()
 
+  isAsideLgActive.value = false
+  isAsideLgActive.value = false
+  const asideMobileToggle = () => {
+    isAsideMobileExpanded.value = !isAsideMobileExpanded.value
+  };
 
-
-  
-
-  export const useLayoutStore = (()=>{
-
-    const state = reactive({
-      isAsideMobileExpanded: false,
-      isAsideLgActive: false,
-    })
-    
-    function asideMobileToggle(){
-      state.isAsideMobileExpanded = !state.isAsideMobileExpanded
-    }
-    
-    return{ asideMobileToggle,state}
-    
-  })
-
-  // export default function useLayoutStore(){
-  //   function asideMobileToggle(){
-  //     state.isAsideMobileExpanded = !state.isAsideMobileExpanded
-  //   }
-  
-  //   return{ asideMobileToggle}
-  // }
+  return { asideMobileToggle, isAsideMobileExpanded, isAsideLgActive }
+};
