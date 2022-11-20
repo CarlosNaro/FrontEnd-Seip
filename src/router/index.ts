@@ -5,7 +5,7 @@ import HomePage from '../pages/HomePage.vue'
 const routes: Array<RouteRecordRaw>=[
     {
         meta: {
-            title: "Select Login",
+            title: "Login",
           },
           path: "/",
           name: "login",
@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw>=[
     },
     {
         meta: {
-            title: "Select Home",
+            title: "Home",
           },
           path: "/dashboard",
           name: "Dashboard",
@@ -32,21 +32,20 @@ const routes: Array<RouteRecordRaw>=[
 
 ]
 
-// const history = createWebHistory()
-// const router = createRouter({
-//     history,
-//     routes,
-//     scrollBehavior (to, from, savedPosition) {
-//       return savedPosition || {top:0}
-//     }
-// })
-
+const history = createWebHistory()
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    return savedPosition || { top: 0 };
-  },
-});
+    history,
+    routes,
+
+})
+
+// const router = createRouter({
+//   history: createWebHashHistory(),
+//   routes,
+//   scrollBehavior(to, from, savedPosition) {
+//     return savedPosition || { top: 0 };
+//   },
+  
+// });
 
 export  default router
