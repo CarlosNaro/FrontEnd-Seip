@@ -17,6 +17,7 @@ router.beforeEach(() => {
   layoutStore.isAsideLgActive.value = false;
 
 });
+
 </script>
 <template>
   <div

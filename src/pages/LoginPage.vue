@@ -3,33 +3,40 @@ import { mdiLock } from "@mdi/js";
 import BaseIcon from "../components/BaseIcon.vue";
 import useAuth from '../composables/useAuth' 
 import useAuthStore from '../stores/AuthStore' 
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 
 
+//variables
 const loginForm = reactive({
   username: '',
   password: '',
 });
 
 const {createUser } = useAuth()
-
 const router = useRouter();
+//:::::::.variables
 
-const submit = () => {
+//::::::: Acciones
+const submitLogin = () => {
   if (!loginForm.username || !loginForm.password) {
-    console.log("falta datos");
+    alert("User/Password invalid")
+    loginForm.username = ""
+    loginForm.password = ""
   } else {
     console.log(" completo datos ");
-    console.log("::::::::::::::::::::")
-    router.push("/dashboard");
     
-    // router.push("/dashboard");
-    // useAuthStore().postUsers(loginForm)
+    useAuthStore().setAuth(loginForm)
+    router.push("/dashboard");
+    loginForm.username = ""
+    loginForm.password = ""
+
   }
 };
 </script>
+
+
 
 <template>
   <div
@@ -79,7 +86,7 @@ const submit = () => {
         <div>
           <button
             type="submit"
-            @click.prevent="submit"
+            @click.prevent="submitLogin"
             class="positive-button relative w-full"
           >
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">

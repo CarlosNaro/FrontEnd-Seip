@@ -1,64 +1,41 @@
-// trabajando con cmpositions API
-import { reactive } from 'vue'
-import axios from 'axios'
-import { api }  from './indexApi'
-
-// definimos el state
+// Usamos el composition APi de vuejs 3
+import { reactive} from 'vue'
+import { api } from './indexApi'
 
 
+//creacion del state
 const state = reactive({
-    access:'',
-    refresh:'',
-    user :''
+    dataLogin :"",
+    IsAuthenticated:false
 })
 
 export default function useAuthStore(){
-   
+    //variable get 
+    const getAuth = (()=>{
+        
+            state.access,
+            state.IsAuthenticated
+    })
 
-    const postUsers = async (datalogin:any)=>{
+    // fuincion encargada de traer los datos 
+    const setAuth = async (users:any) =>{
+        console.log("Data enviada ",users)
         try {
-            console.log('data enviada: ', datalogin) 
-          const {data,status} = await axios.post('http://127.0.0.1:8000/admin/auth/token/login/',datalogin)
-         
-          
-          console.log('data login: ', data )
-          console.log(":::::::::::::::::::::::::")
-          const resp = data.auth_token
+            await api.post("auth/jwt/create/",users).then(
+               response=>{
+                     console.log("data jwt: ",response)
+                }
+            ) 
+            
+            // const acces = state.access
 
-          console.log('data login: ', resp )
-
+            // axios.defaults.headers.common['Authorization'] = "JWT" + acces 
+            // console.log('develve :', data)
         } catch (e) {
-          console.error(e)
+            console.error(e)
         }
-      }
-   
-   
-   
-    // const getUsers = (state:any)=>{
-    //     if(localStorage.getItem("access")){
-    //         state.access = localStorage.getItem("access")    
-    //     }else{
-    //         state.access = ' '
-    //     }
-    // }
-
-
-
-    function InitialStore(state:any){
-
-        if(localStorage.getItem("access")){
-            state.access = localStorage.getItem("access")    
-        }else{
-            state.access = ' '
-        }
-
     }
 
-    function setAccess(state:any ,access:any){
-        state.access = access
-    }
-
-    return{postUsers}
+    return { setAuth, getAuth}
 
 }
-

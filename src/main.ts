@@ -6,9 +6,19 @@ import axios from 'axios'
 import './css/index.css'
 import router from './router'
 
+
+
+
 createApp(App)
 .use(router)
 .mount('#app')
+
+
+// treat all tags starting with 'ion-' as custom elements
+// const app:string = config.compilerOptions.isCustomElement = (tag:string) => {
+//   return tag.startsWith('sa') // (return true)
+// }
+
 
 const defaultDocumentTitle = "SEIP";
 
@@ -18,3 +28,5 @@ router.afterEach((to) => {
     ? `${to.meta.title} — ${defaultDocumentTitle}`
     : defaultDocumentTitle;
 });
+
+

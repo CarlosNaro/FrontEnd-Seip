@@ -21,7 +21,7 @@ const logoutItem = computed(() => ({
 </script>
 
 <template>
-  <sidebar
+  <div id="sideBar"
     class="lg:py-2 lg:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
   >
     <div class="shadow-md bg-white lg:rounded-2xl flex-1 flex flex-col overflow-hidden"
@@ -66,7 +66,7 @@ const logoutItem = computed(() => ({
         />
       </ul>
     </div>
-  </sidebar>
+  </div>
 </template>
 
 <style scoped>

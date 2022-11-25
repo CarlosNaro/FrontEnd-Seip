@@ -1,35 +1,23 @@
 <script  setup lang="ts">
 import { RouterLink } from "vue-router";
 import BaseIcon from '../../../components/BaseIcon.vue';
-import { ref, reactive} from 'vue'
 
 
 export interface Imenu{
   to:string,
   icon:string,
   label:string
-
 }
 
 const props = defineProps<{ 
   item:Imenu
 }>()
 
-//const emit = defineEmits(["menu-click"]);
-
-// const componentClass = computed(() => [
-//   props.isDropdownList ? "py-3 px-6 text-sm" : "py-3",
-
-// ]);
-
-// const hasDropdown = computed(() => !!props.item);
-
-//function active(){return "color: blue text-sm"} 
-
-// const menuClick = (event:any,) => {
-//   emit("menu-click", event, props.item);
-// };
-
+const logout = ()=>{
+  if(props.item.label == "Logout"){
+    alert("hola mundo")
+  }
+}
 </script>
 
 <template>
@@ -38,7 +26,8 @@ const props = defineProps<{
       :is="props.item.to ? RouterLink : 'a'"
       v-slot="vSlot"
       :to="props.item.to ?? null"
-      class="flex cursor-pointer py-3"         
+      class="flex cursor-pointer py-3"
+      @click="logout"
     >
       <Base-Icon
         v-if="props.item.icon"
@@ -63,8 +52,4 @@ const props = defineProps<{
   </li>
 </template>
 
-<style scoped>
-/* .active{
-  @apply text-yellow-500
-} */
-</style>
+
