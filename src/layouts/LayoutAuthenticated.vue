@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
-import NavBar from "./_components/_navbar/NavBar.vue";
-import SideBar from "./_components/_sidebar/SideBar.vue";
-import FooterBar from "./_components/_footer/FooterBar.vue";
+import NavBar from './_navbar/components/NavBar.vue'
+import SideBar from './_sidebar/components/SideBar.vue'
+import FooterBar from "./_footer/components/FooterBar.vue";
 import BaseIcon from "../components/BaseIcon.vue";
-import { useLayoutStore } from "./actions/layout";
+import { useLayoutStore } from './_sidebar/stores/layout'
 import { useRouter } from "vue-router";
 
 
@@ -64,6 +64,7 @@ router.beforeEach(() => {
           <BaseIcon :path="mdiMenu" size="24" />
         </span>
       </div>
+
       </Nav-Bar>
 
       

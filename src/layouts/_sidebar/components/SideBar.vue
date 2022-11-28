@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useLayoutStore } from '../../actions/layout';
+import { useLayoutStore } from '../stores/layout'
 import SideMenuLayer from "./SideMenuLayer.vue";
 import OverlayLayer from '../../../components/OverlayLayer.vue';
-import menuSidebar from '../../actions/menuSideBar'
+import menuSidebar from '../actions/menuSideBar'
 
 const layoutStore = useLayoutStore();
 

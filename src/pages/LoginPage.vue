@@ -6,7 +6,7 @@ import useAuthStore from '../stores/AuthStore'
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
-
+const imglogo = ref(false)
 
 //variables
 const loginForm = reactive({
@@ -27,10 +27,10 @@ const submitLogin = () => {
   } else {
     console.log(" completo datos ");
     
-    useAuthStore().setAuth(loginForm)
+    // useAuthStore().setAuth(loginForm)
     router.push("/dashboard");
-    loginForm.username = ""
-    loginForm.password = ""
+    // loginForm.username = ""
+    // loginForm.password = ""
 
   }
 };
@@ -46,10 +46,10 @@ const submitLogin = () => {
       class="w-full lg:w-1/4 max-w-md space-y-8 shadow-sm p-4 shadow-slate-200"
     >
       <div>
-        <img
+        <img  
           class="mx-auto h-12 w-auto"
           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
+          alt="SEIP"
         />
       </div>
       <form class="mt-8 space-y-6">

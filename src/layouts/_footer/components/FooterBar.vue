@@ -1,8 +1,6 @@
 <script setup lang="ts" > 
 import { containerMaxW } from "../../../config";
-import { reactive, ref } from "vue";
-import BaseLevel from "@/components/BaseLevel.vue";
-import JustboilLogo from "@/components/JustboilLogo.vue";
+import { ref } from "vue";
 
 const year = new Date().getFullYear();
 

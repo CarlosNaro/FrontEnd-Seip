@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { mdiClose, mdiDotsVertical } from "@mdi/js";
 import { containerMaxW } from "../../../config";
-import menuNavBar from '../../actions/menuNavBar'
+import menuNavBar from '../actions/menuNavBar'
 import BaseIcon from "../../../components/BaseIcon.vue";
 import NavBarMenuList from "./NavBarMenuList.vue";
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { mdiLogout, mdiClose } from "@mdi/js";
-import { useLayoutStore } from "../../actions/layout";
+import { useLayoutStore } from '../stores/layout'
 import SideMenuItem from "./SideMenuItem.vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
 
