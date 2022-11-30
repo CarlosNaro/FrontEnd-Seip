@@ -27,11 +27,10 @@ const submitLogin = () => {
   } else {
     console.log(" completo datos ");
     
-    // useAuthStore().setAuth(loginForm)
-    router.push("/dashboard");
-    // loginForm.username = ""
-    // loginForm.password = ""
-
+    useAuthStore().setAuth(loginForm)
+    // router.push("/dashboard");
+    loginForm.username = ""
+    loginForm.password = ""
   }
 };
 </script>
