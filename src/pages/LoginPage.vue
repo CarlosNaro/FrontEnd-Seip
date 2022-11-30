@@ -28,7 +28,10 @@ const submitLogin = () => {
     console.log(" completo datos ");
     
     useAuthStore().setAuth(loginForm)
-    // router.push("/dashboard");
+    
+    // router.push({
+    //   name:'Dashboard'
+    // })
     loginForm.username = ""
     loginForm.password = ""
   }

@@ -1,51 +1,51 @@
-import { createRouter , createWebHistory , RouteRecordRaw, createWebHashHistory } from 'vue-router'
-import LoginPage from '../pages/LoginPage.vue'
-import HomePage from '../pages/HomePage.vue'
+import {
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw,
+  createWebHashHistory,
+} from "vue-router";
+import LoginPage from "../pages/LoginPage.vue";
+import HomePage from "../pages/HomePage.vue";
 
-const routes: Array<RouteRecordRaw>=[
-    {
-        meta: {
-            title: "Login",
-          },
-          path: "/",
-          name: "login",
-          component: LoginPage,
+const routes: Array<RouteRecordRaw> = [
+  {
+    meta: {
+      title: "Login",
     },
-    {
-        meta: {
-            title: "Home",
-          },
-          path: "/dashboard",
-          name: "Dashboard",
-          component: HomePage,
+    path: "/",
+    name: "Login",
+    component: LoginPage,
+  },
+  {
+    meta: {
+      title: "Home",
     },
+    path: "/dashboard",
+    name: "Dashboard",
+    component: HomePage,
+  },
 
-    {
-        meta: {
-          title: "Client",
-        },
-        path: "/client",
-        name: "client",
-        component: () => import("../pages/ClientPage.vue"),
-      },
-    
+  {
+    meta: {
+      title: "Client",
+    },
+    path: "/client",
+    name: "Client",
+    component: () => import("../pages/ClientPage.vue"),
+  },
+];
 
-]
-
-const history = createWebHistory()
+const history = createWebHistory();
 const router = createRouter({
-    history,
-    routes,
+  history,
+  routes,
+});
 
-})
+// const isAuthenticoted = false
 
-// const router = createRouter({
-//   history: createWebHashHistory(),
-//   routes,
-//   scrollBehavior(to, from, savedPosition) {
-//     return savedPosition || { top: 0 };
-//   },
-  
-// });
+// router.beforeEach((to, from, next)=>{
+// if(to.name != 'login' && !isAuthenticoted ) next({name:"login"});
+// else next();
+// })
 
-export  default router
+export default router;
