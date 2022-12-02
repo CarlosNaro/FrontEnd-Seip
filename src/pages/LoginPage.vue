@@ -3,7 +3,7 @@ import { mdiLock } from "@mdi/js";
 import BaseIcon from "../components/BaseIcon.vue";
 import useAuth from '../composables/useAuth' 
 import useAuthStore from '../stores/AuthStore' 
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const imglogo = ref(false)
@@ -14,28 +14,35 @@ const loginForm = reactive({
   password: '',
 });
 
+
+
 const {createUser } = useAuth()
 const router = useRouter();
 //:::::::.variables
 
 //::::::: Acciones
 const submitLogin = () => {
+
   if (!loginForm.username || !loginForm.password) {
     alert("User/Password invalid")
     loginForm.username = ""
     loginForm.password = ""
   } else {
-    console.log(" completo datos ");
+    // console.log(" completo datos ");
     
-    useAuthStore().setAuth(loginForm)
+    useAuthStore().loginAuth(loginForm)
     
-    // router.push({
-    //   name:'Dashboard'
-    // })
+    router.push({
+      name: "Dashboard"
+    })
     loginForm.username = ""
     loginForm.password = ""
   }
 };
+
+// onMounted(() => {
+// console.log("hola mundo")
+// }
 </script>
 
 

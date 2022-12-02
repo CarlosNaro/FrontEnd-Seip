@@ -1,6 +1,6 @@
 // Usamos el composition APi de vuejs 3
 import { reactive } from "vue";
-import { api } from "./indexApi";
+import  apiInstance  from "./indexApi";
 
 //creacion del state
 const state = reactive({
@@ -11,15 +11,32 @@ export default function useAuthStore() {
   //variable get
   const getAuth = () => state.dataUser;
 
+  // const setAuth =async () => {
+  //   try {
+
+  //     await apiInstance.get('auth/users/').then((respon)=>{
+  //       console.log(respon)
+  //     })
+      
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+    
+  // }
+
+
   // fuincion encargada de traer los datos
-  const setAuth = async (jwt_create: any) => {
+  const loginAuth = async (jwt_create: any) => {
     console.log("Data enviada ", jwt_create);
     try {
-        const {data,status} = await api.post("auth/jwt/create/", jwt_create)
-        if(status == 401){
-            alert("dato erroneo")
+        const {data,status} = await apiInstance.post("auth/jwt/create/", jwt_create)
+        if(status == 200){
+            // alert("dato Correcto::::")
+            // console.log(status)
+            localStorage.setItem("token-user",JSON.stringify(data))
+
         }else{
-            console.log(data)
+            console.log(status)
         }
         
     } catch (e) {
@@ -27,7 +44,7 @@ export default function useAuthStore() {
     }
   };
 
-  return { setAuth, getAuth };
+  return { loginAuth,  getAuth };
 }
 
 

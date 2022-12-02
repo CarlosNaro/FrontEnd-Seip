@@ -41,11 +41,11 @@ const router = createRouter({
   routes,
 });
 
-// const isAuthenticoted = false
 
 // router.beforeEach((to, from, next)=>{
-// if(to.name != 'login' && !isAuthenticoted ) next({name:"login"});
-// else next();
+//   const isAuthenticoted = localStorage.getItem("token-user")
+//   if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
+//   else next();
 // })
 
 export default router;
