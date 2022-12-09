@@ -3,51 +3,41 @@ import { mdiLock } from "@mdi/js";
 import BaseIcon from "../components/BaseIcon.vue";
 import useAuth from '../composables/useAuth' 
 import useAuthStore from '../stores/AuthStore' 
+import CardBoxAlert from "../components/CardBoxAlert.vue";
 import { reactive, ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 
-const imglogo = ref(false)
 
 //variables
 const loginForm = reactive({
   username: '',
   password: '',
 });
+const isModalActive = ref(false);
 
-
-
-const {createUser } = useAuth()
-const router = useRouter();
 //:::::::.variables
 
 //::::::: Acciones
 const submitLogin = () => {
 
   if (!loginForm.username || !loginForm.password) {
-    alert("User/Password invalid")
+    isModalActive.value = true
     loginForm.username = ""
     loginForm.password = ""
+    
   } else {
-    // console.log(" completo datos ");
-    
     useAuthStore().loginAuth(loginForm)
-    
-    router.push({
-      name: "Dashboard"
-    })
-    loginForm.username = ""
-    loginForm.password = ""
   }
 };
 
-// onMounted(() => {
-// console.log("hola mundo")
-// }
+
 </script>
 
 
-
 <template>
+
+  <CardBoxAlert  v-model="isModalActive" title="Authentication Error" >
+    <p> Username or password <b>incorrect¡</b></p>
+  </CardBoxAlert>
   <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >

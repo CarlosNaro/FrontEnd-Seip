@@ -1,14 +1,9 @@
 import {
-  mdiMenu,
-  mdiClockOutline,
-  mdiCloud,
-  mdiCrop,
   mdiAccount,
   mdiCogOutline,
   mdiEmail,
   mdiLogout,
-  mdiThemeLightDark,
-  mdiGithub,
+ 
 } from "@mdi/js";
 
 export default [
@@ -34,7 +29,7 @@ export default [
 
   {
     icon: mdiLogout,
-    label: "Log out",
+    label: "Logout",
     isDesktopNoLabel: true,
     isLogout: true,
   },

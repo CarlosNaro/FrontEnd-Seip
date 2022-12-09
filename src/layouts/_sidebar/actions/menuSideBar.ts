@@ -20,22 +20,6 @@ import {
   
 } from "@mdi/js";
 
-
-
-// export const arrayCollectionToObject:Array<object> =([
-//   {
-//     to: "/dashboard",
-//     icon: mdiMonitor,
-//     label: "Dashboard",
-//   },
-//   {
-//     to: "/client",
-//     label: "Cliente",
-//     icon: mdiAccountGroupOutline ,
-//   },
-// ]);
-// export default arrayCollectionToObject
-
 export default [
   {
     to: "/dashboard",
@@ -47,6 +31,8 @@ export default [
     label: "Cliente",
     icon: mdiAccountGroupOutline ,
   },
+
+
 
   // {
   //   to: "/product",
@@ -133,4 +119,6 @@ export default [
   //   icon: mdiGithub,
   //   target: "_blank",
   // },
+
+  
 ];

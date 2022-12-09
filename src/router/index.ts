@@ -6,6 +6,7 @@ import {
 } from "vue-router";
 import LoginPage from "../pages/LoginPage.vue";
 import HomePage from "../pages/HomePage.vue";
+import { getItem } from "../stores/actions/localStorage";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,10 +43,26 @@ const router = createRouter({
 });
 
 
-// router.beforeEach((to, from, next)=>{
-//   const isAuthenticoted = localStorage.getItem("token-user")
-//   if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
-//   else next();
-// })
+router.beforeEach((to, from, next)=>{
+
+  const isAuthenticoted = getItem("token-user")
+  if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
+  if(to.name == 'Login' && isAuthenticoted ) next({name:"Dashboard"});
+  
+  else next();
+})
 
 export default router;
+
+
+// router.beforeEach((to, from, next)=>{
+  
+//   if(localStorage.getItem("token-user")){
+
+//     if(to.name === 'Login' ) next({name:"Dashboard"});
+    
+//   }else{
+//     if(to.name !== 'Login' ) next({name:"Login"});    
+//   }
+//    next();
+// })

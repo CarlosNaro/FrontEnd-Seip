@@ -1,7 +1,7 @@
 <script  setup lang="ts">
 import { RouterLink } from "vue-router";
 import BaseIcon from '../../../components/BaseIcon.vue';
-
+import { useRouter } from "vue-router";
 
 export interface Imenu{
   to:string,
@@ -13,9 +13,12 @@ const props = defineProps<{
   item:Imenu
 }>()
 
+const router = useRouter()
+
 const logout = ()=>{
   if(props.item.label == "Logout"){
-    alert("hola mundo")
+    localStorage.clear()
+    router.push({name:"Login"})
   }
 }
 </script>

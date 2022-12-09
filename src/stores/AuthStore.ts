@@ -1,6 +1,8 @@
 // Usamos el composition APi de vuejs 3
 import { reactive } from "vue";
-import  apiInstance  from "./indexApi";
+import router from "../router";
+import { setItem } from "./actions/localStorage";
+import apiInstance from "./indexApi";
 
 //creacion del state
 const state = reactive({
@@ -11,51 +13,33 @@ export default function useAuthStore() {
   //variable get
   const getAuth = () => state.dataUser;
 
-  // const setAuth =async () => {
-  //   try {
-
-  //     await apiInstance.get('auth/users/').then((respon)=>{
-  //       console.log(respon)
-  //     })
-      
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-    
-  // }
-
-
   // fuincion encargada de traer los datos
   const loginAuth = async (jwt_create: any) => {
     console.log("Data enviada ", jwt_create);
     try {
-        const {data,status} = await apiInstance.post("auth/jwt/create/", jwt_create)
-        if(status == 200){
-            // alert("dato Correcto::::")
-            // console.log(status)
-            localStorage.setItem("token-user",JSON.stringify(data))
+      const { data, status } = await apiInstance.post(
+        "auth/jwt/create/",
+        jwt_create
+      );
 
-        }else{
-            console.log(status)
-        }
+      if (status == 200) {
         
+        setItem("token-user", data )
+        // localStorage.setItem("token-user", JSON.stringify(data));
+        router.push({ name: "Dashboard" });
+      } else {
+        // console.log(status);
+      }
     } catch (e) {
-        console.error("Error :", e);
+      console.error("Error :", e);
     }
   };
 
-  return { loginAuth,  getAuth };
+  return { loginAuth, getAuth };
 }
 
-
-
-
-
-
-
-
 // axios.defaults.headers.common['Authorization'] = "JWT" + acces
-      // console.log('develve :', data)
+// console.log('develve :', data)
 //https://www.youtube.com/watch?v=fuqPuyX1UF8&t=298s&ab_channel=LesKoding
 
 // const {data, status} = await api.get("auth/jwt/create/",{

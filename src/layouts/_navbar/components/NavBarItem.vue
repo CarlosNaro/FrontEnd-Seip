@@ -9,7 +9,7 @@ import {
 import { RouterLink } from "vue-router";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
-// import UserAvatarCurrentUser from "@/components/UserAvatarCurrentUser.vue";
+import { useRouter } from "vue-router";
 import NavBarMenuList from "./NavBarMenuList.vue";
 
 
@@ -33,9 +33,6 @@ const props = defineProps<{
 
 
 const is = computed(() => {
-  // if (props.item.href) {
-  //   return "a";
-  // }
 
   if (props.item.to) {
     return RouterLink;
@@ -74,13 +71,17 @@ const componentClass = computed(() => {
 const itemLabel = computed(() => (props.item.isCurrentUser ? nombre : props.item.label));
 
 
-
+const router = useRouter()
 const menuClick = (event:any) => {
   emit("menu-click", event, props.item);
 
   if (props.item.menu) {
     isDropdownActive.value = !isDropdownActive.value;
   }
+
+  if(props.item.label == "Logout") localStorage.clear(), router.push({name:"Login"})
+  
+
 };
 
 </script>
