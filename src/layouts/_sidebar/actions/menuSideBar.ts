@@ -32,7 +32,11 @@ export default [
     icon: mdiAccountGroupOutline ,
   },
 
-
+{
+    to: "/profile",
+    label: "Profile",
+    icon: mdiAccountCircle,
+  },
 
   // {
   //   to: "/product",

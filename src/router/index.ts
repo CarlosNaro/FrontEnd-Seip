@@ -34,6 +34,17 @@ const routes: Array<RouteRecordRaw> = [
     name: "Client",
     component: () => import("../pages/ClientPage.vue"),
   },
+
+  {
+    meta: {
+      title: "Profile",
+    },
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../pages/ProfilePage.vue"),
+  },
+
+
 ];
 
 const history = createWebHistory();
@@ -43,14 +54,14 @@ const router = createRouter({
 });
 
 
-router.beforeEach((to, from, next)=>{
+// router.beforeEach((to, from, next)=>{
 
-  const isAuthenticoted = getItem("token-user")
-  if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
-  if(to.name == 'Login' && isAuthenticoted ) next({name:"Dashboard"});
+//   const isAuthenticoted = getItem("token-user")
+//   if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
+//   if(to.name == 'Login' && isAuthenticoted ) next({name:"Dashboard"});
   
-  else next();
-})
+//   else next();
+// })
 
 export default router;
 

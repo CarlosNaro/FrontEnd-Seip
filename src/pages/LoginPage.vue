@@ -14,9 +14,6 @@ const loginForm = reactive({
 });
 const isModalActive = ref(false);
 
-//:::::::.variables
-
-//::::::: Acciones
 const submitLogin = () => {
 
   if (!loginForm.username || !loginForm.password) {
@@ -28,7 +25,6 @@ const submitLogin = () => {
     useAuthStore().loginAuth(loginForm)
   }
 };
-
 
 </script>
 
