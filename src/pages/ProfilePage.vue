@@ -52,6 +52,23 @@ const menu = reactive({
               />
             </div>
 
+            <div class="relative pb-5" id="cuerpo" >
+              <label class="text-gray-700 font-bold">Last Name</label>
+              <input
+                id="lastname"
+                name="lastname"
+                type="text"
+                required
+                autocomplete="lastname"
+                class="input-forms-icons"
+                placeholder="Last Name"
+              />
+              <BaseIcon
+                class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
+                :path="mdiAccount"
+              />
+            </div>
+
             <div class=" relative pb-5">
                 <label for="" class="text-gray-700 font-bold ">E-mail</label>
                 <input

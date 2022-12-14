@@ -30,7 +30,6 @@ const submitLogin = () => {
 
 
 <template>
-
   <CardBoxAlert  v-model="isModalActive" title="Authentication Error" >
     <p> Username or password <b>incorrect¡</b></p>
   </CardBoxAlert>

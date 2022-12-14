@@ -22,7 +22,7 @@ const userSwitchVal = ref(false);
   <!-- <img src= "../assets/avatar.jpg" alt="" srcset=""> -->
   <div class="p-5 rounded-2xl ">
     <div class=" flex items-center flex-wrap lg:justify-center">
-      <UserAvatar :username="username"  class="lg:mx-12 sm:mr-5 bg-slate-400 " />
+      <UserAvatar :username="username"  class="lg:mx-12 sm:mr-5 " />
       <div class="space-y-3 text-center md:text-left lg:mx-12 ">   
         <h1 class="text-2xl">
           Howdy, <b>{{ userName }}</b
