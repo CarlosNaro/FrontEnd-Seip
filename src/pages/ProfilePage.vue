@@ -19,7 +19,6 @@ const menu = reactive({
   main: Boolean,
 });
 
-
 </script>
 <template>
   <LayoutAuthenticated>

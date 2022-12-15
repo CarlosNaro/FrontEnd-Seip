@@ -1,9 +1,9 @@
 // Usamos el composition APi de vuejs 3
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import router from "../router";
-import { setItem } from "./actions/localStorage";
+import { setItem,getItem } from "./actions/localStorage";
 import apiInstance from "./indexApi";
-
+import jwt_decode from "jwt-decode";
 //creacion del state
 const state = reactive({
   expens: [],
@@ -46,6 +46,23 @@ export default function useAuthStore() {
         console.error(e)
     }
   };
+
+  // expiración de token 
+
+  const expiredToken =(token:any)=>{
+    token = jwt_decode(token)
+    const expired = ref(false)
+    if(token!=""){
+      const current_time = Date.now()/1000
+      if(token.exp < current_time){
+        expired.value = true
+        router.push({ name: "Login" });
+      }
+    }else{
+      expired.value = true
+    }
+    return expired.value
+  }
 
 
   return { loginAuth, getAuth, setExpens };
