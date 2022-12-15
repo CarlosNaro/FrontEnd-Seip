@@ -77,3 +77,6 @@ export default router;
 //   }
 //    next();
 // })
+
+
+// "dev": "vite --host 192.168"

@@ -10,6 +10,9 @@ const state = reactive({
 
 });
 
+
+
+
 export default function useAuthStore() {
   //variable get
   const getAuth = () => state.expens;
@@ -49,21 +52,23 @@ export default function useAuthStore() {
 
   // expiración de token 
 
-  const expiredToken =(token:any)=>{
-    token = jwt_decode(token)
-    const expired = ref(false)
-    if(token!=""){
-      const current_time = Date.now()/1000
-      if(token.exp < current_time){
-        expired.value = true
-        router.push({ name: "Login" });
-      }
-    }else{
-      expired.value = true
-    }
-    return expired.value
-  }
-
+  // const token = getItem("token-user")
+  // const expiredToken =()=>{
+  //   const token = getItem("token-user")
+  //   const tiempo = jwt_decode(token.access) as IJwtDecode
+  //   const expired = ref(false)
+  //   if(token!=""){
+  //     const current_time = Date.now()/1000
+  //     if(tiempo.exp < current_time){
+  //       expired.value = true
+  //       router.push({ name: "Login" });
+  //     }
+  //   }else{
+  //     expired.value = true
+  //   }
+  //   return console.log("tiempo ::::",expired.value)
+  //   // return expired.value
+  // }
 
   return { loginAuth, getAuth, setExpens };
 }
