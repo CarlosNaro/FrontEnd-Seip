@@ -2,12 +2,15 @@
 import LayoutAuthenticated from '../layouts/LayoutAuthenticated.vue';
 import SectionMain from '../components/SectionMain.vue';
 import useAuthStore from '../stores/AuthStore'
-import {onMounted} from "vue"
+import {computed, onMounted, ref} from "vue"
 
 
-onMounted(() => {
-//   useAuthStore().expiredToken()  
-})
+ 
+// const expireds =  ref(useAuthStore().expiredToken())
+
+// onMounted(() => {
+//    console.log("naro ",expireds.value)
+// })
 
 
 </script>

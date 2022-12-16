@@ -1,17 +1,15 @@
 // Usamos el composition APi de vuejs 3
 import { reactive, ref } from "vue";
 import router from "../router";
-import { setItem,getItem } from "./actions/localStorage";
+import { setItem } from "./actions/localStorage";
 import apiInstance from "./indexApi";
-import jwt_decode from "jwt-decode";
+
+
 //creacion del state
 const state = reactive({
   expens: [],
 
 });
-
-
-
 
 export default function useAuthStore() {
   //variable get
@@ -38,6 +36,7 @@ export default function useAuthStore() {
     }
   };
 
+
   const setExpens = async () => {
     try {
       const { data, status } = await apiInstance.get("apunte/expense/");
@@ -52,7 +51,8 @@ export default function useAuthStore() {
 
   // expiración de token 
 
-  // const token = getItem("token-user")
+  
+  //const token = getItem("token-user")
   // const expiredToken =()=>{
   //   const token = getItem("token-user")
   //   const tiempo = jwt_decode(token.access) as IJwtDecode
@@ -61,15 +61,15 @@ export default function useAuthStore() {
   //     const current_time = Date.now()/1000
   //     if(tiempo.exp < current_time){
   //       expired.value = true
-  //       router.push({ name: "Login" });
+  //       // router.push({ name: "Login" });
   //     }
   //   }else{
   //     expired.value = true
   //   }
-  //   return console.log("tiempo ::::",expired.value)
-  //   // return expired.value
+  //   // return console.log("tiempo ::::",expired.value)
+  //   return expired.value
   // }
 
-  return { loginAuth, getAuth, setExpens };
+  return { loginAuth, getAuth, setExpens, };
 }
 

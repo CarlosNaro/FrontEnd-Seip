@@ -66,17 +66,4 @@ router.beforeEach((to, from, next)=>{
 export default router;
 
 
-// router.beforeEach((to, from, next)=>{
-  
-//   if(localStorage.getItem("token-user")){
-
-//     if(to.name === 'Login' ) next({name:"Dashboard"});
-    
-//   }else{
-//     if(to.name !== 'Login' ) next({name:"Login"});    
-//   }
-//    next();
-// })
-
-
 // "dev": "vite --host 192.168"
