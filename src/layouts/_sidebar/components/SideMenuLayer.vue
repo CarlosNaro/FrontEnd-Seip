@@ -52,6 +52,7 @@ const logoutItem = computed(() => ({
       <div class="flex-1 overflow-y-auto overflow-x-hidden">
         <ul>
           <Side-Menu-Item
+          class="text-blue-600"
             v-for="(item, index) in props.menu"
             :key="index"
             :item="item"
@@ -69,6 +70,4 @@ const logoutItem = computed(() => ({
   </div>
 </template>
 
-<style scoped>
 
-</style>

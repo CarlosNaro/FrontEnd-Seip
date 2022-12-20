@@ -11,8 +11,7 @@ const layoutStore = useLayoutStore();
 <template>
 
   <Side-Menu-Layer
-  
-    :class="[
+        :class="[
       layoutStore.isAsideMobileExpanded.value ? 'left-0' : '-left-60 lg:left-0 ',
       { 'lg:hidden xl:flex': !layoutStore.isAsideLgActive.value },
     ]"

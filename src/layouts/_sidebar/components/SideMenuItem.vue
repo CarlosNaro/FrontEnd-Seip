@@ -1,7 +1,6 @@
 <script  setup lang="ts">
-import { RouterLink } from "vue-router";
 import BaseIcon from '../../../components/BaseIcon.vue';
-import { useRouter } from "vue-router";
+import { useRouter,RouterLink } from "vue-router";
 
 export interface Imenu{
   to:string,
@@ -21,15 +20,18 @@ const logout = ()=>{
     router.push({name:"Login"})
   }
 }
-</script>
 
+
+</script>
 <template>
   <li>
     <component
       :is="props.item.to ? RouterLink : 'a'"
       v-slot="vSlot"
       :to="props.item.to ?? null"
-      class="flex cursor-pointer py-3"
+      class="flex cursor-pointer py-3 "
+     
+      :class="{ 'active':  props.item.to == router.currentRoute.value.path }"
       @click="logout"
     >
       <Base-Icon
@@ -42,7 +44,7 @@ const logout = ()=>{
       />
 
       <span
-        class="grow text-ellipsis line-clamp-1"
+        class="grow text-ellipsis line-clamp-1 "
         :class="[
           'pr-12',
           vSlot && vSlot.isExactActive ,
@@ -55,4 +57,12 @@ const logout = ()=>{
   </li>
 </template>
 
+
+<style scoped>
+ .active{
+    color: black
+
+    
+  }
+</style>
 
