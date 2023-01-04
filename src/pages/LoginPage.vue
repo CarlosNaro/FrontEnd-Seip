@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { mdiLock } from "@mdi/js";
+import { mdiLock, mdiClose } from "@mdi/js";
+
 import BaseIcon from "../components/BaseIcon.vue";
-import useAuth from '../composables/useAuth' 
+
 import useAuthStore from '../stores/AuthStore' 
 import CardBoxAlert from "../components/CardBoxAlert.vue";
 import { reactive, ref, onMounted } from "vue";
@@ -30,7 +31,7 @@ const submitLogin = () => {
 
 
 <template>
-  <CardBoxAlert  v-model="isModalActive" title="Authentication Error" >
+  <CardBoxAlert  v-model="isModalActive" title="Authentication Error" :icon="mdiClose" >
     <p> Username or password <b>incorrect¡</b></p>
   </CardBoxAlert>
   <div

@@ -21,15 +21,15 @@ apiInstance.interceptors.request.use(
       const auth_token = getItem("token-user");
   
       if (auth_token) {
-        const decode = jwt_decode(auth_token.access) as IJwtDecode;
-        const current_time = Date.now() / 1000;
+        // const decode = jwt_decode(auth_token.access) as IJwtDecode;
+        // const current_time = Date.now() / 1000;
         config.headers.Authorization = `JWT ${auth_token.access}`;
   
-        if (decode.exp < current_time) {
-          // Si ha expirado, redirige al usuario al login
-          localStorage.clear();
-          router.push({ name: "Login" });
-        }
+        // if (decode.exp < current_time) {
+        //   // Si ha expirado, redirige al usuario al login
+        //   localStorage.clear();
+        //   router.push({ name: "Login" });
+        // }
       }
   
       return config;
