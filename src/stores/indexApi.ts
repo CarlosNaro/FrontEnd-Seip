@@ -19,18 +19,19 @@ export default apiInstance;
 apiInstance.interceptors.request.use(
     function (config: any) {
       const auth_token = getItem("token-user");
+
+
+        if (auth_token) {
+          const decode = jwt_decode(auth_token.access) as IJwtDecode;
+          const current_time = Date.now() / 1000;
+          config.headers.Authorization = `JWT ${auth_token.access}`;
   
-      if (auth_token) {
-        // const decode = jwt_decode(auth_token.access) as IJwtDecode;
-        // const current_time = Date.now() / 1000;
-        config.headers.Authorization = `JWT ${auth_token.access}`;
-  
-        // if (decode.exp < current_time) {
-        //   // Si ha expirado, redirige al usuario al login
-        //   localStorage.clear();
-        //   router.push({ name: "Login" });
-        // }
-      }
+          if (decode.exp < current_time) {
+            // Si ha expirado, redirige al usuario al login
+            localStorage.clear();
+            router.push({ name: "Login" });
+          }
+        }
   
       return config;
     },

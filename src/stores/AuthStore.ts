@@ -34,13 +34,31 @@ export default function useAuthStore() {
       if (status == 200) {
         setItem("token-user", data);
         router.push({ name: "Dashboard" });
-      } else {
+      } else {  
         // console.log(status);
       }
     } catch (e) {
       console.error("Error :", e);
     }
   };
+
+  // const refreshToken = async (refresh: any) => {
+  //   console.log("Data refresh ", refresh);
+  //   try {
+  //     const { data, status } = await apiInstance.post(
+  //       "auth/jwt/refresh/",
+  //       refresh
+  //     );
+
+  //     if (status == 200) {
+  //       setItem("token-user", data);
+  //     } else {
+  //        console.log(status, " refresh invalidate");
+  //     }
+  //   } catch (e) {
+  //     console.error("Error :", e);
+  //   }
+  // };
 
   const setExpens = async () => {
     try {
