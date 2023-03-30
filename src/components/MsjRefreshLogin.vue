@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { mdiClockOutline } from "@mdi/js";
 import CardBoxAlert from "../components/CardBoxAlert.vue";
-import useAuthStore from "../stores/AuthStore";
+import useAuthStore from "../stores/Prueba/AuthStore";
 import { ref } from "vue";
 
 const token_expired = useAuthStore().expiredToken();
@@ -41,4 +41,4 @@ if (token_expired) isModalActive.value = true;
       </div>
     </CardBoxAlert>
   </div>
-</template>
+</template> -->

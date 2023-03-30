@@ -1,72 +1,53 @@
 // Usamos el composition APi de vuejs 3
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import router from "../router";
-import { setItem, getItem } from "./actions/localStorage";
-import apiInstance from "./indexApi";
+import {getItem, setItem } from "./actions/localStorage";
+import api from "./indexApi";
 import jwt_decode from "jwt-decode";
-
 //creacion del state
-
-export interface IJwtDecode {
-  token_type: string;
-  exp: number;
-  jti: string;
-  user_id: number;
-}
-
 const state = reactive({
-  expens: [],
+  Data: [],
 });
+//::::
 
 export default function useAuthStore() {
   //variable get
-  const getAuth = () => state.expens;
+  const getAuth = state.Data
+  // function for authentication
 
-  // fuincion encargada de traer los datos
-  const loginAuth = async (jwt_create: any) => {
-    console.log("Data enviada ", jwt_create);
+  const autenticationUser = async (dataUser: any) => {
     try {
-      const { data, status } = await apiInstance.post(
-        "auth/jwt/create/",
-        jwt_create
-      );
+      const {data, status} = await api.post('auth/jwt/create/',dataUser)
+      console.log(data)
 
-      if (status == 200) {
-        setItem("token-user", data);
-        router.push({ name: "Dashboard" });
-      } else {
-        // console.log(status);
-      }
+      setItem("token",data)
+      router.push({ name: "Dashboard" })
+
+
+      // const token = getItem("token-user");
+      // const tiempo = jwt_decode(token)
+      // console.log("tiempossdf::")
+
+      
+
     } catch (e) {
-      console.error("Error :", e);
+      // console.log(e.response.statusText)
+      console.log("segundo")
     }
   };
 
-  const setExpens = async () => {
-    try {
-      const { data, status } = await apiInstance.get("apunte/expense/");
-      if (status == 200) {
-        state.expens = data;
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const valorToken = ()=>{
+    // const token = getItem("token-user");
+    // const tiempo = jwt_decode(token)
+    console.log("tiempossdf::")
+  }
 
-  const expiredToken = () => {
-    const token = getItem("token-user");
-    const tiempo = jwt_decode(token.access) as IJwtDecode;
-    const expired = ref(false);
-    if (token != "") {
-      const current_time = Date.now() / 1000;
-      if (tiempo.exp < current_time) {
-        expired.value = true;
-      }
-    } else {
-      expired.value = true;
-    }
-    return expired.value;
-  };
 
-  return { loginAuth, getAuth, setExpens, expiredToken };
+
+
+
+  return {
+    autenticationUser,
+    
+  };
 }

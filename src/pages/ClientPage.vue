@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import LayoutAuthenticated from '../layouts/LayoutAuthenticated.vue';
 import SectionMain from '../components/SectionMain.vue';
-import useAuthStore from '../stores/AuthStore'
+import useAuthStore from '../stores/Prueba/AuthStore'
 import {computed, onMounted, ref} from "vue"
 
 

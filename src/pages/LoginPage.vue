@@ -23,7 +23,7 @@ const submitLogin = () => {
     loginForm.password = ""
     
   } else {
-    useAuthStore().loginAuth(loginForm)
+    useAuthStore().autenticationUser(loginForm)
   }
 };
 

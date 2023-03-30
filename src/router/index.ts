@@ -10,35 +10,29 @@ import { getItem } from "../stores/actions/localStorage";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    meta: {
-      title: "Login",
-    },
+    // meta: {
+    //   title: "Login",
+    // },
     path: "/",
     name: "Login",
     component: LoginPage,
   },
   {
-    meta: {
-      title: "Home",
-    },
+ 
     path: "/dashboard",
     name: "Dashboard",
     component: HomePage,
   },
 
   {
-    meta: {
-      title: "Client",
-    },
+
     path: "/client",
     name: "Client",
     component: () => import("../pages/ClientPage.vue"),
   },
 
   {
-    meta: {
-      title: "Profile",
-    },
+ 
     path: "/profile",
     name: "Profile",
     component: () => import("../pages/ProfilePage.vue"),
@@ -56,7 +50,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next)=>{
 
-  const isAuthenticoted = getItem("token-user")
+  const isAuthenticoted = getItem("token")
   if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
   if(to.name == 'Login' && isAuthenticoted ) next({name:"Dashboard"});
   

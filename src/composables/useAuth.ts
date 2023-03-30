@@ -1,4 +1,4 @@
-import useAuthStore from '../stores/AuthStore'
+import useAuthStore from '../stores/Prueba/AuthStore'
 
 const useAuth = ()=>{
 
