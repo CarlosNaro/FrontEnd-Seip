@@ -23,28 +23,11 @@ export default function useAuthStore() {
       setItem("token",data)
       router.push({ name: "Dashboard" })
 
-
-      // const token = getItem("token-user");
-      // const tiempo = jwt_decode(token)
-      // console.log("tiempossdf::")
-
-      
-
     } catch (e) {
       // console.log(e.response.statusText)
       console.log("segundo")
     }
   };
-
-  const valorToken = ()=>{
-    // const token = getItem("token-user");
-    // const tiempo = jwt_decode(token)
-    console.log("tiempossdf::")
-  }
-
-
-
-
 
   return {
     autenticationUser,

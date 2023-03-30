@@ -6,18 +6,41 @@ import {
   mdiFormTextboxPassword,
   mdiLock,
 } from "@mdi/js";
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, computed, ref } from "vue";
 import LayoutAuthenticated from "../layouts/LayoutAuthenticated.vue";
 import SectionMain from "../components/SectionMain.vue";
 import SectionTitleLineWithButton from "../components/SectionTitleLineWithButton.vue";
 import UserCard from "../components/UserCard.vue";
 import BaseIcon from "../components/BaseIcon.vue";
+import useUserStore from "../stores/UserStore";
+
+export interface IUser {
+    id: number,
+    
+    // "groups": [],
+    // "user_permissions": []
+}
+
+// export interface IJwtDecode {
+//   token_type: string;
+//   exp: number;
+//   jti: string;
+//   user_id: number;
+// }
 
 const menu = reactive({
   icon: mdiAccount,
   title: "Profile",
   main: Boolean,
 });
+
+
+// const userStore = useUserStore() 
+const getuser  = computed(() => useUserStore().getUser()) 
+const setuser = useUserStore().setUser()
+// const user = ref(getuser) as IUser  
+
+const hola = "welcome"
 
 </script>
 <template>
@@ -29,11 +52,29 @@ const menu = reactive({
         :main="menu.main"
       />
       <UserCard class="mb-6" />
+      <pre>{{getuser}}</pre>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
        
         <!-- datos basicos   -->
         <div>
-          <form  class="formulario">
+          <form  class="formulario"> 
+
+            <div v-for="(item, index) in getuser   " :key="item"  >  
+              <ul>
+                {{item.last_name }}
+                <!-- <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                v-model="item.last_name"
+                autocomplete="Name"
+                class="input-forms-icons"
+                placeholder="Name"
+              /> -->
+              </ul>
+            </div>
+
             <div class="relative pb-5" id="cuerpo" >
               <label class="text-gray-700 font-bold">Name</label>
               <input
@@ -41,6 +82,7 @@ const menu = reactive({
                 name="name"
                 type="text"
                 required
+                v-model="getuser.last_name"
                 autocomplete="Name"
                 class="input-forms-icons"
                 placeholder="Name"
