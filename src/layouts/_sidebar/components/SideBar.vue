@@ -18,7 +18,7 @@ const layoutStore = useLayoutStore();
   :menu="menuSidebar"
   />
 
-  <OverlayLayer
+  <OverlayLayer 
   v-show="layoutStore.isAsideLgActive.value"
   z-index="z-30"
   @overlay-click="layoutStore.isAsideLgActive.value = false"

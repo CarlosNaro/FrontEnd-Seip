@@ -8,6 +8,7 @@ import LoginPage from "../pages/LoginPage.vue";
 import HomePage from "../pages/HomePage.vue";
 import { getItem } from "../stores/actions/localStorage";
 
+
 const routes: Array<RouteRecordRaw> = [
   {
     // meta: {
@@ -22,13 +23,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: "Dashboard",
     component: HomePage,
+    
   },
 
   {
-
     path: "/client",
     name: "Client",
     component: () => import("../pages/ClientPage.vue"),
+    meta: {
+      
+      is_admin: false,
+      
+    }
   },
 
   {
@@ -51,13 +57,23 @@ const router = createRouter({
 router.beforeEach((to, from, next)=>{
 
   const isAuthenticoted = getItem("token")
-  if(to.name != 'Login' && !isAuthenticoted ) next({name:"Login"});
-  if(to.name == 'Login' && isAuthenticoted ) next({name:"Dashboard"});
+  // const is_admin = to.matched.some(record => record.meta.is_admin)
+  const  is_admin = isAuthenticoted.is_admin
+
+
+  
+  if(to.name != 'Login' && !isAuthenticoted  ) next({name:"Login"});
+  if(to.name == 'Login' && isAuthenticoted  ) next({name:"Dashboard"});
   
   else next();
 })
+
+
+
+
 
 export default router;
 
 
 // "dev": "vite --host 192.168"
+

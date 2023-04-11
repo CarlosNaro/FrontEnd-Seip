@@ -16,7 +16,7 @@ const props = defineProps<{
 const logoutItem = computed(() => ({
   label: "Logout",
   icon: mdiLogout,
-  // isLogout: true,
+  isLogout: true,
 }));
 </script>
 

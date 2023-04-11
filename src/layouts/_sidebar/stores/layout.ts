@@ -10,5 +10,18 @@ export const useLayoutStore = () => {
     isAsideMobileExpanded.value = !isAsideMobileExpanded.value
   };
 
-  return { asideMobileToggle, isAsideMobileExpanded, isAsideLgActive }
+  const administrador = (token:any)=>{
+
+    if(token.is_admin){
+      return true
+    }else{
+      return false
+    }
+  }
+
+
+
+
+
+  return { asideMobileToggle, isAsideMobileExpanded, isAsideLgActive, administrador }
 };

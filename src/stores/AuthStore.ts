@@ -15,9 +15,11 @@ export default function useAuthStore() {
   const getAuth = state.Data
   // function for authentication
 
+  
+
   const autenticationUser = async (dataUser: any) => {
     try {
-      const {data, status} = await api.post('auth/jwt/create/',dataUser)
+      const {data, status} = await api.post('auth/token/',dataUser)
       console.log(data)
 
       setItem("token",data)
@@ -29,8 +31,10 @@ export default function useAuthStore() {
     }
   };
 
+
   return {
     autenticationUser,
+   
     
   };
 }

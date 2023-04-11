@@ -1,4 +1,3 @@
-
 import {
   mdiAccountCircle,
   mdiMonitor,
@@ -16,23 +15,27 @@ import {
   mdiReproduction,
   mdiCartOutline,
   mdiCart,
-  mdiAccountGroupOutline , 
-  
+  mdiAccountGroupOutline,
 } from "@mdi/js";
+
 
 export default [
   {
-    to: "/dashboard",
-    icon: mdiMonitor,
+    is_admin:true,
+    to:"/dashboard" ,
     label: "Dashboard",
+    icon: mdiMonitor,
   },
   {
+    is_admin:true,
     to: "/client",
     label: "Cliente",
-    icon: mdiAccountGroupOutline ,
+    icon: mdiAccountGroupOutline,
+    
   },
 
-{
+  {
+    is_admin:true,
     to: "/profile",
     label: "Profile",
     icon: mdiAccountCircle,
@@ -62,13 +65,11 @@ export default [
   //   icon: mdiPalette ,
   // },
 
-
   // {
   //   to: "/tables",
   //   label: "Tables",
   //   icon: mdiTable,
   // },
-
 
   // {
   //   to: "/forms",
@@ -123,6 +124,4 @@ export default [
   //   icon: mdiGithub,
   //   target: "_blank",
   // },
-
-  
 ];

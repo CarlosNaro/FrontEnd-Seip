@@ -9,13 +9,13 @@ import {computed, onMounted, ref} from "vue"
 // const expireds =  ref(useAuthStore().expiredToken())
 
 // onMounted(() => {
-//    console.log("naro ",expireds.value)
+//    console.log("naro ",s.value)
 // })
 
 
 </script>
 <template>
-    <LayoutAuthenticated>
+    <LayoutAuthenticated >
         <SectionMain>
 
             <span>Welcome to Clients</span>
