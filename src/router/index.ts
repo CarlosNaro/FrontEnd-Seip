@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../pages/ClientPage.vue"),
     meta: {
       
-      is_admin: false,
+      requiresAdmin: true,
       
     }
   },
@@ -57,11 +57,9 @@ const router = createRouter({
 router.beforeEach((to, from, next)=>{
 
   const isAuthenticoted = getItem("token")
-  // const is_admin = to.matched.some(record => record.meta.is_admin)
-  const  is_admin = isAuthenticoted.is_admin
-
-
+  const requiresAdmin = to.matched.some(record => record.meta.is_admin)
   
+  // console.log("is_admin:: ", is_admin)
   if(to.name != 'Login' && !isAuthenticoted  ) next({name:"Login"});
   if(to.name == 'Login' && isAuthenticoted  ) next({name:"Dashboard"});
   
