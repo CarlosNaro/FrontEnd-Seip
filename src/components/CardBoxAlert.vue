@@ -11,7 +11,6 @@ const props = defineProps<{
   icon:string
 }>();
 
-// const value = ref(props.modelValue)
 const emit = defineEmits(["update:modelValue", "cancel"]);
 
 const value = computed({

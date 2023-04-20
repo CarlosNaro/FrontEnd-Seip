@@ -19,7 +19,5 @@ export default function useUserStore (){
             console.error(e)
         }
     }
-
-
     return {getUser, setUser}
 }

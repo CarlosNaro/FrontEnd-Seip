@@ -19,9 +19,10 @@ import {
 } from "@mdi/js";
 
 
+
 export default [
   {
-    is_admin:true,
+    is_admin:true,    
     to:"/dashboard" ,
     label: "Dashboard",
     icon: mdiMonitor,

@@ -3,7 +3,7 @@ import { computed } from "vue";
 
 const props = defineProps<{
   username?: string,
-  // avatar?: string,
+  avatar?: string,
 
   // avatar: {
   //   type: String,
@@ -19,10 +19,10 @@ const username = computed(() => props.username);
 <template>
   <div class="p-3">
     <img
-      src="../assets/avatar.jpg"
+      :src="props.avatar"
       :alt="username"
-      class="rounded-full  block h-60  w-60 bg-gray-100 "
+      
     />
   </div>
 </template>
-
+<!-- class="rounded-full  block h-60  w-60 bg-gray-100 " -->

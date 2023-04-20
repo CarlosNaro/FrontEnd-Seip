@@ -11,6 +11,7 @@ import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
 import { useRouter } from "vue-router";
 import NavBarMenuList from "./NavBarMenuList.vue";
+import { getItem } from "../../../stores/actions/localStorage";
 
 
 export interface Imenu{
@@ -31,6 +32,7 @@ const props = defineProps<{
   item: Imenu;
 }>();
 
+const token = getItem("token")
 
 const is = computed(() => {
 
@@ -43,7 +45,6 @@ const is = computed(() => {
 
 const emit = defineEmits(["menu-click"]);
 
-const nombre = "Carlos Alonso";
 
 const isDropdownActive = ref(false);
 
@@ -68,8 +69,11 @@ const componentClass = computed(() => {
 });
 
 
-const itemLabel = computed(() => (props.item.isCurrentUser ? nombre : props.item.label));
+// const itemLabel = computed(() => (props.item.isCurrentUser ? nombre : props.item.label));
 
+const itemLabel = computed(() =>
+  props.item.isCurrentUser ? token.username : props.item.label
+);
 
 const router = useRouter()
 const menuClick = (event:any) => {

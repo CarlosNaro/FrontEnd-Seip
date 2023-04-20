@@ -1,7 +1,8 @@
-import apiInstance from  '../indexApi' 
-import { getItem } from './localStorage'
+// import api from '../indexApi'
+// import { getItem } from './localStorage'
+// // import apiInstance from  '../indexApi' 
 
-// apiInstance.interceptors.request.use(
+// api.interceptors.request.use(
 //     function(config:any){
 //          const auth_token = getItem("token-user")
 //         if(auth_token){
@@ -14,7 +15,7 @@ import { getItem } from './localStorage'
 //     }
 // )
 
-// apiInstance.interceptors.response.use(function (response:any) {
+// api.interceptors.response.use(function (response:any) {
 //     // Cualquier código de estado que este dentro del rango de 2xx causa la ejecución de esta función 
 //     // Haz algo con los datos de la respuesta
 //      return response.data;

@@ -16,7 +16,6 @@ import useUserStore from "../stores/UserStore";
 
 export interface IUser {
     id: number,
-    
     // "groups": [],
     // "user_permissions": []
 }
@@ -27,7 +26,6 @@ export interface IUser {
 //   jti: string;
 //   user_id: number;
 // }
-
 const menu = reactive({
   icon: mdiAccount,
   title: "Profile",
@@ -35,10 +33,13 @@ const menu = reactive({
 });
 
 
-// const userStore = useUserStore() 
+ 
 const getuser  = computed(() => useUserStore().getUser()) 
 const setuser = useUserStore().setUser()
-// const user = ref(getuser) as IUser  
+
+onMounted(() => {
+  console.log("data", getuser.value)
+})
 
 const hola = "welcome"
 

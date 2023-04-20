@@ -1,22 +1,25 @@
 // Usamos el composition APi de vuejs 3
-import { reactive } from "vue";
+import { reactive,ref } from "vue";
 import router from "../router";
-import {getItem, setItem } from "./actions/localStorage";
+import { setItem } from "./actions/localStorage";
 import api from "./indexApi";
-import jwt_decode from "jwt-decode";
+
+
 //creacion del state
 const state = reactive({
   Data: [],
 });
+// varible para activar el modal alert al resivior una respuesta 401 de loguin
+const isModalActiveAlert = ref()
 //::::
 
 export default function useAuthStore() {
   //variable get
-  const getAuth = state.Data
-  // function for authentication
-
+  // const getAuth = state.Data
   
+  isModalActiveAlert.value = false
 
+  // function for authentication
   const autenticationUser = async (dataUser: any) => {
     try {
       const {data, status} = await api.post('auth/token/',dataUser)
@@ -26,15 +29,13 @@ export default function useAuthStore() {
       router.push({ name: "Dashboard" })
 
     } catch (e) {
-      // console.log(e.response.statusText)
+      // console.log("respuesta " ,e.response.statusText)
+      isModalActiveAlert.value = true
       console.log("segundo")
     }
   };
-
-
   return {
     autenticationUser,
-   
-    
+    isModalActiveAlert,
   };
 }

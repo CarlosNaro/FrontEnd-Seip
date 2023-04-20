@@ -1,53 +1,83 @@
 <script lang="ts" setup>
 import { mdiLock, mdiClose } from "@mdi/js";
-
 import BaseIcon from "../components/BaseIcon.vue";
-
-import useAuthStore from '../stores/AuthStore' 
+import useAuthStore from "../stores/AuthStore";
 import CardBoxAlert from "../components/CardBoxAlert.vue";
-import { reactive, ref, onMounted } from "vue";
-
+import {
+  reactive,
+  ref,
+  onMounted,
+  computed,
+  watchEffect,
+  onBeforeUpdate,
+} from "vue";
 
 //variables
 const loginForm = reactive({
-  username: '',
-  password: '',
+  username: "",
+  password: "",
 });
-const isModalActive = ref(false);
+
+// const isModalActiveAlert = ref(false);
+const {isModalActiveAlert} = useAuthStore()
+
+
 
 const submitLogin = () => {
-
-  if (!loginForm.username || !loginForm.password) {
-    isModalActive.value = true
-    loginForm.username = ""
-    loginForm.password = ""
+  console.log("welcom,e");
+  const estanVacias = Object.values(loginForm).every((valor) => !valor);
+  if (!estanVacias) {
+    if (!loginForm.username || !loginForm.password) {
+      console.log(" uno de los formularios esta lleno ");
+      isModalActiveAlert.value = true;
+      loginForm.username = "";
+      loginForm.password = "";
+    } else {
+      useAuthStore().autenticationUser(loginForm)
+      loginForm.username = "";
+      loginForm.password = "";
+    }
     
   } else {
-    useAuthStore().autenticationUser(loginForm)
+    isModalActiveAlert.value = true;
+    console.log("todos vacios", isModalActiveAlert.value);
   }
 };
 
+onMounted(() => {
+  console.log("onMounted:: ", isModalActiveAlert.value);
+});
+
+watchEffect(async () => {
+  console.log("watchEffect:: ", isModalActiveAlert.value);
+});
 </script>
 
-
 <template>
-  <CardBoxAlert  v-model="isModalActive" title="Authentication Error" :icon="mdiClose" >
-    <p> Username or password <b>incorrect¡</b></p>
+  <CardBoxAlert
+    title="Authentication Error"
+    :icon="mdiClose"
+    v-model="isModalActiveAlert"
+  >
+    <p>Username or password <b>incorrect¡</b></p>
   </CardBoxAlert>
+
   <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div
-      class="w-full lg:w-1/4 max-w-md space-y-8 shadow-sm p-4 shadow-slate-200"
+      class="w-full lg:w-1/4 max-w-md space-y-8 shadow-lg p-4 shadow-slate-400 relative"
     >
-      <div>
-        <img  
-          class="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="SEIP"
+      <div
+        class="mx-auto h-32 w-32 rounded-full p-3 shadow-2xl shadow-slate-400 absolute z-10 inset-x-0 -top-20"
+      >
+        <img
+          class="mx-auto h-32 w-auto hover:h-36 transition-all"
+          src="../assets/logo01.svg"
+          alt="Iquitos Technology"
         />
       </div>
-      <form class="mt-8 space-y-6">
+      <form class="pt-10 space-y-6">
         <div class="flex flex-col gap-4">
           <div class="relative">
             <label for="" class="text-gray-700">User</label>
