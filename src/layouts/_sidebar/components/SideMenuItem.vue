@@ -40,6 +40,7 @@ const logout = ()=>{
 }
 
 
+// v-if="item.is_admin == token.is_admin || item.isLogout"
 
 
 </script>
@@ -48,7 +49,6 @@ const logout = ()=>{
   <li>
     
     <component
-      v-if="item.is_admin == token.is_admin || item.isLogout"
       :is="props.item.to ? RouterLink : 'a'"
       v-slot="vSlot"
       :to="props.item.to ?? null"
@@ -62,7 +62,7 @@ const logout = ()=>{
       v-if="props.item.icon"
       :path="props.item.icon "
       class="flex-none"
-      :class="[vSlot && vSlot.isExactActive ]"
+      :class="[vSlot]"
       w="w-16"
       :size="18"
       />
@@ -71,7 +71,7 @@ const logout = ()=>{
       class="grow text-ellipsis line-clamp-1 "
       :class="[
         'pr-12',
-        vSlot && vSlot.isExactActive ,
+        vSlot  ,
       ]"
       >{{ props.item.label }}</span
     >

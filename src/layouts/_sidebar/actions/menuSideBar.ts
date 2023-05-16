@@ -22,13 +22,13 @@ import {
 
 export default [
   {
-    is_admin:true,    
+    // is_admin:true,    
     to:"/dashboard" ,
     label: "Dashboard",
     icon: mdiMonitor,
   },
   {
-    is_admin:true,
+    // is_admin:true,
     to: "/client",
     label: "Cliente",
     icon: mdiAccountGroupOutline,
@@ -36,7 +36,7 @@ export default [
   },
 
   {
-    is_admin:true,
+    // is_admin:true,
     to: "/profile",
     label: "Profile",
     icon: mdiAccountCircle,

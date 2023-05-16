@@ -13,12 +13,9 @@ import SectionTitleLineWithButton from "../components/SectionTitleLineWithButton
 import UserCard from "../components/UserCard.vue";
 import BaseIcon from "../components/BaseIcon.vue";
 import useUserStore from "../stores/UserStore";
+import { getItem } from "../stores/actions/localStorage";
+import jwt_decode from "jwt-decode";
 
-export interface IUser {
-    id: number,
-    // "groups": [],
-    // "user_permissions": []
-}
 
 // export interface IJwtDecode {
 //   token_type: string;
@@ -32,16 +29,39 @@ const menu = reactive({
   main: Boolean,
 });
 
+ interface IUser {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_staff: boolean;
+  is_active: boolean;
+}
 
- 
-const getuser  = computed(() => useUserStore().getUser()) 
-const setuser = useUserStore().setUser()
+const token = getItem("token");
+
+// const getuser = computed(()=> {
+//   return useUserStore()
+//   .getUser()
+//   .filter((element:any)=>{if (element.id == token.id) return element;}) 
+// })
+
+const getuser = computed(()=>useUserStore().getUser() )
+
+const setuser = useUserStore().setUser();
+
 
 onMounted(() => {
-  console.log("data", getuser.value)
+  
+  console.log("data:::", getuser.value);
+
 })
 
-const hola = "welcome"
+
+// const dataUser = getuser.value.filter((elemet: any )  => {
+//     if (elemet.id == token.id) return  elemet;
+//   })
 
 </script>
 <template>
@@ -52,18 +72,17 @@ const hola = "welcome"
         :title="menu.title"
         :main="menu.main"
       />
-      <UserCard class="mb-6" />
-      <pre>{{getuser}}</pre>
+      <UserCard  class="mb-6" />
+      <pre>{{ getuser }}</pre>
+      
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-       
         <!-- datos basicos   -->
         <div>
-          <form  class="formulario"> 
-
-            <div v-for="(item, index) in getuser   " :key="item"  >  
+          <form class="formulario"  >
+            <!-- <div v-for="(item, index) in dataUser" :key="item">
               <ul>
-                {{item.last_name }}
-                <!-- <input
+                e
+                <input
                 id="name"
                 name="name"
                 type="text"
@@ -72,18 +91,18 @@ const hola = "welcome"
                 autocomplete="Name"
                 class="input-forms-icons"
                 placeholder="Name"
-              /> -->
+              />
               </ul>
-            </div>
+            </div> -->
 
-            <div class="relative pb-5" id="cuerpo" >
+            <div class="relative pb-5" id="cuerpo">
               <label class="text-gray-700 font-bold">Name</label>
               <input
                 id="name"
                 name="name"
                 type="text"
                 required
-                v-model="getuser.last_name"
+                v-model="getuser.username"
                 autocomplete="Name"
                 class="input-forms-icons"
                 placeholder="Name"
@@ -94,9 +113,10 @@ const hola = "welcome"
               />
             </div>
 
-            <div class="relative pb-5" id="cuerpo" >
+            <div class="relative pb-5" id="cuerpo">
               <label class="text-gray-700 font-bold">Last Name</label>
               <input
+                
                 id="lastname"
                 name="lastname"
                 type="text"
@@ -111,23 +131,28 @@ const hola = "welcome"
               />
             </div>
 
-            <div class=" relative pb-5">
-                <label for="" class="text-gray-700 font-bold ">E-mail</label>
-                <input
-                  name="email"
-                  type="email"
-                  autocomplete="email"
-                  required
-                  class="input-forms-icons  "
-                  placeholder="default@example.com"
-                />
-                <BaseIcon 
-                class=" absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
-                :path="mdiMail"/>
-              </div>
+            <div class="relative pb-5">
+              <label for="" class="text-gray-700 font-bold">E-mail</label>
+              <input
+               
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="input-forms-icons"
+                placeholder="default@example.com"
+              />
+              <BaseIcon
+                class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
+                :path="mdiMail"
+              />
+            </div>
 
-            <div >
-              <button type="submit" class="positive-button font-bold relative w-full">
+            <div>
+              <button
+                type="submit"
+                class="positive-button font-bold relative w-full"
+              >
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <BaseIcon :path="mdiLock" />
                 </span>
@@ -139,59 +164,64 @@ const hola = "welcome"
 
         <!-- datos de password -->
         <div>
-          <form >
-              <div class=" relative pb-5">
-                <label  class="text-gray-700 font-bold ">Current password</label>
-                <input
-                  type="text"
-                  required
-                  onselect="alert(123)"
-                  class="input-forms-icons  "
-                  placeholder="Name"
-                />
-                
-                <BaseIcon 
-                class=" absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
-                :path="mdiAsterisk"/>
-              </div>
+          <form>
+            <div class="relative pb-5">
+              <label class="text-gray-700 font-bold">Current password</label>
+              <input
+                type="text"
+                required
+                onselect="alert(123)"
+                class="input-forms-icons"
+                placeholder="Name"
+              />
 
-              <div class=" relative pb-5">
-                <label for="" class="text-gray-700 font-bold ">New password</label>
-                <input
-                  type="text"
-                  required
-                  class="input-forms-icons  "
-                  placeholder=""
-                />
-                <BaseIcon 
-                class=" absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
-                :path="mdiFormTextboxPassword"/>
-              </div>
+              <BaseIcon
+                class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
+                :path="mdiAsterisk"
+              />
+            </div>
 
-              <div class=" relative pb-5">
-                <label for="" class="text-gray-700 font-bold ">Confirm password</label>
-                <input
-                  type="text"
-                  required
-                  class="input-forms-icons  "
-                  placeholder=""
-                />
-                <BaseIcon 
-                class=" absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
-                :path="mdiFormTextboxPassword"/>
-              </div>
+            <div class="relative pb-5">
+              <label for="" class="text-gray-700 font-bold">New password</label>
+              <input
+                type="text"
+                required
+                class="input-forms-icons"
+                placeholder=""
+              />
+              <BaseIcon
+                class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
+                :path="mdiFormTextboxPassword"
+              />
+            </div>
 
-            
-            <div >
-              <button type="submit" class="positive-button font-bold relative w-full">
+            <div class="relative pb-5">
+              <label for="" class="text-gray-700 font-bold"
+                >Confirm password</label
+              >
+              <input
+                type="text"
+                required
+                class="input-forms-icons"
+                placeholder=""
+              />
+              <BaseIcon
+                class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
+                :path="mdiFormTextboxPassword"
+              />
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="positive-button font-bold relative w-full"
+              >
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <BaseIcon :path="mdiLock" />
                 </span>
                 Save
               </button>
             </div>
-
-
           </form>
         </div>
       </div>

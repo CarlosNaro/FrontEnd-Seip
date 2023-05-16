@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "Client",
     component: () => import("../pages/ClientPage.vue"),
     meta: {
-      requiresAdmin: true,
+      is_staff: true,
     },
   },
 
@@ -36,6 +36,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/profile",
     name: "Profile",
     component: () => import("../pages/ProfilePage.vue"),
+  },
+
+  {
+    path: "/emailReset",
+    name: "EmailReset",
+    component: () => import("../pages/EmailResetPage.vue"),
   },
 ];
 
@@ -51,13 +57,10 @@ router.beforeEach((to, from, next) => {
 
   console.log("ruta", Object.keys(to.meta));
 
-  // console.log("is_admin:: ", is_admin)
-  if (
-    Object.entries(to.meta) &&
-    Object.keys(to.meta).includes("requiresAdmin")
-  ) {
-    if (!authObj.is_admin) next(from);
+  if (Object.entries(to.meta) && Object.keys(to.meta).includes("is_staff")) {
+    if (!authObj.is_staff) next(from);
   }
+
   if (to.name != "Login" && !authObj) next({ name: "Login" });
   if (to.name == "Login" && authObj) next({ name: "Dashboard" });
   else next();

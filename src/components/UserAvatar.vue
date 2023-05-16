@@ -21,7 +21,6 @@ const username = computed(() => props.username);
     <img
       :src="props.avatar"
       :alt="username"
-      
     />
   </div>
 </template>

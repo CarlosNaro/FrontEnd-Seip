@@ -34,6 +34,7 @@ export default function useAuthStore() {
       console.log("segundo")
     }
   };
+  
   return {
     autenticationUser,
     isModalActiveAlert,

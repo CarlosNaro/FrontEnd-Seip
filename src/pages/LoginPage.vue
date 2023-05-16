@@ -3,6 +3,8 @@ import { mdiLock, mdiClose } from "@mdi/js";
 import BaseIcon from "../components/BaseIcon.vue";
 import useAuthStore from "../stores/AuthStore";
 import CardBoxAlert from "../components/CardBoxAlert.vue";
+import router from "../router";
+
 import {
   reactive,
   ref,
@@ -51,9 +53,17 @@ onMounted(() => {
 watchEffect(async () => {
   console.log("watchEffect:: ", isModalActiveAlert.value);
 });
+
+const emailReset = ()=>{
+  router.push({ name: "EmailReset" })
+  console.log("welcome")
+}
+
 </script>
 
 <template>
+
+  
   <CardBoxAlert
     title="Authentication Error"
     :icon="mdiClose"
@@ -61,6 +71,8 @@ watchEffect(async () => {
   >
     <p>Username or password <b>incorrect¡</b></p>
   </CardBoxAlert>
+
+ 
 
   <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
@@ -72,8 +84,8 @@ watchEffect(async () => {
         class="mx-auto h-32 w-32 rounded-full p-3 shadow-2xl shadow-slate-400 absolute z-10 inset-x-0 -top-20"
       >
         <img
-          class="mx-auto h-32 w-auto hover:h-36 transition-all"
-          src="../assets/logo01.svg"
+          class="mx-auto h-32 w-auto  "
+          src="../assets/logoIT.png"
           alt="Iquitos Technology"
         />
       </div>
@@ -103,9 +115,7 @@ watchEffect(async () => {
         </div>
 
         <div class="text-sm text-right">
-          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"
-            >Forgot your password?</a
-          >
+          <a @click="emailReset" href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
         </div>
 
         <div>
@@ -120,6 +130,9 @@ watchEffect(async () => {
             Sign in
           </button>
         </div>
+
+        
+
       </form>
     </div>
   </div>
