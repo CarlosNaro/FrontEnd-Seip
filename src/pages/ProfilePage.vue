@@ -6,22 +6,16 @@ import {
   mdiFormTextboxPassword,
   mdiLock,
 } from "@mdi/js";
-import { reactive, onMounted, computed, ref } from "vue";
+import { reactive, onMounted, computed, ref, watchEffect, watch } from "vue";
 import LayoutAuthenticated from "../layouts/LayoutAuthenticated.vue";
 import SectionMain from "../components/SectionMain.vue";
 import SectionTitleLineWithButton from "../components/SectionTitleLineWithButton.vue";
 import UserCard from "../components/UserCard.vue";
 import BaseIcon from "../components/BaseIcon.vue";
 import useUserStore from "../stores/UserStore";
-import { getItem } from "../stores/actions/localStorage";
-import jwt_decode from "jwt-decode";
+// import { IAuthStore,IUser } from '../models/IModels';
 
-// export interface IJwtDecode {
-//   token_type: string;
-//   exp: number;
-//   jti: string;
-//   user_id: number;
-// }
+
 
 const menu = reactive({
   icon: mdiAccount,
@@ -29,33 +23,52 @@ const menu = reactive({
   main: Boolean,
 });
 
-interface IUser {
-  id: number;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  is_staff: boolean;
-  is_active: boolean;
-}
+// const is_validate = ref(false)
 
-const token = getItem("token");
+// const isValidEmail = (email: string) => {
+//  const domain = email.split('@')[1]
+//  return domain === 'postgradounap.edu.pe'
+// }
 
-const getuser = computed(() => useUserStore().getUser());
-const setuser = useUserStore().setUser();
+
+
+const getUser = computed(() => useUserStore().getUser()) ;
+const setUser = useUserStore().setUser();
 
 onMounted(() => {
-  console.log("data:::", getuser.value);
+  console.log("data:::", getUser.value);
 });
 
-const ifRequired = ref(true)
 
-const updataUser = (valor:any)=>{
-  
-  // const objData = valor
-  // console.log("mandamos :", objData)
-  // useUserStore().putUser(objData)
+const message = ref()
+
+const rules = reactive({
+  Message : "Required field",
+  target : "text-red-600 text-xs absolute ",
+  required:false
+
+})
+
+const is_validate = (()=>{
+
+  const objData = getUser.value
+  if(objData.username =="" ){
+    rules.required = true
+  } else{
+
+    return rules.required = false
+  }
+
+})
+const updateUser = (valor:any)=>{  
+  // cambiarValor()
+
+// const objData = valor
+// console.log("mandamos :", objData)
+// useUserStore().putUser(objData)
 }
+
+
 
 </script> 
 <template>
@@ -67,38 +80,23 @@ const updataUser = (valor:any)=>{
         :main="menu.main"
       />
       <UserCard class="mb-6" />
-      <pre>{{ getuser }}</pre>
+      <pre>{{ getUser }}</pre>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- datos basicos   -->
+        
         <div>
-          <form class="formulario">
-            <!-- <div v-for="(item, index) in dataUser" :key="item">
-              <ul>
-                e
-                <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                v-model="item.last_name"
-                autocomplete="Name"
-                class="input-forms-icons"
-                placeholder="Name"
-              />
-              </ul>
-            </div> -->
-
+          <form class="formulario" @input="is_validate" >
+  
             <div class="relative pb-5" id="cuerpo">
               <label class="text-gray-700 font-bold">First Name</label>
               <input
                 id="name"
                 name="name"
-                v-model="getuser.first_name"
+                v-model="getUser.first_name "
                 type="text"
                 autocomplete="Name"
                 class="input-forms-icons"
-                placeholder="username"
+                placeholder="First Name"
               />
               <BaseIcon
                 class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
@@ -111,11 +109,11 @@ const updataUser = (valor:any)=>{
               <div class="relative pb-5 md:w-3/5 " id="cuerpo">
                 <label class="text-gray-700 font-bold">Last Name</label>
                 <input
-                  id="lastname"
-                  name="lastname"
-                  v-model="getuser.last_name"
+                  id="last_name"
+                  name="last_name"
+                  v-model="getUser.last_name"
                   type="text"
-                  autocomplete="lastname"
+                  autocomplete="last_name"
                   class="input-forms-icons"
                   placeholder="Last Name"
                 />
@@ -130,9 +128,8 @@ const updataUser = (valor:any)=>{
                 <input
                   id="username"
                   name="username"
-                  v-model="getuser.username"
+                  v-model="getUser.username"
                   type="text"
-                  autocomplete="username"
                   class="input-forms-icons"
                   placeholder="Username"
                 />
@@ -140,6 +137,8 @@ const updataUser = (valor:any)=>{
                   class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
                   :path="mdiAccount"
                 />
+                <span v-if="rules.required" :class=" rules.target " >{{rules.Message}}</span> 
+                
               </div>
             </div>
 
@@ -147,12 +146,12 @@ const updataUser = (valor:any)=>{
               <label for="" class="text-gray-700 font-bold">E-mail</label>
               <input
                 name="email"
-                v-model="getuser.email"
+                v-model="getUser.email"
                 type="email"
                 autocomplete="email"
                 class="input-forms-icons"
                 placeholder="default@example.com"
-                required
+                
               />
               <BaseIcon
                 class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
@@ -163,8 +162,9 @@ const updataUser = (valor:any)=>{
             <div>
               <button
                 type="submit"
+                
                 class="positive-button font-bold relative w-full"
-                @click.prevent="updataUser(getuser)"
+                @click.prevent="updateUser(getUser)"
               >
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <BaseIcon :path="mdiLock" />

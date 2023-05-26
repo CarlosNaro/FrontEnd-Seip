@@ -26,9 +26,9 @@ const {isModalActiveAlert} = useAuthStore()
 
 
 const submitLogin = () => {
-  console.log("welcom,e");
-  const estanVacias = Object.values(loginForm).every((valor) => !valor);
-  if (!estanVacias) {
+  console.log("welcome");
+  const is_empty = Object.values(loginForm).every((valor) => !valor);
+  if (!is_empty) {
     if (!loginForm.username || !loginForm.password) {
       console.log(" uno de los formularios esta lleno ");
       isModalActiveAlert.value = true;
@@ -42,7 +42,7 @@ const submitLogin = () => {
     
   } else {
     isModalActiveAlert.value = true;
-    console.log("todos vacios", isModalActiveAlert.value);
+    console.log("todo vacio", isModalActiveAlert.value);
   }
 };
 
