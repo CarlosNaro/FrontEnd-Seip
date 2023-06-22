@@ -10,39 +10,41 @@ import { getItem } from "../stores/actions/localStorage";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    // meta: {
-    //   title: "Login",
-    // },
+    
     path: "/",
     name: "Login",
     component: LoginPage,
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: HomePage,
-  },
-
-  {
-    path: "/client",
-    name: "Client",
-    component: () => import("../pages/ClientPage.vue"),
     meta: {
-      is_staff: true,
+      title: "Login",
     },
   },
 
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../pages/ProfilePage.vue"),
-  },
+  // {
+  //   path: "/dashboard",
+  //   name: "Dashboard",
+  //   component: HomePage,
+  // },
 
-  {
-    path: "/emailReset",
-    name: "EmailReset",
-    component: () => import("../pages/EmailResetPage.vue"),
-  },
+  // {
+  //   path: "/client",
+  //   name: "Client",
+  //   component: () => import("../pages/ClientPage.vue"),
+  //   meta: {
+  //     is_staff: true,
+  //   },
+  // },
+
+  // {
+  //   path: "/profile",
+  //   name: "Profile",
+  //   component: () => import("../pages/ProfilePage.vue"),
+  // },
+
+  // {
+  //   path: "/emailReset",
+  //   name: "EmailReset",
+  //   component: () => import("../pages/EmailResetPage.vue"),
+  // },
 ];
 
 const history = createWebHistory();
@@ -51,21 +53,26 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const authObj = getItem("token");
-  // const requiresAdmin = to.matched.some(record => record.meta.is_admin)
 
-  console.log("ruta", Object.keys(to.meta));
+// router.beforeEach((to, from, next) => {
+//   const authObj = getItem("token");
+//   // const requiresAdmin = to.matched.some(record => record.meta.is_admin)
 
-  if (Object.entries(to.meta) && Object.keys(to.meta).includes("is_staff")) {
-    if (!authObj.is_staff) next(from);
-  }
+//   console.log("ruta", Object.keys(to.meta));
 
-  if (to.name != "Login" && !authObj) next({ name: "Login" });
-  if (to.name == "Login" && authObj) next({ name: "Dashboard" });
-  else next();
-});
+//   if (Object.entries(to.meta) && Object.keys(to.meta).includes("is_staff")) {
+//     if (!authObj.is_staff) next(from);
+//   }
+
+//   if (to.name != "Login" && !authObj) next({ name: "Login" });
+//   if (to.name == "Login" && authObj) next({ name: "Dashboard" });
+//   else next();
+// });
 
 export default router;
+
+
+
+
 
 // "dev": "vite --host 192.168"

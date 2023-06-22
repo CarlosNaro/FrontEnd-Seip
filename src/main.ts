@@ -1,16 +1,20 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import './css/index.css'
 import axios from 'axios'
+import ElementPlus from 'element-plus'
+import 'element-plus/es/components/message/style/css'
+import 'element-plus/dist/index.css'
+import router from './router'
 
 // import './style.css'
-import './css/index.css'
-import router from './router'
+
 
 
 
 
 createApp(App)
-.use(router)
+.use(router,ElementPlus)
 .mount('#app')
 
 
