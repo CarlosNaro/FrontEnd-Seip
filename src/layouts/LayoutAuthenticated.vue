@@ -32,7 +32,7 @@ router.beforeEach(() => {
       ]"
       class="pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50"
     >
-      <!-- trabajo en el coerpo -->
+      <!-- trabajo en el cuerpo -->
       <Nav-Bar
         :class="[
           layoutAsidePadding,
@@ -65,7 +65,9 @@ router.beforeEach(() => {
 
       <Side-Bar />
       <slot />
-      <FooterBar>
+
+
+      <Footer-Bar>
         Verificación
         <a
           href="https://compuempresa.com/info/servicios-e-inversiones-putumayo-eirl-20601836174"
@@ -73,7 +75,7 @@ router.beforeEach(() => {
           class="text-blue-600"
           >Datos generales de la Empresa S.E.I.P
         </a>
-      </FooterBar>
+      </Footer-Bar>
     </div>
   </div>
 </template>

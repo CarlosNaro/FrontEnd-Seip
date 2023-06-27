@@ -1,80 +1,81 @@
 <script lang="ts" setup>
-import { mdiLock, mdiClose } from "@mdi/js";
-import BaseIcon from "../components/BaseIcon.vue";
-import useAuthStore from "../stores/AuthStore";
-import CardBoxAlert from "../components/CardBoxAlert.vue";
-import router from "../router";
+// import { mdiLock, mdiClose } from "@mdi/js";
+// import BaseIcon from "../components/BaseIcon.vue";
+// import useAuthStore from "../stores/AuthStore";
+// import CardBoxAlert from "../components/CardBoxAlert.vue";
+// import router from "../router";
 
-import {
-  reactive,
-  ref,
-  onMounted,
-  computed,
-  watchEffect,
-  onBeforeUpdate,
-} from "vue";
+// import {
+//   reactive,
+//   ref,
+//   onMounted,
+//   computed,
+//   watchEffect,
+//   onBeforeUpdate,
+// } from "vue";
 
-//variables
-const loginForm = reactive({
-  username: "",
-  password: "",
-});
+// //variables
+// const loginForm = reactive({
+//   username: "",
+//   password: "",
+// });
 
-// const isModalActiveAlert = ref(false);
-const {isModalActiveAlert} = useAuthStore()
+// // const isModalActiveAlert = ref(false);
+// const {isModalActiveAlert} = useAuthStore()
 
 
 
-const submitLogin = () => {
-  console.log("welcome");
-  const is_empty = Object.values(loginForm).every((valor) => !valor);
-  if (!is_empty) {
-    if (!loginForm.username || !loginForm.password) {
-      console.log(" uno de los formularios esta lleno ");
-      isModalActiveAlert.value = true;
-      loginForm.username = "";
-      loginForm.password = "";
-    } else {
-      useAuthStore().autenticationUser(loginForm)
-      loginForm.username = "";
-      loginForm.password = "";
-    }
+// const submitLogin = () => {
+//   console.log("welcome");
+//   const is_empty = Object.values(loginForm).every((valor) => !valor);
+//   if (!is_empty) {
+//     if (!loginForm.username || !loginForm.password) {
+//       console.log(" uno de los formularios esta lleno ");
+//       isModalActiveAlert.value = true;
+//       loginForm.username = "";
+//       loginForm.password = "";
+//     } else {
+//       useAuthStore().autenticationUser(loginForm)
+//       loginForm.username = "";
+//       loginForm.password = "";
+//     }
     
-  } else {
-    isModalActiveAlert.value = true;
-    console.log("todo vacio", isModalActiveAlert.value);
-  }
-};
+//   } else {
+//     isModalActiveAlert.value = true;
+//     console.log("todo vacio", isModalActiveAlert.value);
+//   }
+// };
 
-onMounted(() => {
-  console.log("onMounted:: ", isModalActiveAlert.value);
-});
+// onMounted(() => {
+//   console.log("onMounted:: ", isModalActiveAlert.value);
+// });
 
-watchEffect(async () => {
-  console.log("watchEffect:: ", isModalActiveAlert.value);
-});
+// watchEffect(async () => {
+//   console.log("watchEffect:: ", isModalActiveAlert.value);
+// });
 
-const emailReset = ()=>{
-  router.push({ name: "EmailReset" })
-  console.log("welcome")
-}
+// const emailReset = ()=>{
+//   router.push({ name: "EmailReset" })
+//   console.log("welcome")
+// }
+
 
 </script>
 
 <template>
 
-  
+<!--   
   <CardBoxAlert
     title="Authentication Error"
     :icon="mdiClose"
     v-model="isModalActiveAlert"
   >
     <p>Username or password <b>incorrect¡</b></p>
-  </CardBoxAlert>
+  </CardBoxAlert> -->
 
- 
+ <Login/>
 
-  <div
+  <!-- <div
     class="flex h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
     <div
@@ -135,5 +136,5 @@ const emailReset = ()=>{
 
       </form>
     </div>
-  </div>
+  </div> -->
 </template>
