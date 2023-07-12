@@ -19,6 +19,16 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
 
+  {
+    
+    path: "/recoveryPassword",
+    name: "RecoverPassword",
+    component: ()=> import("../pages/RecoveryPasswordPage.vue"),
+    meta: {
+      title: "Recover Password",
+    },
+  },
+
   // {
   //   path: "/dashboard",
   //   name: "Dashboard",

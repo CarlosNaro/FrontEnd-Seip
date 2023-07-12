@@ -10,12 +10,14 @@ const model = ref<ILogin>({
   password: "",
 } as ILogin);
 
+
+
 const isLoading = ref(false);
 
 const setLogin = async (): Promise<void> => {
   form.value.validate(async (valid: boolean) => {
     if (!valid) {
-      ElMessage.warning("Por favor, rellene los campos correctamente");
+      ElMessage.warning("Por favor, rellenar los campos correctamente");
       return;
     }
 
@@ -57,17 +59,21 @@ const setLogin = async (): Promise<void> => {
     <el-col :span="6"><div class="grid-content bg-purple-300"> as </div></el-col>
   </el-row> -->
 
-  <div class="w-full h-screen bg-gray-100 flex items-center justify-center p-2">
-    <div class="flex bg-white p-5">
-      <div class="w-80">
-        <div class="w-44 pb-4">
-          <img src="./src/isologoiqt.png" />
+  <div class=" h-screen bg-gray-100 flex items-center justify-center p-2">
+    
+    <div class="flex bg-white p-4 flex-col md:flex-row w-3/6   justify-center  ">
+      
+      <div class=" w-full ">
+        
+        <div class=" flex  justify-center md:justify-start pb-4  ">
+          <img class="w-44" src="./src/isologoiqt.png" />
         </div>
+
         <div class="pb-4 font-semibold">
           <span> Inicio de sesión </span>
         </div>
 
-        <div class="mr-10">
+        <div class="md:mr-10">
           <el-form
             label-width="80px"
             label-position="top"
@@ -97,18 +103,18 @@ const setLogin = async (): Promise<void> => {
               >
             </el-form-item>
 
-            <el-link class=" " href="https://element-plus.org" target="_blank"
+            <el-link class=" " href="/recoveryPassword" target="_blank"
               >¿Olvido su contraseña?</el-link
             >
           </el-form>
         </div>
+
       </div>
 
-      <div class="card-img flex items-center w-80 border-l border-gray-300">
-        <!-- imagen  -->
-
-        <img class="img2" src="./src/homepage.gif" />
+      <div class=" w-full card-img hidden md:flex md:items-center   border-l border-gray-300">
+        <img class="img2 " src="./src/homepage.gif" />
       </div>
+
     </div>
   </div>
 </template>
