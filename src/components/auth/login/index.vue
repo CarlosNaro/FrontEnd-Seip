@@ -1,16 +1,17 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { ILogin } from "./models/ILogin";
 import loginRules from "./rules/loginRules";
 import { ElMessage } from "element-plus";
+import routesConfig from "../../../router/routesConfig";
+import authLogin from "./stores/AuthStore";
 
+const router = useRouter();
 const form = ref();
 const model = ref<ILogin>({
-  user: "",
+  username: "",
   password: "",
 } as ILogin);
-
-
 
 const isLoading = ref(false);
 
@@ -20,52 +21,25 @@ const setLogin = async (): Promise<void> => {
       ElMessage.warning("Por favor, rellenar los campos correctamente");
       return;
     }
-
-    console.log(" Login Iniciado")
-
+    isLoading.value = true;
+    const status = await authLogin(model.value);
+    isLoading.value = false;
+    if (status) router.push(routesConfig.Home);
   });
+};
 
-  // form.value.validate(async (valid: boolean) => {
-  //   if (!valid) {
-  //     ElMessage.error("Por favor, rellene los campos correctamente");
-  //     return;
-  //   }
-  //   isLoading.value = true;
-  //   const status = await authLogin(model.value);
-  //   isLoading.value = false;
-  //   if (status) router.push(routesConfig.Home);
-  // });
+const recoveryPassword = () => {
+  router.push(routesConfig.RecoverPassword);
 };
 </script>
 
 <template>
-  <!-- <div class=" flex  h-screen items-center">
-    <el-row  class="bg-green-100 w-full" justify="center" >
-      <el-col :span="12"  >
-        <el-card class=" box-card">
-          <div v-for="o in 7" :key="o" class="">
-            {{ "List item " + o }}
-          </div>
-
-        </el-card>
-      </el-col>
-      
-    </el-row>
-  </div> -->
-  <!-- <el-row :gutter="10">
-    <el-col :span="6"><div class="grid-content bg-purple-300">asds</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple-300">asds</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple-300">asds</div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple-300"> as </div></el-col>
-  </el-row> -->
-
-  <div class=" h-screen bg-gray-100 flex items-center justify-center p-2">
-    
-    <div class="flex bg-white p-4 flex-col md:flex-row w-3/6   justify-center  ">
-      
-      <div class=" w-full ">
-        
-        <div class=" flex  justify-center md:justify-start pb-4  ">
+  <div class="h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div
+      class="flex bg-white p-4 flex-col md:flex-row w-full sm:w-3/6 justify-center"
+    >
+      <div class="w-full">
+        <div class="flex justify-center md:justify-start pb-4">
           <img class="w-44" src="./src/isologoiqt.png" />
         </div>
 
@@ -81,11 +55,11 @@ const setLogin = async (): Promise<void> => {
             :rules="loginRules"
             ref="form"
           >
-            <el-form-item label="" prop="user">
+            <el-form-item label="" prop="username">
               <el-input
                 size="large"
                 placeholder="Usuario"
-                v-model="model.user"
+                v-model="model.username"
               ></el-input>
             </el-form-item>
 
@@ -94,27 +68,29 @@ const setLogin = async (): Promise<void> => {
                 size="large"
                 placeholder="Contraseña"
                 v-model="model.password"
+                type="password"
+                @keyup.enter="setLogin"
               ></el-input>
             </el-form-item>
 
             <el-form-item>
-              <el-button type="primary" @click="setLogin"
+              <el-button type="primary" @click="setLogin" :loading="isLoading"
                 >Iniciar Sesion</el-button
               >
             </el-form-item>
 
-            <el-link class=" " href="/recoveryPassword" target="_blank"
+            <el-link class=" " @click="recoveryPassword" target="_blank"
               >¿Olvido su contraseña?</el-link
             >
           </el-form>
         </div>
-
       </div>
 
-      <div class=" w-full card-img hidden md:flex md:items-center   border-l border-gray-300">
-        <img class="img2 " src="./src/homepage.gif" />
+      <div
+        class="w-full card-img hidden md:flex md:items-center border-l border-gray-300"
+      >
+        <img class="img2" src="./src/homepage.gif" />
       </div>
-
     </div>
   </div>
 </template>

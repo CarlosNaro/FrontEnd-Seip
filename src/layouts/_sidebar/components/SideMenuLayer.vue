@@ -1,46 +1,46 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { mdiLogout, mdiClose } from "@mdi/js";
-import { useLayoutStore } from '../stores/layout'
+import { useLayoutStore } from "../stores/layout";
 import SideMenuItem from "./SideMenuItem.vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
-
+import { IMenu } from "../models/IMenu";
 const layoutStore = useLayoutStore();
 
 // extraer los datos del menu
-
 const props = defineProps<{
-  menu: Array<object>;
+  menu: PropType<Array<IMenu>>;
 }>();
 
 const logoutItem = computed(() => ({
-  label: "Logout",
+  name: "Logout",
   icon: mdiLogout,
   isLogout: true,
 }));
 </script>
 
 <template>
-  <div id="sideBar"
+  <div
+    id="sideBar"
     class="lg:py-2 lg:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
   >
-    <div class="shadow-md bg-white lg:rounded-2xl flex-1 flex flex-col overflow-hidden"
+    <div
+      class="shadow-md bg-white lg:rounded-2xl flex-1 flex flex-col overflow-hidden"
     >
       <!-- data del encabesado  -->
 
-      <div class="shadow-sm flex flex-row h-14 items-center justify-between"
-      >
+      <div class="shadow-sm flex flex-row h-14 items-center justify-between">
         <div
           class="text-center flex-1 lg:text-left lg:pl-6 xl:text-center xl:pl-0"
         >
-          <b class="font-black">S E I P</b>
+          <h1 class="font-black">S E I P</h1>
           <!-- <img src="../img/Group_2.png" class="rounded-md " 
           width="100"
               /> -->
         </div>
 
         <button
-          class="hidden lg:inline-block xl:hidden  hover:bg-indigo-100 hover:shadow-md rounded-full h-8 w-8 text-center py-1 "
+          class="hidden lg:inline-block xl:hidden hover:bg-indigo-100 hover:shadow-md rounded-full h-8 w-8 text-center py-1"
           @click.prevent="layoutStore.isAsideLgActive.value = false"
         >
           <Base-Icon :path="mdiClose" />
@@ -52,13 +52,14 @@ const logoutItem = computed(() => ({
       <div class="flex-1 overflow-y-auto overflow-x-hidden">
         <ul>
           <Side-Menu-Item
-          class="text-blue-600"
+            class="text-blue-600"
             v-for="(item, index) in props.menu"
             :key="index"
             :item="item"
           />
         </ul>
       </div>
+
       <!-- data del logaut -->
       <ul>
         <Side-Menu-Item
@@ -69,5 +70,3 @@ const logoutItem = computed(() => ({
     </div>
   </div>
 </template>
-
-

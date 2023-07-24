@@ -1,61 +1,21 @@
+import { computed } from "vue";
 import {
   createRouter,
   createWebHistory,
-  RouteRecordRaw,
+  type RouteRecordRaw,
   createWebHashHistory,
 } from "vue-router";
-import LoginPage from "../pages/LoginPage.vue";
-import HomePage from "../pages/HomePage.vue";
+import routesConfig from "./routesConfig";
 import { getItem } from "../stores/actions/localStorage";
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    
-    path: "/",
-    name: "Login",
-    component: LoginPage,
-    meta: {
-      title: "Login",
-    },
-  },
+//************ */
 
-  {
-    
-    path: "/recoveryPassword",
-    name: "RecoverPassword",
-    component: ()=> import("../pages/RecoveryPasswordPage.vue"),
-    meta: {
-      title: "Recover Password",
-    },
-  },
-
-  // {
-  //   path: "/dashboard",
-  //   name: "Dashboard",
-  //   component: HomePage,
-  // },
-
-  // {
-  //   path: "/client",
-  //   name: "Client",
-  //   component: () => import("../pages/ClientPage.vue"),
-  //   meta: {
-  //     is_staff: true,
-  //   },
-  // },
-
-  // {
-  //   path: "/profile",
-  //   name: "Profile",
-  //   component: () => import("../pages/ProfilePage.vue"),
-  // },
-
-  // {
-  //   path: "/emailReset",
-  //   name: "EmailReset",
-  //   component: () => import("../pages/EmailResetPage.vue"),
-  // },
-];
+let routes = [
+  routesConfig.Login,
+  routesConfig.RecoverPassword,
+  routesConfig.Home,
+  routesConfig.Client,
+] as RouteRecordRaw[];
 
 const history = createWebHistory();
 const router = createRouter({
@@ -63,6 +23,44 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const authObj = getItem("token") !== null;
+  const { auth } = to.meta;
+  if (auth && !authObj) {
+    next(routesConfig.Login);
+    return;
+  }
+  next();
+});
+
+export default router;
+
+// const routes: Array<RouteRecordRaw> = [
+//   {
+//     path: "/",
+//     name: "Login",
+//     component: LoginPage,
+//     meta: {
+//       title: "Login",
+//     },
+//   },
+
+//   {
+//     path: "/recoveryPassword",
+//     name: "RecoverPassword",
+//     component: () => import("../pages/RecoveryPasswordPage.vue"),
+//     meta: {
+//       title: "Recover Password",
+//     },
+//   },
+
+// ];
+
+// const history = createWebHistory();
+// const router = createRouter({
+//   history,
+//   routes,
+// });
 
 // router.beforeEach((to, from, next) => {
 //   const authObj = getItem("token");
@@ -79,10 +77,6 @@ const router = createRouter({
 //   else next();
 // });
 
-export default router;
+// export default router;
 
-
-
-
-
-// "dev": "vite --host 192.168"
+// // "dev": "vite --host 192.168"

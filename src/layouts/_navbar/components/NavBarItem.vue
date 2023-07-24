@@ -4,38 +4,37 @@ import {
   mdiChevronDown,
   mdiSunAngleOutline,
   mdiCalculator,
-  mdiAccount
+  mdiAccount,
 } from "@mdi/js";
 import { RouterLink } from "vue-router";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
-import { useRouter } from "vue-router";
 import NavBarMenuList from "./NavBarMenuList.vue";
 import { getItem } from "../../../stores/actions/localStorage";
+import { IMenuNavbar } from "../models/IMenu";
+import routesConfig from "../../../router/routesConfig";
 
+// export interface Imenu{
+//   to: string;
+//   icon: string;
+//   label: string;
+//   isCurrentUser: boolean;
+//   isDesktopNoLabel:boolean
 
-export interface Imenu{
-  to: string;
-  icon: string;
-  label: string;
-  isCurrentUser: boolean;
-  isDesktopNoLabel:boolean
+//   menu: {
+//     icon: string;
+//     label: string;
+//     to: string;
 
-  menu: {
-    icon: string;
-    label: string;
-    to: string;
-
-  };
-}
+//   };
+// }
 const props = defineProps<{
-  item: Imenu;
+  item: IMenuNavbar;
 }>();
 
-const token = getItem("token")
+const token = getItem("token");
 
 const is = computed(() => {
-
   if (props.item.to) {
     return RouterLink;
   }
@@ -44,7 +43,6 @@ const is = computed(() => {
 });
 
 const emit = defineEmits(["menu-click"]);
-
 
 const isDropdownActive = ref(false);
 
@@ -55,19 +53,14 @@ const isDropdownActive = ref(false);
 //   return base;
 // });
 
-
 const componentClass = computed(() => {
-  
   const base = [
     // isDropdownActive.value,
     props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3",
   ];
 
- 
-
   return base;
 });
-
 
 // const itemLabel = computed(() => (props.item.isCurrentUser ? nombre : props.item.label));
 
@@ -75,32 +68,28 @@ const itemLabel = computed(() =>
   props.item.isCurrentUser ? token.username : props.item.label
 );
 
-const router = useRouter()
-const menuClick = (event:any) => {
+const router = useRouter();
+const menuClick = (event: any) => {
   emit("menu-click", event, props.item);
 
   if (props.item.menu) {
     isDropdownActive.value = !isDropdownActive.value;
   }
 
-  if(props.item.label == "Logout") localStorage.clear(), router.push({name:"Login"})
-  
-
+  if (props.item.label == "Logout")
+    localStorage.clear(), router.push(routesConfig.Login);
 };
-
 </script>
 
 <template>
- 
   <component
     :is="is"
     ref="root"
-    class="block lg:flex items-center relative cursor-pointer "
+    class="block lg:flex items-center relative cursor-pointer"
     :class="componentClass"
     :to="item.to ?? null"
     @click="menuClick"
   >
-
     <div
       class="flex items-center"
       :class="{
@@ -114,12 +103,16 @@ const menuClick = (event:any) => {
         :path="mdiAccount"
       />
 
-      <Base-Icon v-if="item.icon"  :path="item.icon" class=" rounded-md hover:bg-indigo-400 transition-colors" />
+      <Base-Icon
+        v-if="item.icon"
+        :path="item.icon"
+        class="rounded-md hover:bg-indigo-400 transition-colors"
+      />
 
       <!-- <span class="px-2 transition-colors">{{ itemLabel }}</span> -->
 
       <span
-        class="px-2 transition-colors  "
+        class="px-2 transition-colors"
         :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
         >{{ itemLabel }}</span
       >
@@ -129,12 +122,11 @@ const menuClick = (event:any) => {
         :path="isDropdownActive ? mdiChevronUp : mdiChevronDown"
         class="hidden lg:inline-flex transition-colors"
       />
-
     </div>
 
     <div
       v-if="item.menu"
-      class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:left-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg  "
+      class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:left-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg"
       :class="{ 'lg:hidden': !isDropdownActive }"
     >
       <NavBar-Menu-List :menu="item.menu" />

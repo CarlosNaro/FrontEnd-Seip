@@ -13,30 +13,28 @@ import jwt_decode from "jwt-decode";
 //   user_id: number;
 // }
 
-
 /* An interceptor that is used to add the token to the header of the request. */
 export default api;
 
 api.interceptors.request.use(
-    function (config: any) {
-      const token = getItem("token");
-  
-      if (token) {
-        // const decode = jwt_decode(auth_token.access) as IJwtDecode;
-        // const current_time = Date.now() / 1000;
-        config.headers.Authorization = `JWT ${token.access}`;
-  
-        // if (decode.exp < current_time) {
-        //   // Si ha expirado, redirige al usuario al login
-        //   localStorage.clear();
-        //   router.push({ name: "Login" });
-        // }
-      }
-  
-      return config;
-    },
-    function (err:any) {
-      return Promise.reject(err.response.status);
+  function (config: any) {
+    const token = getItem("token");
+
+    if (token) {
+      // const decode = jwt_decode(auth_token.access) as IJwtDecode;
+      // const current_time = Date.now() / 1000;
+      config.headers.Authorization = `JWT ${token.access}`;
+
+      // if (decode.exp < current_time) {
+      //   // Si ha expirado, redirige al usuario al login
+      //   localStorage.clear();
+      //   router.push({ name: "Login" });
+      // }
     }
-  );
-  
+
+    return config;
+  },
+  function (err: any) {
+    return Promise.reject(err.response.status);
+  }
+);

@@ -1,13 +1,6 @@
-import {
-  mdiAccount,
-  mdiCogOutline,
-  mdiEmail,
-  mdiLogout,
- 
-} from "@mdi/js";
+import { mdiAccount, mdiCogOutline, mdiEmail, mdiLogout } from "@mdi/js";
 
 export default [
-
   {
     isCurrentUser: true,
     menu: [
@@ -33,6 +26,4 @@ export default [
     isDesktopNoLabel: true,
     isLogout: true,
   },
-
-
 ];

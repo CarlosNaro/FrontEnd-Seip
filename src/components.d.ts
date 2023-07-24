@@ -11,6 +11,7 @@ declare module 'vue' {
     CardBoxAlert: typeof import('./components/CardBoxAlert.vue')['default']
     CardBoxTitle: typeof import('./components/CardBoxTitle.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
