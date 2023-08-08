@@ -19,16 +19,6 @@ const isMenuNavBarActive = ref(false);
     <div class="flex lg:items-stretch" :class="containerMaxW">
       <div class="flex flex-1 items-stretch h-14">
         <slot />
-
-        <div class="flex items-center justify-center w-full">
-          <el-input
-            v-model="input1"
-            class="w-50 m-2"
-            size="large"
-            placeholder="Please Search"
-            :suffix-icon="Search"
-          />
-        </div>
       </div>
 
       <div class="flex items-center h-14 lg:hidden">

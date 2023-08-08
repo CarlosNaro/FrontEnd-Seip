@@ -6,10 +6,12 @@ import BaseIcon from "./BaseIcon.vue";
 import { computed, ref } from "vue";
 
 const props = defineProps<{
-  title: String;
-  modelValue: Boolean;
-  icon:string
+  title: string;
+  modelValue: boolean;
+  icon: string;
 }>();
+
+console.log(" card ", props.modelValue);
 
 const emit = defineEmits(["update:modelValue", "cancel"]);
 
@@ -32,15 +34,19 @@ window.addEventListener("keydown", (e: any) => {
 </script>
 <template>
   <OverlayLayer v-show="value" @overlay-click="Cancel">
+    <!-- class="p-6 flex flex-col items-center rounded-2xl shadow-lg w-10/12 md:w-3/5 lg:w-2/5 xl:w-3/12 z-50 text-red-600" -->
     <div
       v-show="value"
-      class=" p-6 flex flex-col items-center rounded-2xl shadow-lg w-10/12 md:w-3/5 lg:w-2/5 xl:w-3/12  z-50 text-red-600 "
+      class="p-4 rounded-lg shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50 bg-white"
     >
-      <span class="flex   hover:bg-slate-200  rounded-full items-center p-1  " @click="Cancel">
-        <BaseIcon class="w-auto h-auto" :path="props.icon" :size="48"  />
-      </span>
-      <CardBoxTitle  :title="props.title" />
-      
+      <CardBoxTitle :title="props.title">
+        <span
+          class="flex hover:bg-slate-200 rounded-full items-center p-1"
+          @click="Cancel"
+        >
+          <BaseIcon class="w-auto h-auto" :path="props.icon" />
+        </span>
+      </CardBoxTitle>
       <hr />
 
       <slot />

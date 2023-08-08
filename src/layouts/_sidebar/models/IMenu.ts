@@ -17,5 +17,5 @@ export interface IMenuSidebar {
 }
 
 export interface IMenuStore {
-  item: IMenu[] | null;
+  sidebar: IMenu[] | null;
 }

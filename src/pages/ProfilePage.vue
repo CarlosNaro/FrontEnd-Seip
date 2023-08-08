@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import {
   mdiAccount,
   mdiMail,
@@ -12,10 +12,8 @@ import SectionMain from "../components/SectionMain.vue";
 import SectionTitleLineWithButton from "../components/SectionTitleLineWithButton.vue";
 import UserCard from "../components/UserCard.vue";
 import BaseIcon from "../components/BaseIcon.vue";
-import useUserStore from "../stores/UserStore";
+// import useUserStore from "../stores/UserStore";
 // import { IAuthStore,IUser } from '../models/IModels';
-
-
 
 const menu = reactive({
   icon: mdiAccount,
@@ -30,69 +28,55 @@ const menu = reactive({
 //  return domain === 'postgradounap.edu.pe'
 // }
 
-
-
-const getUser = computed(() => useUserStore().getUser()) ;
-const setUser = useUserStore().setUser();
+// const getUser = computed(() => useUserStore().getUser());
+// const setUser = useUserStore().setUser();
 
 onMounted(() => {
-  console.log("data:::", getUser.value);
+  // console.log("data:::", getUser.value);
 });
 
+const message = ref();
 
-const message = ref()
+// const rules = reactive({
+//   Message: "Required field",
+//   target: "text-red-600 text-xs absolute ",
+//   required: false,
+// });
 
-const rules = reactive({
-  Message : "Required field",
-  target : "text-red-600 text-xs absolute ",
-  required:false
-
-})
-
-const is_validate = (()=>{
-
-  const objData = getUser.value
-  if(objData.username =="" ){
-    rules.required = true
-  } else{
-
-    return rules.required = false
-  }
-
-})
-const updateUser = (valor:any)=>{  
+// const is_validate = () => {
+//   const objData = getUser.value;
+//   if (objData.username == "") {
+//     rules.required = true;
+//   } else {
+//     return (rules.required = false);
+//   }
+// };
+const updateUser = (valor: any) => {
   // cambiarValor()
-
-// const objData = valor
-// console.log("mandamos :", objData)
-// useUserStore().putUser(objData)
-}
-
-
-
-</script> 
+  // const objData = valor
+  // console.log("mandamos :", objData)
+  // useUserStore().putUser(objData)
+};
+</script>
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton
+      <!-- <SectionTitleLineWithButton
         :icon="menu.icon"
         :title="menu.title"
         :main="menu.main"
-      />
-      <UserCard class="mb-6" />
-      <pre>{{ getUser }}</pre>
+      /> -->
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
+      <Profile />
+
+      <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <form class="formulario" @input="is_validate" >
-  
+          <form class="formulario">
             <div class="relative pb-5" id="cuerpo">
               <label class="text-gray-700 font-bold">First Name</label>
               <input
                 id="name"
                 name="name"
-                v-model="getUser.first_name "
                 type="text"
                 autocomplete="Name"
                 class="input-forms-icons"
@@ -104,14 +88,12 @@ const updateUser = (valor:any)=>{
               />
             </div>
 
-            <div class=" flex flex-col md:flex-row  justify-between ">
-              
-              <div class="relative pb-5 md:w-3/5 " id="cuerpo">
+            <div class="flex flex-col md:flex-row justify-between">
+              <div class="relative pb-5 md:w-3/5" id="cuerpo">
                 <label class="text-gray-700 font-bold">Last Name</label>
                 <input
                   id="last_name"
                   name="last_name"
-                  v-model="getUser.last_name"
                   type="text"
                   autocomplete="last_name"
                   class="input-forms-icons"
@@ -122,13 +104,12 @@ const updateUser = (valor:any)=>{
                   :path="mdiAccount"
                 />
               </div>
-                <!-- :::::::::::::: --> 
+              
               <div class="relative pb-5" id="cuerpo">
                 <label class="text-gray-700 font-bold">Username</label>
                 <input
                   id="username"
                   name="username"
-                  v-model="getUser.username"
                   type="text"
                   class="input-forms-icons"
                   placeholder="Username"
@@ -137,8 +118,9 @@ const updateUser = (valor:any)=>{
                   class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
                   :path="mdiAccount"
                 />
-                <span v-if="rules.required" :class=" rules.target " >{{rules.Message}}</span> 
-                
+                <span v-if="rules.required" :class="rules.target">{{
+                  rules.Message
+                }}</span>
               </div>
             </div>
 
@@ -146,12 +128,10 @@ const updateUser = (valor:any)=>{
               <label for="" class="text-gray-700 font-bold">E-mail</label>
               <input
                 name="email"
-                v-model="getUser.email"
                 type="email"
                 autocomplete="email"
                 class="input-forms-icons"
                 placeholder="default@example.com"
-                
               />
               <BaseIcon
                 class="absolute top-8 left-0 z-10 pointer-events-none text-gray-500"
@@ -162,9 +142,7 @@ const updateUser = (valor:any)=>{
             <div>
               <button
                 type="submit"
-                
                 class="positive-button font-bold relative w-full"
-                @click.prevent="updateUser(getUser)"
               >
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <BaseIcon :path="mdiLock" />
@@ -175,7 +153,6 @@ const updateUser = (valor:any)=>{
           </form>
         </div>
 
-        <!-- datos de password -->
         <div>
           <form>
             <div class="relative pb-5">
@@ -237,7 +214,7 @@ const updateUser = (valor:any)=>{
             </div>
           </form>
         </div>
-      </div>
+      </div> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>

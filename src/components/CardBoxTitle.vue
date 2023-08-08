@@ -1,13 +1,10 @@
-<script lang="ts" setup >
-
+<script lang="ts" setup>
 const props = defineProps<{
-    title:String, 
-    
-}>() 
-
+  title: String;
+}>();
 </script>
 <template>
-<div class="flex items-center justify-between mb-3">
+  <div class="flex items-center font-semibold justify-between mb-3">
     <h1 class="text-2xl">
       {{ props.title }}
     </h1>

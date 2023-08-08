@@ -4,7 +4,7 @@ import SectionMain from "../components/SectionMain.vue";
 import SectionTitleLineWithButton from "../components/SectionTitleLineWithButton.vue";
 import { onMounted, reactive, computed, ref } from "vue";
 import useAuthStore from "../stores/Prueba/AuthStore";
-import { getItem } from "../stores/actions/localStorage";
+import { getItem } from "../core/interceptors/localStorage";
 import { mdiFamilyTree, mdiMicrosoftXboxControllerBatteryAlert } from "@mdi/js";
 import jwt_decode from "jwt-decode";
 import routesConfig from "../router/routesConfig";

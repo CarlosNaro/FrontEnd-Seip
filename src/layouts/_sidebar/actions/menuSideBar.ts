@@ -1,7 +1,6 @@
 import { IMenu } from "../models/IMenu";
-import { useRouter } from "vue-router";
-import { computed } from "vue";
 import routesConfig from "../../../router/routesConfig";
+import menuStore from "../stores/menuStore";
 
 export const menuSidebar = (): IMenu[] => {
   const iconsArray = Object.values(routesConfig).map((route: any) => route);
@@ -11,9 +10,9 @@ export const menuSidebar = (): IMenu[] => {
   Object.values(iconsArray).forEach((route) => {
     if (route.meta?.isAdmin) {
       const sidebar: IMenu = {
-        name: route.name as string,
-        path: route.path as string,
-        icon: route.icon as string,
+        name: route.name,
+        path: route.path,
+        icon: route.icon,
       };
       adminRoutes.push(sidebar);
     }

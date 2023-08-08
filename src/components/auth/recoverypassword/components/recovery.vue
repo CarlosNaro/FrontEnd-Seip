@@ -2,6 +2,7 @@
 import { FormInstance, ElMessage } from "element-plus";
 import { computed, ref, reactive } from "vue";
 import routesConfig from "../../../../router/routesConfig";
+import resetPasswordStore from "../store/resetStore";
 import {
   mdiAccount,
   mdiMail,
@@ -43,6 +44,7 @@ const sendEmail = async (): Promise<void> => {
       return;
     }
 
+    resetPasswordStore(modelEmail.email);
     console.log(" Login Iniciado");
   });
 };

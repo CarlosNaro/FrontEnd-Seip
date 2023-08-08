@@ -1,17 +1,16 @@
 //  composition APi de vue.js 3
 import { reactive, ref } from "vue";
-import { setItem } from "../../../../stores/actions/localStorage";
-import api from "../../../../stores/indexApi";
+import { setItem } from "../../../../core/interceptors/localStorage";
+import service from "../../../../core/modules/axios";
 import { ILogin } from "../models/ILogin";
 import { ElMessage } from "element-plus";
 
 const authLogin = async (model: ILogin): Promise<boolean> => {
   try {
-    // console.log("modelo entrado  ", model);
-    const { data } = await api.post("auth/token/", model);
+    const { data } = await service.post("auth/token/", model);
 
     setItem("token", data);
-    // console.log("data ", data);
+    console.log("data ", data);
     ElMessage.success(`Welcome ${data.username}`);
     return true;
   } catch (error: any) {

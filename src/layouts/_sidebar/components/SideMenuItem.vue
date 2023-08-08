@@ -1,28 +1,8 @@
 <script setup lang="ts">
 import BaseIcon from "../../../components/BaseIcon.vue";
 import { useRouter, RouterLink } from "vue-router";
-import { useLayoutStore } from "../stores/layout";
-import { getItem } from "../../../stores/actions/localStorage";
-import { onMounted } from "vue";
 import { IMenu } from "../models/IMenu";
 import routesConfig from "../../../router/routesConfig";
-import {
-  mdiChevronUp,
-  mdiChevronDown,
-  mdiSunAngleOutline,
-  mdiCalculator,
-  mdiAccount,
-  mdiLogout,
-} from "@mdi/js";
-
-export interface Imenu {
-  name: string;
-  path: string;
-  icon: string;
-  isLogout: boolean;
-}
-
-const token = getItem("token");
 
 const props = defineProps<{
   item: IMenu;
@@ -66,5 +46,6 @@ const logout = () => {
 <style scoped>
 .active {
   color: black;
+  font-weight: 700;
 }
 </style>

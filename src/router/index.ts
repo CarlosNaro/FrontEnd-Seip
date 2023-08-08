@@ -6,7 +6,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routesConfig from "./routesConfig";
-import { getItem } from "../stores/actions/localStorage";
+import { getItem } from "../core/interceptors/localStorage";
 
 //************ */
 
@@ -15,6 +15,7 @@ let routes = [
   routesConfig.RecoverPassword,
   routesConfig.Home,
   routesConfig.Client,
+  routesConfig.Profile,
 ] as RouteRecordRaw[];
 
 const history = createWebHistory();

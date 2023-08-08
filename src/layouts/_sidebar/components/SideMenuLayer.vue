@@ -5,8 +5,8 @@ import { useLayoutStore } from "../stores/layout";
 import SideMenuItem from "./SideMenuItem.vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
 import { IMenu } from "../models/IMenu";
+//***** */
 const layoutStore = useLayoutStore();
-
 // extraer los datos del menu
 const props = defineProps<{
   menu: PropType<Array<IMenu>>;
@@ -34,9 +34,6 @@ const logoutItem = computed(() => ({
           class="text-center flex-1 lg:text-left lg:pl-6 xl:text-center xl:pl-0"
         >
           <h1 class="font-black">S E I P</h1>
-          <!-- <img src="../img/Group_2.png" class="rounded-md " 
-          width="100"
-              /> -->
         </div>
 
         <button
@@ -52,7 +49,7 @@ const logoutItem = computed(() => ({
       <div class="flex-1 overflow-y-auto overflow-x-hidden">
         <ul>
           <Side-Menu-Item
-            class="text-blue-600"
+            class="text-blue-600 hover:bg-indigo-50 hover:text-black"
             v-for="(item, index) in props.menu"
             :key="index"
             :item="item"

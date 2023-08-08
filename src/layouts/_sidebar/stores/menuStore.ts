@@ -1,15 +1,17 @@
-// import { computed, reactive } from "vue";
-// import type { IMenu, IMenuStore } from "./../models/IMenu";
+import { computed, reactive } from "vue";
+import type { IMenu, IMenuStore } from "./../models/IMenu";
 
-// const state = reactive<IMenuStore>({
-//   item: null,
-// });
+const state = reactive<IMenuStore>({
+  sidebar: null,
+});
 
-// const menuStore = {
-//   sidebar: {
-//     get: () => state.item,
-//     set: (value: IMenu[]) => (state.item = value),
-//   },
-// };
+const menuStore = {
+  sidebar: {
+    get: () => state.sidebar,
+    set: (value: IMenu[]) => (state.sidebar = value),
+  },
+};
 
-// export default computed(() => menuStore).value;
+console.log("menu", menuStore.sidebar.get());
+
+export default computed(() => menuStore).value;

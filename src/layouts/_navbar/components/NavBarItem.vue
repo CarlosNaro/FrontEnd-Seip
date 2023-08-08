@@ -10,7 +10,7 @@ import { RouterLink } from "vue-router";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
 import NavBarMenuList from "./NavBarMenuList.vue";
-import { getItem } from "../../../stores/actions/localStorage";
+import { getItem } from "../../../core/interceptors/localStorage";
 import { IMenuNavbar } from "../models/IMenu";
 import routesConfig from "../../../router/routesConfig";
 

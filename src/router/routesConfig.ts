@@ -1,5 +1,5 @@
 import LoginPage from "../pages/LoginPage.vue";
-import { mdiMonitor, mdiAccountGroupOutline } from "@mdi/js";
+import { mdiMonitor, mdiAccountGroupOutline, mdiAccount } from "@mdi/js";
 
 export default {
   Login: {
@@ -43,17 +43,19 @@ export default {
     icon: mdiAccountGroupOutline,
     component: () => import("../pages/ClientPage.vue"),
   },
-};
 
-// Profile: {
-//   path: "/perfil",
-//   name: "Profile",
-//   component: () => import("../pages/ProfilePage.vue"),
-//   meta: {
-//     title: "Perfil",
-//     auth: true,
-//   },
-// },
+  Profile: {
+    path: "/perfil",
+    name: "Profile",
+    icon: mdiAccount,
+    component: () => import("../pages/ProfilePage.vue"),
+    meta: {
+      title: "Perfil",
+      auth: true,
+      isAdmin: true,
+    },
+  },
+};
 
 // Procedure: {
 //   path: "/tramites",

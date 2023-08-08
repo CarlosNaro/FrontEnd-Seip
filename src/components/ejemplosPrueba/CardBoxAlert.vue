@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import OverlayLayer from "./OverlayLayer.vue";
 import CardBoxTitle from "./CardBoxTitle.vue";
 import BaseIcon from "./BaseIcon.vue";
@@ -62,4 +62,4 @@ onMounted(() => {
 .max-h-modal {
   max-height: calc(100vh - 160px);
 }
-</style>
+</style> -->
