@@ -1,4 +1,4 @@
-<script lang="ts" setup >
+<!-- <script lang="ts" setup >
 
 const props = defineProps<{
     title:String, 
@@ -14,4 +14,4 @@ const props = defineProps<{
 
     <slot />
   </div>
-</template>
+</template> -->

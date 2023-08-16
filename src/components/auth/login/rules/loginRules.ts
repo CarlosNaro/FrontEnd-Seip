@@ -4,7 +4,7 @@ const loginRules = {
   username: [
     {
       required: true,
-      message: "Por favor ingrese su correo electrónico",
+      message: "Por favor ingrese Usuario",
       trigger: trigger,
     },
   ],

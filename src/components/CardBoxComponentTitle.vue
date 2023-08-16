@@ -5,7 +5,7 @@ const props = defineProps<{
 </script>
 <template>
   <div class="flex items-center font-semibold justify-between mb-3">
-    <h1 class="text-2xl">
+    <h1 class="text-base md:text-2xl">
       {{ props.title }}
     </h1>
 

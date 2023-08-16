@@ -12,7 +12,7 @@ const username = computed(() => props.username);
 <template>
   <div class="shadow-lg rounded-full">
     <img
-      :src="props.avatar"
+      src="../assets/avatar.jpg"
       :alt="username"
       class="rounded-full block h-60 w-60"
     />
