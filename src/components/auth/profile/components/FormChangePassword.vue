@@ -4,10 +4,10 @@ import BaseIcon from "../../../BaseIcon.vue";
 import { reactive, computed, ref, onMounted, watch } from "vue";
 import { mdiAsterisk, mdiFormTextboxPassword } from "@mdi/js";
 import useUserStore from "../stores/userStore";
-import { modelChangePassword } from "../stores/modelPasswordStore";
 import passwordRules from "../rules/changePasswordRules";
 import { ElMessage, imageProps } from "element-plus";
 import { IChangePassword } from "../models/IUser";
+import { ca } from "element-plus/es/locale";
 
 const props = defineProps<{
   title: string;
@@ -15,17 +15,47 @@ const props = defineProps<{
   icon: string;
 }>();
 
-// const model = reactive<IChangePassword>({
-//   current_password: "",
-//   new_password: "",
-//   confirm_password: "",
-// }) as IChangePassword;
+const model = reactive<IChangePassword>({
+  current_password: "",
+  new_password: "",
+  confirm_password: "",
+}) as IChangePassword;
 
 const { changePassword } = useUserStore();
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();
 const view = ref(false);
 const type = ref("password");
+
+// const checkPassword = computed(() => {
+//   return [
+//     {
+//       validator: (rule: any, value: string, callback: any) => {
+//         if (value != model.new_password) {
+//           callback(new Error("Las contraseñas no coinciden"));
+//         } else {
+//           callback();
+//         }
+//       },
+//       trigger: "blur",
+//     },
+//   ];
+// });
+
+const checkPassword = computed(() => {
+      return [
+        {
+          validator: (rule:any, value:string, callback:any) => {
+            if (value !== model.new_password) {
+              callback(new Error("Las contraseñas no coinciden"));
+            } else {
+              callback();
+            }
+          },
+          trigger: "blur"
+        }
+      ];
+    });
 
 const value = computed({
   get: () => props.modelValue,
@@ -76,17 +106,17 @@ watch(view, () => {
 
       <div>
         <el-form
-          :model="modelChangePassword"
+          :model="model"
           :rules="passwordRules"
           ref="form"
           label-position="top"
         >
           <el-form-item label="Contraseña actual" prop="current_password">
-            <el-input
+            <el-input class="pruebita  " 
               size="large"
               :type="type"
               placeholder="Contraseña actual"
-              v-model="modelChangePassword.current_password"
+              v-model="model.current_password"
             />
             <BaseIcon
               class="absolute right-0 z-10 pointer-events-none text-gray-500"
@@ -99,7 +129,7 @@ watch(view, () => {
               size="large"
               :type="type"
               placeholder="Nueva contraseña"
-              v-model="modelChangePassword.new_password"
+              v-model="model.new_password"
             />
             <BaseIcon
               class="absolute right-0 z-10 pointer-events-none text-gray-500"
@@ -111,8 +141,9 @@ watch(view, () => {
             <el-input
               size="large"
               :type="type"
+              :rules="checkPassword"
               placeholder="Confirmar contraseña"
-              v-model="modelChangePassword.confirm_password"
+              v-model="model.confirm_password"
             />
             <BaseIcon
               class="absolute right-0 z-10 pointer-events-none text-gray-500"
@@ -134,4 +165,8 @@ watch(view, () => {
     </Card-Box>
   </OverlayLayer>
 </template>
-../stores/modelPasswordStore
+
+<style >
+
+
+</style>

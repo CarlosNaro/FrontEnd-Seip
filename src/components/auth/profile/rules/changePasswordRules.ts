@@ -1,4 +1,4 @@
-import { modelChangePassword } from "../stores/modelPasswordStore";
+
 const trigger = "blur";
 const passwordRules = {
   current_password: [
@@ -36,16 +36,16 @@ const passwordRules = {
       message: "La contraseña debe tener al menos 6 caracteres",
       trigger: trigger,
     },
-    {
-      validator: (rule: any, value: string, callback: any) => {
-        if (value != modelChangePassword.new_password) {
-          callback(new Error("Las contraseñas no coinciden"));
-        } else {
-          callback();
-        }
-      },
-      trigger: trigger,
-    },
+    // {
+    //   validator: (rule: any, value: string, callback: any) => {
+    //     if (value != modelChangePassword.new_password) {
+    //       callback(new Error("Las contraseñas no coinciden"));
+    //     } else {
+    //       callback();
+    //     }
+    //   },
+    //   trigger: trigger,
+    // },
   ],
 } as Record<string, any>;
 
