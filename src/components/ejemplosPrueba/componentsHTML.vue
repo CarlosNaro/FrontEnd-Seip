@@ -125,4 +125,35 @@ import {
       </button>
     </div>
   </div>
+
+  <div>
+    <el-form ref="form" label-position="top">
+      <el-form-item label="Current password">
+        <input type="text" class="input-forms-icons" placeholder="Name" />
+        <BaseIcon
+          class="absolute z-10 pointer-events-none text-gray-500"
+          :path="mdiAsterisk"
+        />
+      </el-form-item>
+
+      <el-form-item label="New password" prop="new_password">
+        <input type="text" class="input-forms-icons" placeholder="Name" />
+        <BaseIcon
+          class="absolute z-10 pointer-events-none text-gray-500"
+          :path="mdiFormTextboxPassword"
+        />
+      </el-form-item>
+
+      <el-form-item label="Confirm password" prop="confirm_password">
+        <input type="text" class="input-forms-icons" placeholder="Name" />
+        <BaseIcon
+          class="absolute z-10 pointer-events-none text-gray-500"
+          :path="mdiFormTextboxPassword"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button class="w-full" type="primary">Actualizar</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>

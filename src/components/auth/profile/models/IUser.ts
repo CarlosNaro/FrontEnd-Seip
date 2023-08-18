@@ -31,3 +31,9 @@ export interface IJwtDecode {
   jti: string;
   user_id: number;
 }
+
+export interface IChangePassword {
+  current_password?: string;
+  new_password?: string;
+  confirm_password?: string;
+}

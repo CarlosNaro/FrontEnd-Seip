@@ -1,26 +1,31 @@
 <script setup lang="ts">
 import OverlayLayer from "../../../OverlayLayer.vue";
 import BaseIcon from "../../../BaseIcon.vue";
-import { reactive, computed, ref } from "vue";
+import { reactive, computed, ref, onMounted, watch } from "vue";
 import { mdiAsterisk, mdiFormTextboxPassword } from "@mdi/js";
 import useUserStore from "../stores/userStore";
+import { modelChangePassword } from "../stores/modelPasswordStore";
 import passwordRules from "../rules/changePasswordRules";
-import { ElMessage } from "element-plus";
+import { ElMessage, imageProps } from "element-plus";
+import { IChangePassword } from "../models/IUser";
+
 const props = defineProps<{
   title: string;
   modelValue: boolean;
   icon: string;
 }>();
 
-const model = reactive({
-  current_password: "",
-  new_password: "",
-  confirm_password: "",
-});
+// const model = reactive<IChangePassword>({
+//   current_password: "",
+//   new_password: "",
+//   confirm_password: "",
+// }) as IChangePassword;
 
 const { changePassword } = useUserStore();
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();
+const view = ref(false);
+const type = ref("password");
 
 const value = computed({
   get: () => props.modelValue,
@@ -43,6 +48,17 @@ const sendPassword = () => {
   });
   // changePassword(model);
 };
+const viewPassword = () => {
+  if (view.value) {
+    type.value = "text";
+  } else {
+    type.value = "password";
+  }
+};
+
+watch(view, () => {
+  viewPassword();
+});
 </script>
 
 <template>
@@ -60,49 +76,54 @@ const sendPassword = () => {
 
       <div>
         <el-form
-          :model="model"
+          :model="modelChangePassword"
           :rules="passwordRules"
           ref="form"
           label-position="top"
         >
-          <el-form-item label="Current password" prop="current_password">
-            <input
-              type="text"
-              class="input-forms-icons"
-              placeholder="Name"
-              v-model="model.current_password"
+          <el-form-item label="Contraseña actual" prop="current_password">
+            <el-input
+              size="large"
+              :type="type"
+              placeholder="Contraseña actual"
+              v-model="modelChangePassword.current_password"
             />
             <BaseIcon
-              class="absolute z-10 pointer-events-none text-gray-500"
+              class="absolute right-0 z-10 pointer-events-none text-gray-500"
               :path="mdiAsterisk"
             />
           </el-form-item>
 
-          <el-form-item label="New password" prop="new_password">
-            <input
-              type="text"
-              class="input-forms-icons"
-              placeholder="Name"
-              v-model="model.new_password"
+          <el-form-item label="Nueva contraseña" prop="new_password">
+            <el-input
+              size="large"
+              :type="type"
+              placeholder="Nueva contraseña"
+              v-model="modelChangePassword.new_password"
             />
             <BaseIcon
-              class="absolute z-10 pointer-events-none text-gray-500"
+              class="absolute right-0 z-10 pointer-events-none text-gray-500"
               :path="mdiFormTextboxPassword"
             />
           </el-form-item>
 
-          <el-form-item label="Confirm password" prop="confirm_password">
-            <input
-              type="text"
-              class="input-forms-icons"
-              placeholder="Name"
-              v-model="model.confirm_password"
+          <el-form-item label="Confirmar contraseña" prop="confirm_password">
+            <el-input
+              size="large"
+              :type="type"
+              placeholder="Confirmar contraseña"
+              v-model="modelChangePassword.confirm_password"
             />
             <BaseIcon
-              class="absolute z-10 pointer-events-none text-gray-500"
+              class="absolute right-0 z-10 pointer-events-none text-gray-500"
               :path="mdiFormTextboxPassword"
             />
           </el-form-item>
+
+          <el-form-item>
+            <el-checkbox v-model="view">Mostrar contraseña</el-checkbox>
+          </el-form-item>
+
           <el-form-item>
             <el-button @click="sendPassword" class="w-full" type="primary"
               >Actualizar</el-button
@@ -113,3 +134,4 @@ const sendPassword = () => {
     </Card-Box>
   </OverlayLayer>
 </template>
+../stores/modelPasswordStore

@@ -14,6 +14,7 @@ declare module 'vue' {
     CardBoxTitle: typeof import('./components/ejemplosPrueba/CardBoxTitle.vue')['default']
     ComponentsHTML: typeof import('./components/ejemplosPrueba/componentsHTML.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElImage: typeof import('element-plus/es')['ElImage']

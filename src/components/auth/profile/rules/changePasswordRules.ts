@@ -1,3 +1,4 @@
+import { modelChangePassword } from "../stores/modelPasswordStore";
 const trigger = "blur";
 const passwordRules = {
   current_password: [
@@ -37,7 +38,7 @@ const passwordRules = {
     },
     {
       validator: (rule: any, value: string, callback: any) => {
-        if (value != passwordRules.new_password[0].value) {
+        if (value != modelChangePassword.new_password) {
           callback(new Error("Las contraseñas no coinciden"));
         } else {
           callback();
