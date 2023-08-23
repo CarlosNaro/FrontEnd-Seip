@@ -9,7 +9,7 @@ const ListClient = computed(() => getClient());
 const isModelDelete = ref(false);
 const isModelEdit = ref(false);
 const ID = ref();
-const Client: any = [];
+const Client = ref();
 
 onMounted(() => {
   setClient();
@@ -23,7 +23,7 @@ const isActiveDelete = (id: any) => {
 const isActiveEdit = (item: any) => {
   isModelEdit.value = !isModelEdit.value;
   console.log("sads ", item);
-  Client.value = Object(item);
+  Client.value = item;
 };
 </script>
 <template>
@@ -33,10 +33,12 @@ const isActiveEdit = (item: any) => {
     :icon="mdiClose"
     v-model="isModelDelete"
     :id-client="ID"
+
   />
   <EditClient
     title="Actualización de datos del cliente"
     :icon="mdiClose"
+    v-if="Client && isModelEdit "
     v-model="isModelEdit"
     :client="Client"
   />

@@ -12,7 +12,7 @@ const props = defineProps<{
   client: IMClient;
 }>();
 
-const model = reactive({
+const model = reactive<IFClientEdit> ({
   id: props.client.id,
   name: props.client.name,
   document: props.client.document,
@@ -36,20 +36,19 @@ window.addEventListener("keydown", (e: any) => {
   if (e.key == "Escape") confirmCancel();
 });
 
-// const sendData = async (): Promise<void> => {
-//   console.log("Datos Nuevos ", props.client);
-//   //   form.value.validate(async (valid: boolean) => {
-//   //     if (!valid) {
-//   //       ElMessage.warning("Por favor, rellenar los campos correctamente");
-//   //       return;
-//   //     }
-
-//   //     isLoading.value = true;
-//   //     const status = await sendClient(model);
-//   //     isLoading.value = false;
-//   //     if (status) value.value = false;
-//   //   });
-// };
+const sendData =  ()  => {
+  console.log("Datos Nuevos ", props.client);
+    // form.value.validate(async (valid: boolean) => {
+    //   if (!valid) {
+    //     ElMessage.warning("Por favor, rellenar los campos correctamente");
+    //     return;
+    //   }
+    //   isLoading.value = true;
+    //   const status = await sendClient(model);
+    //   isLoading.value = false;
+    //   if (status) value.value = false;
+    // });
+};
 </script>
 <template>
   <OverlayLayer v-show="value" @overlay-click="confirmCancel">
@@ -63,23 +62,23 @@ window.addEventListener("keydown", (e: any) => {
         </span>
       </CardBox-Component-Title>
       <hr />
-      <pre>{{ props.client }}</pre>
+      
       <div>
-        <el-form :rules="clientRules" ref="form" label-position="top">
+        <el-form :model="model" :rules="clientRules" ref="form" label-position="top">
           <el-form-item label="Nombre(s)" prop="name">
-            <el-input size="large" placeholder="Nombre" />
+            <el-input v-model="model.name" size="large" placeholder="Nombre" />
           </el-form-item>
 
           <el-form-item label="N°Documento" prop="document">
-            <el-input maxlength="8" size="large" placeholder="N° documento" />
+            <el-input v-model="model.document" maxlength="8" size="large" placeholder="N° documento" />
           </el-form-item>
 
           <el-form-item label="Descripción">
-            <el-input size="large" placeholder="Descripción del cliente" />
+            <el-input v-model="model.description" size="large" placeholder="Descripción del cliente" />
           </el-form-item>
 
           <el-form-item label="Teléfono / Celular" prop="phone">
-            <el-input maxlength="9" size="large" placeholder="N° de contacto" />
+            <el-input v-model="model.phone" maxlength="9" size="large" placeholder="N° de contacto" />
           </el-form-item>
 
           <el-form-item>
@@ -88,7 +87,7 @@ window.addEventListener("keydown", (e: any) => {
               :loading="isLoading"
               class="w-full"
               type="primary"
-              >Crear</el-button
+              >Actualizar</el-button
             >
           </el-form-item>
         </el-form>

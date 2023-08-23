@@ -15,8 +15,8 @@ export interface IFClient {
 }
 
 export interface IFClientEdit {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
   document?: number;
   description?: string;
   phone?: number;
