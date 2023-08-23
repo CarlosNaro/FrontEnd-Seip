@@ -10,7 +10,6 @@ const authLogin = async (model: ILogin): Promise<boolean> => {
     const { data } = await service.post("auth/token/", model);
 
     setItem("token", data);
-    console.log("data ", data);
     ElMessage.success(`Welcome ${data.username}`);
     return true;
   } catch (error: any) {

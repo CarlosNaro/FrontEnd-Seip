@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted, watch } from "vue";
-import { mdiAccount, mdiClose } from "@mdi/js";
+import { mdiClose } from "@mdi/js";
 import useUserStore from "./stores/userStore";
 import { IUser, IUserUpdate, userStore } from "./models/IUser";
-// import FormChangePassword from "./components/FormChangePassword.vue";
+import { getItem } from "../../../core/interceptors/localStorage";
 
-const avatar =
-  "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80";
-
+const user = getItem("token");
 const isModalActiveUserUpdate = ref(false);
 const isModalActiveChangePassword = ref(false);
 
@@ -20,12 +18,6 @@ const set_User = setUser();
 //   console.log(`La variable cambió de** ${viejoValor} a ${nuevoValor}`);
 //   // Aquí puedes ejecutar cualquier otra lógica que desees realizar cuando la variable cambia.
 // });
-
-const menu = reactive({
-  icon: mdiAccount,
-  title: "Profile",
-  main: Boolean,
-});
 
 const isActiveUserUpdate = () => {
   isModalActiveUserUpdate.value = !isModalActiveUserUpdate.value;
@@ -52,18 +44,15 @@ const isActiveChangePassword = () => {
     :user="item"
   />
 
-  <SectionTitleLineWithButton
-    :icon="menu.icon"
-    :title="menu.title"
-    :main="menu.main"
-  />
-
   <div class="flex w-auto flex-col items-center">
-    <!-- <h1 class="text-lg md:text-5xl font-semibold text-indigo-600 mb-5">
-      Carlos Alonso Naro Saldaña
-    </h1> -->
+    <div class="mb-5 text-center">
+      <h1 class="text-3xl font-semibold text-indigo-600">Bienvenido</h1>
+      <h1 class="text-lg md:text-5xl font-semibold text-indigo-600">
+        {{ user.username }}
+      </h1>
+    </div>
 
-    <UserCard :avatar="avatar"> </UserCard>
+    <!-- <UserCard :avatar="avatar"> </UserCard> -->
 
     <div class="bg-white md:w-8/12 rounded-lg text-sm md:text-base">
       <ol v-for="(item, index) in userInfo" :key="index" class="mx-4 my-4">

@@ -1,19 +1,7 @@
-
 @import "tailwind/_base.css";
 @import "tailwind/_components.css";
 @import "tailwind/_utilities.css";
 
-
-/* @import "./styles/_styleButtons.css"; */
-@import "./styles//_stylecomponentHtml.css";
+@import "./styles/_table.css";
+@import "./styles/_stylecomponentHtml.css";
 @import "./styles/_scrollbars.css";
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-
-/* Import of own design */
-
-
-/* @import "_checkbox-radio-switch.css"; */

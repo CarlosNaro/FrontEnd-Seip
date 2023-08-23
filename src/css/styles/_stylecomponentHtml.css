@@ -14,4 +14,17 @@
     /* @apply  block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm */
     @apply block w-full px-5 py-2 appearance-none rounded-md border border-gray-300 shadow-sm  text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm;
   }
+
+  .btn-delete {
+    @apply rounded-md border border-transparent bg-red-600 p-1 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring cursor-pointer transition-colors duration-150;
+  }
+
+  .btn-edit {
+    @apply rounded-md border border-transparent bg-indigo-600 p-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring cursor-pointer transition-colors duration-150;
+  }
+}
+
+/* clases globales del elementPlus */
+.el-form-item__label {
+  @apply font-semibold  !important;
 }

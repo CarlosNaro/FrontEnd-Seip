@@ -13,30 +13,7 @@ import {
   mdiLock,
 } from "@mdi/js";
 
-// const props = defineProps<{
-//   title: String;
-//   //   modelValue: Boolean;
-//   //   icon:string
-// }>();
 const email = ref();
-// const emit = defineEmits(["update:modelValue", "cancel"]);
-
-// const value = computed({
-//   get: () => props.modelValue,
-//   set: (valor) => emit("update:modelValue", valor),
-// });
-
-// const confirmCancel = (valor: any) => {
-//   value.value = false;
-//   emit(valor);
-// };
-// const Cancel = () => confirmCancel("cancel");
-
-// window.addEventListener("keydown", (e: any) => {
-//   if (e.key === "Escape") {
-//     Cancel();
-//   }
-// });
 
 const loginView = () => {
   router.push({ name: "Login" });

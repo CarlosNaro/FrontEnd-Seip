@@ -1,5 +1,11 @@
 import { getItem } from "../../../../core/interceptors/localStorage";
-import { userStore, IUser, IJwtDecode, IUserUpdate } from "../models/IUser";
+import {
+  userStore,
+  IUser,
+  IJwtDecode,
+  IUserUpdate,
+  IChangePassword,
+} from "../models/IUser";
 import service from "../../../../core/modules/axios";
 import jwtDecode from "jwt-decode";
 import { ElMessage } from "element-plus";
@@ -20,8 +26,9 @@ export default function useUserStore() {
       const { data, status } = await service.get("users/user/");
       if (status == 200)
         state.user = data.filter((item: IUser) => item.id == id.user_id);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      ElMessage.error(error.message);
     }
   };
 
@@ -29,6 +36,7 @@ export default function useUserStore() {
     try {
       await service.put(`users/user/${model.id}/`, model);
       setUser();
+      ElMessage.success("Usuario actualizado correctamente");
       return true;
     } catch (error: any) {
       // console.log(error);
@@ -37,13 +45,13 @@ export default function useUserStore() {
     }
   };
 
-  const changePassword = async (model: any): Promise<boolean> => {
+  const changePassword = async (model: IChangePassword): Promise<boolean> => {
     try {
       await service.post("change-password/", model);
-      ElMessage.error("Contraseña Actualizada Correctamente");
+      ElMessage.success("Contraseña Actualizada Correctamente");
       return true;
     } catch (error: any) {
-      console.log(error.response.data.detail);
+      // console.log(error.response.data.detail);
       ElMessage.error(error.response.data.detail);
       return false;
     }
