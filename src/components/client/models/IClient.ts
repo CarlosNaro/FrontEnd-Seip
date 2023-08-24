@@ -9,17 +9,17 @@ export interface IMClient {
 
 export interface IFClient {
   name: string;
-  document?: number | "";
+  document?: number | null ;
   description?: string;
-  phone?: number | "";
+  phone?: number | null;
 }
 
 export interface IFClientEdit {
   id: number;
   name: string;
-  document?: number;
+  document?: number | null;
   description?: string;
-  phone?: number;
+  phone?: number | null;
 }
 
 export interface IMClientStore {

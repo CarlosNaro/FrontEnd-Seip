@@ -9,24 +9,26 @@ const props = defineProps<{
   title: string;
   icon: string;
   modelValue: boolean;
-  client: IMClient;
+  client: IFClientEdit;
 }>();
 
-const phoneNumber = props.client.phone
-  ? parseInt(Object(props.client.phone))
-  : "";
+
 
 const documentNumber = props.client.document
-  ? parseInt(Object(props.client.document))
+  ? Number(props.client.document)
+  : "";
+
+  const phoneNumber = props.client.phone
+  ? Number(props.client.phone)
   : "";
 
 const model = ref<IFClientEdit>({
   id: props.client.id,
   name: props.client.name,
-  document: documentNumber,
+  document: props.client.document,
   description: props.client.description,
-  phone: phoneNumber,
-} as IFClientEdit);
+  phone: props.client.phone ,
+} as IFClientEdit );
 
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();
@@ -71,6 +73,7 @@ const sendData = () => {
       </CardBox-Component-Title>
       <hr />
       <br />
+      <pre>{{ model }}</pre>
       <div>
         <el-form
           :model="model"

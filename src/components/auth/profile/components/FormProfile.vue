@@ -39,8 +39,7 @@ const value = computed({
 
 const confirmCancel = () => {
   value.value = false;
-  // Object.assign(model, props.user);
-  // emit(mode);
+  
 };
 
 const Cancel = () => confirmCancel();
@@ -98,7 +97,7 @@ const sendData = async (): Promise<void> => {
               placeholder="De las Torres "
             />
           </el-form-item>
-          <el-form-item label="Correo Electronico " prop="email">
+          <el-form-item label="Correo Electrónico " prop="email">
             <el-input
               size="large"
               v-model="model.email"

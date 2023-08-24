@@ -11,20 +11,22 @@ const clientRules = {
   document: [
     {
       validator: (rule: any, value: any, callback: any) => {
-        const stringValue = value.toString();
+        const stringValue = !value ? "" : value.toString();
         if (value != "") {
-          console.log("valor ", typeof value);
-          if (typeof value != "number") {
-            callback(new Error("El documento debe ser numérico"));
-          } else if (stringValue.length != 8) {
-            callback(
-              new Error("El documento debe contener exactamente 8 dígitos")
-            );
-          } else {
-            callback();
-          }
+          callback(
+            new Error(" ::::.. ")
+          );
+          // if (typeof value != "number") {
+          //   callback(new Error("El documento debe ser numérico"));
+          // } else if (stringValue.length != 8) {
+          //   callback(
+          //     new Error("El documento debe contener exactamente 8 dígitos")
+          //   );
+          // } else {
+          //   callback();
+          // }
         } else {
-          console.log("vacio");
+          
           callback();
         }
       },

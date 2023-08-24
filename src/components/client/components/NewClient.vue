@@ -13,9 +13,9 @@ const props = defineProps<{
 
 const model = reactive<IFClient>({
   name: "",
-  document: "",
+  document: null ,
   description: "",
-  phone: "",
+  phone: null,
 } as IFClient);
 
 const emit = defineEmits(["update:modelValue"]);
