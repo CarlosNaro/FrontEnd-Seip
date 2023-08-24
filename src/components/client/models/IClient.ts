@@ -9,9 +9,9 @@ export interface IMClient {
 
 export interface IFClient {
   name: string;
-  document?: string;
+  document?: number | "";
   description?: string;
-  phone?: string;
+  phone?: number | "";
 }
 
 export interface IFClientEdit {

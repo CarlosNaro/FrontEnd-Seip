@@ -17,6 +17,7 @@ declare module 'vue' {
     DeleteClient: typeof import('./components/client/components/DeleteClient.vue')['default']
     EditClient: typeof import('./components/client/components/EditClient.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']

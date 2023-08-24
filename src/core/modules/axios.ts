@@ -1,9 +1,15 @@
 import axios from "axios";
+import { ref, reactive } from "vue";
 import { getItem } from "../interceptors/localStorage";
-const BASE_URL = "http://127.0.0.1:8000/";
-// const BASE_URL = "http://192.168.43.179:8000/"
-// const BASE_URL = "http://192.168.43.53:8000/";
-const service = axios.create({ baseURL: BASE_URL });
+// const BASE_URL_01 = "http://127.0.0.1:8000/";
+// const BASE_URL_02 = "http://192.168.43.179:8000/";
+const BASE_URL_03 = "http://192.168.43.53:8000/";
+
+// Variable en la que deseas almacenar una de las tres variables originales
+
+// Elegir cuál variable almacenar en función de si existe o no
+
+const service = axios.create({ baseURL: BASE_URL_03 });
 
 // export interface IJwtDecode {
 //   token_type: string;

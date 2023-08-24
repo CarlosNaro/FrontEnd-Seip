@@ -1,6 +1,3 @@
-import { mdiAxisXRotateCounterclockwise } from "@mdi/js";
-import { isNumber } from "element-plus/es/utils";
-
 const trigger = "blur";
 const clientRules = {
   name: [
@@ -16,6 +13,7 @@ const clientRules = {
       validator: (rule: any, value: any, callback: any) => {
         const stringValue = value.toString();
         if (value != "") {
+          console.log("valor ", typeof value);
           if (typeof value != "number") {
             callback(new Error("El documento debe ser numérico"));
           } else if (stringValue.length != 8) {
@@ -26,6 +24,7 @@ const clientRules = {
             callback();
           }
         } else {
+          console.log("vacio");
           callback();
         }
       },
@@ -41,7 +40,7 @@ const clientRules = {
           if (typeof value != "number") {
             callback(new Error("El documento debe ser numérico"));
           } else if (stringValue.length != 8 && stringValue.length != 9) {
-            callback(new Error("El campo debe contener min 8 | mx 9 dígitos"));
+            callback(new Error("El campo debe contener min 8 | max 9 dígitos"));
           } else {
             callback();
           }

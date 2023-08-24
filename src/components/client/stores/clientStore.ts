@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import { IMClientStore, IFClient } from "../models/IClient";
+import { IMClientStore, IFClient, IFClientEdit } from "../models/IClient";
 import service from "../../../core/modules/axios";
 import { ElMessage } from "element-plus";
 
@@ -26,7 +26,6 @@ export default function useClientStore() {
       ElMessage.success(" Cliente registrado exitosamente ");
       return true;
     } catch (error: any) {
-      console.log(error);
       ElMessage.error(error.message);
       return false;
     }
@@ -39,11 +38,22 @@ export default function useClientStore() {
       ElMessage.warning("Cliente eliminado del registro SEIP");
       return true;
     } catch (error: any) {
-      console.log(error);
       ElMessage.error(error.message);
       return false;
     }
   };
 
-  return { getClient, setClient, sendClient, deleteClient };
+  const updateClient = async (model: IFClientEdit): Promise<boolean> => {
+    try {
+      await service.put(`apunte/client/${model.id}/`, model);
+      setClient();
+      ElMessage.success("Cliente actualizado correctamente");
+      return true;
+    } catch (error: any) {
+      ElMessage.error(error.message);
+      return false;
+    }
+  };
+
+  return { getClient, setClient, sendClient, deleteClient, updateClient };
 }

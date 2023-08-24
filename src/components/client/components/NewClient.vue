@@ -16,7 +16,7 @@ const model = reactive<IFClient>({
   document: "",
   description: "",
   phone: "",
-}) as IFClient;
+} as IFClient);
 
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();
@@ -61,7 +61,7 @@ const sendData = async (): Promise<void> => {
         </span>
       </CardBox-Component-Title>
       <hr />
-
+      <br />
       <div>
         <el-form
           :model="model"

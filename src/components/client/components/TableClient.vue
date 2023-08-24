@@ -15,14 +15,13 @@ onMounted(() => {
   setClient();
 });
 
-// falta arrglar logica del delete
 const isActiveDelete = (id: any) => {
   isModelDelete.value = !isModelDelete.value;
   ID.value = id;
 };
-const isActiveEdit = (item: any) => {
+
+const isActiveEdit = (item: IMClient) => {
   isModelEdit.value = !isModelEdit.value;
-  console.log("sads ", item);
   Client.value = item;
 };
 </script>
@@ -33,12 +32,11 @@ const isActiveEdit = (item: any) => {
     :icon="mdiClose"
     v-model="isModelDelete"
     :id-client="ID"
-
   />
   <EditClient
     title="Actualización de datos del cliente"
     :icon="mdiClose"
-    v-if="Client && isModelEdit "
+    v-if="Client && isModelEdit"
     v-model="isModelEdit"
     :client="Client"
   />
@@ -69,7 +67,7 @@ const isActiveEdit = (item: any) => {
           <td data-label="Description">{{ item.description }}</td>
           <td data-label="Phone">{{ item.phone }}</td>
 
-          <td data-label="Date" class="lg:w-1 whitespace-nowrap">
+          <td data-label="Creado" class="lg:w-1 whitespace-nowrap">
             <small class="text-gray-500 dark:text-slate-400">{{
               item.date
             }}</small>

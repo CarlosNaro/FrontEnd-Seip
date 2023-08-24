@@ -12,17 +12,26 @@ const props = defineProps<{
   client: IMClient;
 }>();
 
-const model = reactive<IFClientEdit> ({
+const phoneNumber = props.client.phone
+  ? parseInt(Object(props.client.phone))
+  : "";
+
+const documentNumber = props.client.document
+  ? parseInt(Object(props.client.document))
+  : "";
+
+const model = ref<IFClientEdit>({
   id: props.client.id,
   name: props.client.name,
-  document: props.client.document,
+  document: documentNumber,
   description: props.client.description,
-  phone: props.client.phone,
-});
+  phone: phoneNumber,
+} as IFClientEdit);
 
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();
 const isLoading = ref(false);
+const { updateClient } = useClientStore();
 
 const value = computed({
   get: () => props.modelValue,
@@ -36,18 +45,17 @@ window.addEventListener("keydown", (e: any) => {
   if (e.key == "Escape") confirmCancel();
 });
 
-const sendData =  ()  => {
-  console.log("Datos Nuevos ", props.client);
-    // form.value.validate(async (valid: boolean) => {
-    //   if (!valid) {
-    //     ElMessage.warning("Por favor, rellenar los campos correctamente");
-    //     return;
-    //   }
-    //   isLoading.value = true;
-    //   const status = await sendClient(model);
-    //   isLoading.value = false;
-    //   if (status) value.value = false;
-    // });
+const sendData = () => {
+  form.value.validate(async (valid: boolean) => {
+    if (!valid) {
+      ElMessage.warning("Por favor, rellenar los campos correctamente");
+      return;
+    }
+    isLoading.value = true;
+    const status = await updateClient(model.value);
+    isLoading.value = false;
+    if (status) value.value = false;
+  });
 };
 </script>
 <template>
@@ -62,28 +70,47 @@ const sendData =  ()  => {
         </span>
       </CardBox-Component-Title>
       <hr />
-      
+      <br />
       <div>
-        <el-form :model="model" :rules="clientRules" ref="form" label-position="top">
+        <el-form
+          :model="model"
+          :rules="clientRules"
+          ref="form"
+          label-position="top"
+        >
           <el-form-item label="Nombre(s)" prop="name">
             <el-input v-model="model.name" size="large" placeholder="Nombre" />
           </el-form-item>
 
           <el-form-item label="N°Documento" prop="document">
-            <el-input v-model="model.document" maxlength="8" size="large" placeholder="N° documento" />
+            <el-input
+              v-model.number="model.document"
+              maxlength="8"
+              size="large"
+              placeholder="N° documento"
+            />
           </el-form-item>
 
           <el-form-item label="Descripción">
-            <el-input v-model="model.description" size="large" placeholder="Descripción del cliente" />
+            <el-input
+              v-model="model.description"
+              size="large"
+              placeholder="Descripción del cliente"
+            />
           </el-form-item>
 
           <el-form-item label="Teléfono / Celular" prop="phone">
-            <el-input v-model="model.phone" maxlength="9" size="large" placeholder="N° de contacto" />
+            <el-input
+              v-model.number="model.phone"
+              maxlength="9"
+              size="large"
+              placeholder="N° de contacto"
+            />
           </el-form-item>
 
           <el-form-item>
             <el-button
-              @click=""
+              @click="sendData"
               :loading="isLoading"
               class="w-full"
               type="primary"
