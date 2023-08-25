@@ -5,6 +5,12 @@ export interface IMProduct {
   date: Date;
 }
 
+export interface IFProduct {
+  name:string,
+  description:string 
+}
+
+
 export interface IProductStore {
   product: IMProduct[] | null;
 }

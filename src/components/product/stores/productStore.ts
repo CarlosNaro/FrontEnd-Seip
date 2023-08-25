@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import service from '../../../core/modules/axios';
-import { IProductStore } from '../models/IProduct';
+import { IProductStore, IFProduct } from '../models/IProduct';
 import { ElMessage } from 'element-plus';
 
 const state = reactive<IProductStore>({
@@ -19,6 +19,29 @@ export default function useProductStore() {
         }
     }
 
-    return{ getProduct, setProduct }
+    const sendProduct = async( model: IFProduct  ):Promise<boolean> =>{
+        try {
+            
+
+            await service.post("apunte/product/", model)
+            setProduct()
+            ElMessage.success("Producto agregado")
+            return true
+        } catch (error:any  ) {
+            ElMessage.error(error.message)
+            return false
+        }
+
+    }
+
+    const deleteProduct= () =>{
+
+
+    }
+
+
+    
+
+    return{ getProduct, setProduct, sendProduct }
 }
 
