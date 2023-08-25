@@ -1,9 +1,9 @@
 export interface IMClient {
   id: number;
   name: string;
-  document: number;
+  document: Number;
   description: string;
-  phone: number;
+  phone: Number;
   date: Date;
 }
 

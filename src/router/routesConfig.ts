@@ -1,5 +1,10 @@
 import LoginPage from "../pages/LoginPage.vue";
-import { mdiMonitor, mdiAccountGroupOutline, mdiAccount } from "@mdi/js";
+import {
+  mdiMonitor,
+  mdiAccountGroupOutline,
+  mdiAccount,
+  mdiCartPlus,
+} from "@mdi/js";
 
 export default {
   Login: {
@@ -42,6 +47,18 @@ export default {
     name: "Client",
     icon: mdiAccountGroupOutline,
     component: () => import("../pages/ClientPage.vue"),
+  },
+
+  Product: {
+    meta: {
+      title: "Product",
+      auth: true,
+      isAdmin: true,
+    },
+    path: "/producto",
+    name: "Product",
+    icon: mdiCartPlus,
+    component: () => import("../pages/ProductPage.vue"),
   },
 
   Profile: {

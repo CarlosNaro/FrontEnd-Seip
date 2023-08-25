@@ -15,6 +15,7 @@ let routes = [
   routesConfig.RecoverPassword,
   routesConfig.Home,
   routesConfig.Client,
+  routesConfig.Product,
   routesConfig.Profile,
 ] as RouteRecordRaw[];
 

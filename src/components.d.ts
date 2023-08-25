@@ -28,6 +28,7 @@ declare module 'vue' {
     MsjRefreshLogin: typeof import('./components/MsjRefreshLogin.vue')['default']
     NewClient: typeof import('./components/client/components/NewClient.vue')['default']
     OverlayLayer: typeof import('./components/OverlayLayer.vue')['default']
+    Product: typeof import('./components/product/index.vue')['default']
     Profile: typeof import('./components/auth/profile/index.vue')['default']
     Recovery: typeof import('./components/auth/recoverypassword/components/recovery.vue')['default']
     Recoverypassword: typeof import('./components/auth/recoverypassword/index.vue')['default']

@@ -62,6 +62,9 @@ const sendData = async (): Promise<void> => {
       </CardBox-Component-Title>
       <hr />
       <br />
+
+      <pre>{{ model }}</pre>
+
       <div>
         <el-form
           :model="model"

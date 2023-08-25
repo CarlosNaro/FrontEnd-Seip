@@ -21,6 +21,7 @@ export default function useClientStore() {
 
   const sendClient = async (model: IFClient): Promise<boolean> => {
     try {
+      console.log("enviar ", model);
       await service.post("apunte/client/", model);
       setClient();
       ElMessage.success(" Cliente registrado exitosamente ");
