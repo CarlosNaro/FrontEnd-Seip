@@ -37,6 +37,7 @@ declare module 'vue' {
     SectionMain: typeof import('./components/SectionMain.vue')['default']
     SectionTitleLineWithButton: typeof import('./components/SectionTitleLineWithButton.vue')['default']
     TableClient: typeof import('./components/client/components/TableClient.vue')['default']
+    TableProduct: typeof import('./components/product/components/TableProduct.vue')['default']
     UserAvatar: typeof import('./components/UserAvatar.vue')['default']
     UserCard: typeof import('./components/UserCard.vue')['default']
   }
