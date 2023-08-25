@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
-import { IFClient, IMClient, IFClientEdit } from "../models/IClient";
+import { IMClient, IFClientEdit } from "../models/IClient";
 import clientRules from "../rules/clientRules";
 import { ElMessage } from "element-plus";
 import useClientStore from "../stores/clientStore";
@@ -12,23 +12,13 @@ const props = defineProps<{
   client: IFClientEdit;
 }>();
 
-
-
-const documentNumber = props.client.document
-  ? Number(props.client.document)
-  : "";
-
-  const phoneNumber = props.client.phone
-  ? Number(props.client.phone)
-  : "";
-
 const model = ref<IFClientEdit>({
   id: props.client.id,
   name: props.client.name,
   document: props.client.document,
   description: props.client.description,
-  phone: props.client.phone ,
-} as IFClientEdit );
+  phone: props.client.phone,
+} as IFClientEdit);
 
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();

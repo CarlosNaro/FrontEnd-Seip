@@ -4,12 +4,12 @@ export interface IMClient {
   document: number;
   description: string;
   phone: number;
-  date: number;
+  date: Date;
 }
 
 export interface IFClient {
   name: string;
-  document?: number | null ;
+  document?: number | null;
   description?: string;
   phone?: number | null;
 }

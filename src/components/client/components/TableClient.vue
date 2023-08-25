@@ -2,7 +2,7 @@
 import useClientStore from "../stores/clientStore";
 import { computed, onMounted } from "vue";
 import { mdiTrashCan, mdiClose, mdiArchiveEdit } from "@mdi/js";
-import { IMClient, IFClientEdit } from '../models/IClient';
+import { IMClient, IFClientEdit } from "../models/IClient";
 
 const { setClient, getClient } = useClientStore();
 const ListClient = computed(() => getClient());
@@ -22,7 +22,7 @@ const isActiveDelete = (id: any) => {
 
 const isActiveEdit = (item: IFClientEdit) => {
   isModelEdit.value = !isModelEdit.value;
-  Client.value = item ;
+  Client.value = item;
 };
 </script>
 <template>

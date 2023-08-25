@@ -11,22 +11,18 @@ const clientRules = {
   document: [
     {
       validator: (rule: any, value: any, callback: any) => {
-        const stringValue = !value ? "" : value.toString();
-        if (value != "") {
-          callback(
-            new Error(" ::::.. ")
-          );
-          // if (typeof value != "number") {
-          //   callback(new Error("El documento debe ser numérico"));
-          // } else if (stringValue.length != 8) {
-          //   callback(
-          //     new Error("El documento debe contener exactamente 8 dígitos")
-          //   );
-          // } else {
-          //   callback();
-          // }
+        const stringValue = !value ? null : value.toString();
+        if (value != null && value != "") {
+          if (typeof value != "number") {
+            callback(new Error("El documento debe ser numérico"));
+          } else if (stringValue.length != 8) {
+            callback(
+              new Error("El documento debe contener exactamente 8 dígitos")
+            );
+          } else {
+            callback();
+          }
         } else {
-          
           callback();
         }
       },
@@ -37,8 +33,8 @@ const clientRules = {
   phone: [
     {
       validator: (rule: any, value: any, callback: any) => {
-        const stringValue = value.toString();
-        if (value != "") {
+        const stringValue = !value ? null : value.toString();
+        if (value != null && value != "") {
           if (typeof value != "number") {
             callback(new Error("El documento debe ser numérico"));
           } else if (stringValue.length != 8 && stringValue.length != 9) {

@@ -43,7 +43,7 @@ export default function useClientStore() {
     }
   };
 
-  const updateClient = async (model: IFClientEdit): Promise<boolean> => {
+  const updateClient = async (model: any): Promise<boolean> => {
     try {
       await service.put(`apunte/client/${model.id}/`, model);
       setClient();

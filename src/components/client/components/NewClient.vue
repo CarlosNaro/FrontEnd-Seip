@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const model = reactive<IFClient>({
   name: "",
-  document: null ,
+  document: null,
   description: "",
   phone: null,
 } as IFClient);
