@@ -21,10 +21,9 @@ export default function useClientStore() {
 
   const sendClient = async (model: IFClient): Promise<boolean> => {
     try {
-      console.log("enviar ", model);
-      
-      model.document = String(model.document) === "" ? null : model.document
-      
+      model.document = String(model.document) === "" ? null : model.document;
+      model.phone = String(model.phone) === "" ? null : model.phone;
+
       await service.post("apunte/client/", model);
       setClient();
       ElMessage.success(" Cliente registrado exitosamente ");
@@ -49,6 +48,9 @@ export default function useClientStore() {
 
   const updateClient = async (model: any): Promise<boolean> => {
     try {
+      model.document = String(model.document) === "" ? null : model.document;
+      model.phone = String(model.phone) === "" ? null : model.phone;
+
       await service.put(`apunte/client/${model.id}/`, model);
       setClient();
       ElMessage.success("Cliente actualizado correctamente");

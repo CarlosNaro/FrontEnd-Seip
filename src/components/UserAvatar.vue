@@ -37,5 +37,3 @@ const username = computed(() => props.username);
     />
   </div>
 </template>
-<!-- class="rounded-full  block h-60  w-60 bg-gray-100 " -->
-<!-- class="p-3" -->

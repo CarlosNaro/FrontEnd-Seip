@@ -2,14 +2,14 @@
 import useClientStore from "../stores/clientStore";
 import { computed, onMounted } from "vue";
 import { mdiTrashCan, mdiClose, mdiArchiveEdit } from "@mdi/js";
-import { IMClient, IFClientEdit } from "../models/IClient";
+import { IMClient } from "../models/IClient";
 
 const { setClient, getClient } = useClientStore();
 const ListClient = computed(() => getClient());
 const isModelDelete = ref(false);
 const isModelEdit = ref(false);
 const ID = ref();
-const Client = ref<IFClientEdit>();
+const Client = ref<IMClient>();
 
 onMounted(() => {
   setClient();
@@ -20,7 +20,7 @@ const isActiveDelete = (id: any) => {
   ID.value = id;
 };
 
-const isActiveEdit = (item: IFClientEdit) => {
+const isActiveEdit = (item: IMClient) => {
   isModelEdit.value = !isModelEdit.value;
   Client.value = item;
 };
@@ -47,8 +47,8 @@ const isActiveEdit = (item: IFClientEdit) => {
           <th />
           <th>Nombre</th>
           <th>Documento</th>
-          <th>Descripcion</th>
-          <th>Telefono</th>
+          <th>Descripción</th>
+          <th>Teléfono</th>
           <th>Creado</th>
           <th />
         </tr>

@@ -3,13 +3,14 @@ export interface IMProduct {
   name: string;
   description: string;
   date: Date;
+  image: string;
 }
 
 export interface IFProduct {
-  name:string,
-  description:string 
+  name: string;
+  description: string;
+  image: string;
 }
-
 
 export interface IProductStore {
   product: IMProduct[] | null;

@@ -37,8 +37,8 @@ const clientRules = {
         if (value != null && value != "") {
           if (typeof value != "number") {
             callback(new Error("El documento debe ser numérico"));
-          } else if (stringValue.length != 8 && stringValue.length != 9) {
-            callback(new Error("El campo debe contener min 8 | max 9 dígitos"));
+          } else if (stringValue.length != 9) {
+            callback(new Error("El campo debe contener exactamente 9 dígitos"));
           } else {
             callback();
           }

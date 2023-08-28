@@ -63,8 +63,6 @@ const sendData = async (): Promise<void> => {
       <hr />
       <br />
 
-      <pre>{{ model }}</pre>
-
       <div>
         <el-form
           :model="model"
@@ -80,10 +78,9 @@ const sendData = async (): Promise<void> => {
             />
           </el-form-item>
 
-          <el-form-item label="N°Documento" >
+          <el-form-item label="N°Documento" prop="document">
             <el-input
-            type="number"
-              v-model="model.document"
+              v-model.number="model.document"
               maxlength="8"
               size="large"
               placeholder="Nueva contraseña"

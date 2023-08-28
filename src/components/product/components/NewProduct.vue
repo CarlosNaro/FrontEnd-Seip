@@ -4,6 +4,15 @@ import useProductStore from "../stores/productStore";
 import { IFProduct } from "../models/IProduct";
 import { ElMessage } from "element-plus";
 import productRules from "../rules/productRules";
+import { UploadFilled } from "@element-plus/icons-vue";
+import { Plus } from "@element-plus/icons-vue";
+import type {
+  UploadProps,
+  UploadUserFile,
+  UploadInstance,
+  UploadRawFile,
+} from "element-plus";
+import { genFileId } from "element-plus";
 
 const props = defineProps<{
   title: string;
@@ -14,6 +23,7 @@ const props = defineProps<{
 const model = ref<IFProduct>({
   name: "",
   description: "",
+  image: "",
 } as IFProduct);
 
 const { sendProduct } = useProductStore();
@@ -35,17 +45,51 @@ window.addEventListener("keydown", (e: any) => {
 });
 
 const sendData = () => {
-  form.value.validate(async (valid: boolean) => {
-    if (!valid) {
-      ElMessage.warning("Por favor, rellenar los campos correctamente");
-      return;
-    }
+  console.log("model a enviar ", fileList.value);
+  // form.value.validate(async (valid: boolean) => {
+  //   if (!valid) {
+  //     ElMessage.warning("Por favor, rellenar los campos correctamente");
+  //     return;
+  //   }
 
-    isLoading.value = true;
-    const status = await sendProduct(model.value);
-    isLoading.value = true;
-    if (status) value.value = false;
-  });
+  //   isLoading.value = true;
+  //   const status = await sendProduct(model.value);
+  //   isLoading.value = true;
+  //   if (status) value.value = false;
+  // });
+};
+
+// manejo de imagenes
+
+const fileList = ref<UploadUserFile[]>();
+const dialogImageUrl = ref("");
+const dialogVisible = ref(false);
+const upload = ref<UploadInstance>();
+
+// función que verifica el limite de archivos
+const handleExceed: UploadProps["onExceed"] = (files) => {
+  upload.value!.clearFiles();
+  const file = files[0] as UploadRawFile;
+  // file.uid = genFileId();
+  console.log("asdasd", files);
+  upload.value!.handleStart(file);
+};
+
+const handlePictureCardPreview: UploadProps["onPreview"] = (uploadFile) => {
+  console.log("handlePictureCardPreview", uploadFile);
+  dialogImageUrl.value = uploadFile.url!;
+  dialogVisible.value = true;
+};
+const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
+  if (rawFile.type !== "image/jpeg") {
+    console.log("beforeAvatarUpload ", rawFile);
+    // ElMessage.error("Avatar picture must be JPG format!");
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error("Avatar picture size can not exceed 2MB!");
+    return false;
+  }
+  return true;
 };
 </script>
 <template>
@@ -59,6 +103,32 @@ const sendData = () => {
           <Base-Icon :path="props.icon" />
         </span>
       </CardBox-Component-Title>
+
+      <div>
+        <el-upload
+          v-model="fileList"
+          class="upload-demo"
+          :limit="1"
+          :on-preview="handlePictureCardPreview"
+        >
+          <!-- <el-icon class="el-icon--upload"><upload-filled /></el-icon> -->
+          <template #trigger>
+            <el-button type="primary">select file</el-button>
+          </template>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
+
+        <template>
+          <el-dialog v-model="dialogVisible">
+            <img w-full :src="dialogImageUrl" alt="Preview Image" />
+          </el-dialog>
+        </template>
+      </div>
+
       <div>
         <el-form
           :model="model"

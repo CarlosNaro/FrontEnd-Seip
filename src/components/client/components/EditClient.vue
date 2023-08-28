@@ -9,7 +9,7 @@ const props = defineProps<{
   title: string;
   icon: string;
   modelValue: boolean;
-  client: IFClientEdit;
+  client: IMClient;
 }>();
 
 const model = ref<IFClientEdit>({
@@ -63,7 +63,6 @@ const sendData = () => {
       </CardBox-Component-Title>
       <hr />
       <br />
-      <pre>{{ model }}</pre>
       <div>
         <el-form
           :model="model"
