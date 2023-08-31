@@ -9,7 +9,7 @@ export interface IMProduct {
 export interface IFProduct {
   name: string;
   description: string;
-  image: string;
+  image: string[] | null;
 }
 
 export interface IProductStore {

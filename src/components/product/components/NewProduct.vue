@@ -11,8 +11,10 @@ import type {
   UploadUserFile,
   UploadInstance,
   UploadRawFile,
+  UploadFiles,
 } from "element-plus";
 import { genFileId } from "element-plus";
+import { mdiUpload } from "@mdi/js";
 
 const props = defineProps<{
   title: string;
@@ -23,13 +25,16 @@ const props = defineProps<{
 const model = ref<IFProduct>({
   name: "",
   description: "",
-  image: "",
+  image: null,
 } as IFProduct);
 
 const { sendProduct } = useProductStore();
 const emit = defineEmits(["update:modelValue"]);
 const form = ref();
 const isLoading = ref(false);
+const upload = ref();
+const valueImage = ref();
+const visibleImg = ref(false);
 
 const value = computed({
   get: () => props.modelValue,
@@ -44,52 +49,46 @@ window.addEventListener("keydown", (e: any) => {
   if (e.key == "Escape") confirmCancel();
 });
 
-const sendData = () => {
-  console.log("model a enviar ", fileList.value);
-  // form.value.validate(async (valid: boolean) => {
-  //   if (!valid) {
-  //     ElMessage.warning("Por favor, rellenar los campos correctamente");
-  //     return;
-  //   }
-
-  //   isLoading.value = true;
-  //   const status = await sendProduct(model.value);
-  //   isLoading.value = true;
-  //   if (status) value.value = false;
-  // });
-};
-
-// manejo de imagenes
-
-const fileList = ref<UploadUserFile[]>();
-const dialogImageUrl = ref("");
-const dialogVisible = ref(false);
-const upload = ref<UploadInstance>();
-
 // función que verifica el limite de archivos
 const handleExceed: UploadProps["onExceed"] = (files) => {
   upload.value!.clearFiles();
   const file = files[0] as UploadRawFile;
   // file.uid = genFileId();
-  console.log("asdasd", files);
   upload.value!.handleStart(file);
 };
-
-const handlePictureCardPreview: UploadProps["onPreview"] = (uploadFile) => {
-  console.log("handlePictureCardPreview", uploadFile);
-  dialogImageUrl.value = uploadFile.url!;
-  dialogVisible.value = true;
-};
-const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
-  if (rawFile.type !== "image/jpeg") {
-    console.log("beforeAvatarUpload ", rawFile);
-    // ElMessage.error("Avatar picture must be JPG format!");
-    return false;
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error("Avatar picture size can not exceed 2MB!");
-    return false;
+// función que lee el archivo y lo muestra en miniatura en el componente
+const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
+  const dataUpdate = uploadFile.raw;
+  // model.value.image = computed(() => dataUpdate) as any;
+  uploadImage(dataUpdate);
+  if (upload.value) {
+    console.log("upload ", upload.value);
+  } else {
+    console.log("upload no existe");
   }
-  return true;
+};
+
+const uploadImage = (file: any) => {
+  let reader = new FileReader();
+  reader.onload = (e: any) => {
+    valueImage.value = e.target.result;
+    visibleImg.value = true;
+  };
+  reader.readAsDataURL(file);
+};
+
+const sendData = () => {
+  form.value.validate(async (valid: boolean) => {
+    if (!valid) {
+      ElMessage.warning("Por favor, rellenar los campos correctamente");
+      return;
+    }
+
+    isLoading.value = true;
+    const status = await sendProduct(model.value);
+    isLoading.value = true;
+    if (status) value.value = false;
+  });
 };
 </script>
 <template>
@@ -105,37 +104,42 @@ const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
       </CardBox-Component-Title>
 
       <div>
-        <el-upload
-          v-model="fileList"
-          class="upload-demo"
-          :limit="1"
-          :on-preview="handlePictureCardPreview"
-        >
-          <!-- <el-icon class="el-icon--upload"><upload-filled /></el-icon> -->
-          <template #trigger>
-            <el-button type="primary">select file</el-button>
-          </template>
-          <template #tip>
-            <div class="el-upload__tip">
-              jpg/png files with a size less than 500kb
-            </div>
-          </template>
-        </el-upload>
-
-        <template>
-          <el-dialog v-model="dialogVisible">
-            <img w-full :src="dialogImageUrl" alt="Preview Image" />
-          </el-dialog>
-        </template>
-      </div>
-
-      <div>
         <el-form
+          enctype="multipart/form-data"
           :model="model"
           ref="form"
           :rules="productRules"
           label-position="top"
         >
+          <div class="flex">
+            <el-upload
+              ref="upload"
+              class="upload-demo"
+              v-model="model.image"
+              :limit="1"
+              :on-exceed="handleExceed"
+              :on-change="handleChanges"
+              :auto-upload="false"
+            >
+              <template #trigger>
+                <el-button type="primary">select file</el-button>
+              </template>
+
+              <template #tip>
+                <div class="el-upload__tip text-red text-xs">
+                  limit 1 file <br />
+                  jpg/png files with a size less than 500kb
+                </div>
+              </template>
+            </el-upload>
+            <img
+              v-if="visibleImg"
+              class="bg-red-50 w-32 h-32"
+              :src="valueImage"
+              alt="sa"
+            />
+          </div>
+
           <el-form-item label="Nombre " prop="name">
             <el-input v-model="model.name" />
           </el-form-item>

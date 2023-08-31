@@ -21,6 +21,7 @@ export default function useProductStore() {
 
   const sendProduct = async (model: IFProduct): Promise<boolean> => {
     try {
+      console.log("model: ", model);
       await service.post("apunte/product/", model);
       setProduct();
       ElMessage.success("Producto agregado");
