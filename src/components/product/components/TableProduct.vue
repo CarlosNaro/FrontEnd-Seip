@@ -1,23 +1,48 @@
 <script setup lang="ts">
 import { mdiTrashCan, mdiClose, mdiArchiveEdit } from "@mdi/js";
 import { onMounted, computed } from "vue";
+import { IMProduct } from "../models/IProduct";
 import useProductStore from "../stores/productStore";
 
-const { getProduct, setProduct } = useProductStore();
 
+const { getProduct, setProduct } = useProductStore();
 const productList = computed(() => getProduct());
+const isModelDelete = ref(false);
+const isModelEdit = ref(false);
+const ID = ref();
+const Product = ref()
 
 onMounted(() => {
   setProduct();
 });
 
-const getRelativeImageUrl = (fullUrl: any) => {
-  // Construye la URL completa de la imagen del producto a partir de la URL base de medios y la URL de la imagen en el modelo de Django.
-  const baseUrl = "http://127.0.0.1:8000/media/"; // Ajusta esto a tu URL base de medios
-  return fullUrl.replace(baseUrl, "");
+const isActiveDelete = (id: any) => {
+  isModelDelete.value = !isModelDelete.value;
+  ID.value = id;
 };
+
+const isActiveEdit = (item : IMProduct) => {
+  isModelEdit.value = !isModelEdit.value;
+  Product.value = item;
+};
+
 </script>
 <template>
+  <Delete-Product
+    v-if="isModelDelete"
+    v-model="isModelDelete"
+    title="Eliminar  Productos"
+    :icon="mdiClose" 
+    :id-product="ID"
+    />
+
+    <EditProduct
+    v-if="isModelEdit"
+    v-model="isModelEdit"
+    title="Actualizar Producto"
+    :icon="mdiClose"
+    :product="Product"
+    />
   <div class="rounded-2xl flex-col bg-white flex mb-6">
     <table>
       <thead>
@@ -48,11 +73,11 @@ const getRelativeImageUrl = (fullUrl: any) => {
           </td>
           <td class="before:hidden lg:w-1 whitespace-nowrap">
             <div class="flex justify-start lg:justify-end">
-              <button class="btn-edit mr-2">
+              <button class="btn-edit mr-2" @click="isActiveEdit(item)" >
                 <BaseIcon :path="mdiArchiveEdit" />
               </button>
 
-              <button class="btn-delete">
+              <button class="btn-delete" @click="isActiveDelete(item.id)" >
                 <BaseIcon :path="mdiTrashCan" />
               </button>
             </div>

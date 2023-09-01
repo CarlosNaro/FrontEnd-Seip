@@ -4,12 +4,20 @@ export interface IMProduct {
   description: string;
   date: Date;
   image: string;
+  isDelete: boolean;
 }
 
 export interface IFProduct {
   name: string;
   description: string;
-  image: string[] | null;
+  image: any |null;
+}
+
+export interface IFProductEdit {
+  id: number;
+  name: string;
+  description?: string;
+  image?: any |null;
 }
 
 export interface IProductStore {

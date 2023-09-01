@@ -4,8 +4,6 @@ import useProductStore from "../stores/productStore";
 import { IFProduct } from "../models/IProduct";
 import { ElMessage } from "element-plus";
 import productRules from "../rules/productRules";
-import { UploadFilled } from "@element-plus/icons-vue";
-import { Plus } from "@element-plus/icons-vue";
 import type {
   UploadProps,
   UploadUserFile,
@@ -13,8 +11,7 @@ import type {
   UploadRawFile,
   UploadFiles,
 } from "element-plus";
-import { genFileId } from "element-plus";
-import { mdiUpload } from "@mdi/js";
+
 
 const props = defineProps<{
   title: string;
@@ -53,13 +50,12 @@ window.addEventListener("keydown", (e: any) => {
 const handleExceed: UploadProps["onExceed"] = (files) => {
   upload.value!.clearFiles();
   const file = files[0] as UploadRawFile;
-  // file.uid = genFileId();
   upload.value!.handleStart(file);
 };
 // función que lee el archivo y lo muestra en miniatura en el componente
 const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
   const dataUpdate = uploadFile.raw;
-  // model.value.image = computed(() => dataUpdate) as any;
+  model.value.image = uploadFile.raw
   uploadImage(dataUpdate);
   if (upload.value) {
     console.log("upload ", upload.value);
@@ -67,7 +63,7 @@ const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
     console.log("upload no existe");
   }
 };
-
+// lectura de imgen para poder mostrar lo en el img:src
 const uploadImage = (file: any) => {
   let reader = new FileReader();
   reader.onload = (e: any) => {
@@ -114,8 +110,8 @@ const sendData = () => {
           <div class="flex">
             <el-upload
               ref="upload"
+              
               class="upload-demo"
-              v-model="model.image"
               :limit="1"
               :on-exceed="handleExceed"
               :on-change="handleChanges"

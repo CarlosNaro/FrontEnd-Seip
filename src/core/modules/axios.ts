@@ -2,8 +2,8 @@ import axios from "axios";
 import { ref, reactive } from "vue";
 import { getItem } from "../interceptors/localStorage";
 // const BASE_URL = "http://127.0.0.1:8000/";
-// const BASE_URL = "http://192.168.43.179:8000/";
-const BASE_URL = "http://192.168.43.53:8000/";
+const BASE_URL = "http://192.168.137.3:8000/";
+// const BASE_URL = "http://192.168.43.53:8000/";
 
 const service = axios.create({ baseURL: BASE_URL });
 
