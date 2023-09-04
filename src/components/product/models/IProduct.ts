@@ -9,15 +9,15 @@ export interface IMProduct {
 
 export interface IFProduct {
   name: string;
-  description: string;
-  image: any |null;
+  description?: string;
+  image?: any | null;
 }
 
 export interface IFProductEdit {
   id: number;
   name: string;
   description?: string;
-  image?: any |null;
+  image?: any | null;
 }
 
 export interface IProductStore {

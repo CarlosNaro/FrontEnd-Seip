@@ -4,14 +4,7 @@ import useProductStore from "../stores/productStore";
 import { IFProduct } from "../models/IProduct";
 import { ElMessage } from "element-plus";
 import productRules from "../rules/productRules";
-import type {
-  UploadProps,
-  UploadUserFile,
-  UploadInstance,
-  UploadRawFile,
-  UploadFiles,
-} from "element-plus";
-
+import type { UploadProps, UploadRawFile } from "element-plus";
 
 const props = defineProps<{
   title: string;
@@ -55,13 +48,8 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 // función que lee el archivo y lo muestra en miniatura en el componente
 const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
   const dataUpdate = uploadFile.raw;
-  model.value.image = uploadFile.raw
+  model.value.image = uploadFile.raw;
   uploadImage(dataUpdate);
-  if (upload.value) {
-    console.log("upload ", upload.value);
-  } else {
-    console.log("upload no existe");
-  }
 };
 // lectura de imgen para poder mostrar lo en el img:src
 const uploadImage = (file: any) => {
@@ -79,7 +67,6 @@ const sendData = () => {
       ElMessage.warning("Por favor, rellenar los campos correctamente");
       return;
     }
-
     isLoading.value = true;
     const status = await sendProduct(model.value);
     isLoading.value = true;
@@ -110,7 +97,6 @@ const sendData = () => {
           <div class="flex">
             <el-upload
               ref="upload"
-              
               class="upload-demo"
               :limit="1"
               :on-exceed="handleExceed"
@@ -130,9 +116,9 @@ const sendData = () => {
             </el-upload>
             <img
               v-if="visibleImg"
-              class="bg-red-50 w-32 h-32"
+              class="bg-red-50 w-28 h-32 border-dashed border-2 border-indigo-600 shadow-lg"
               :src="valueImage"
-              alt="sa"
+              alt="#"
             />
           </div>
 

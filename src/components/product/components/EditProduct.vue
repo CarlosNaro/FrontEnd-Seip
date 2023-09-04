@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { IFProductEdit, IMProduct } from "../models/IProduct";
 import productRules from "../rules/productRules";
-import { ref, computed, onUpdated } from "vue";
-import type { UploadProps, UploadRawFile } from "element-plus";
+import { ref, computed } from "vue";
+import { ElMessage, type UploadProps, type UploadRawFile } from "element-plus";
+import useProductStore from "../stores/productStore";
 
 const props = defineProps<{
   title: string;
@@ -18,10 +19,13 @@ const model = ref<IFProductEdit>({
   image: props.product.image,
 } as IFProductEdit);
 
+const { updateProduct } = useProductStore();
 const isLoading = ref(false);
+const form = ref();
 const emit = defineEmits(["update:modelValue"]);
 const upload = ref();
-const valueImage = model.value.image ? model.value.image : ref();
+const imageNew = ref();
+const valueImage = model.value.image!;
 const visibleImg = model.value.image ? ref(true) : ref(false);
 
 const value = computed({
@@ -46,7 +50,6 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 // función que lee el archivo y lo muestra en miniatura en el componente
 const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
   const dataUpdate = uploadFile.raw;
-  
   model.value.image = uploadFile.raw;
   uploadImage(dataUpdate);
 };
@@ -54,17 +57,25 @@ const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
 const uploadImage = (file: any) => {
   let reader = new FileReader();
   reader.onload = (e: any) => {
-    if(valueImage){
-        console.log("valueImage ", valueImage.value);
-        valueImage.value = e.target.result
-    }
-    
+    imageNew.value = e.target.result;
+    visibleImg.value = true;
   };
   reader.readAsDataURL(file);
 };
 
+const sendData = () => {
+  form.value.validate(async (valid: boolean) => {
+    if (!valid) {
+      ElMessage.warning("Por favor, rellenar los campos correctamente");
+      return;
+    }
 
-
+    isLoading.value = true;
+    const status = await updateProduct(model.value);
+    isLoading.value = false;
+    if (status) value.value = false;
+  });
+};
 </script>
 <template>
   <OverlayLayer v-show="value" @overlay-click="confirmCancel">
@@ -100,11 +111,12 @@ const uploadImage = (file: any) => {
         </el-upload>
         <img
           v-if="visibleImg"
-          class="bg-red-50 w-32 h-32"
-          :src="valueImage"
-          alt="sa"
+          class="bg-red-50 w-28 h-32 border-dashed border-2 border-indigo-600 shadow-lg"
+          :src="imageNew ? imageNew : valueImage"
+          alt="#"
         />
       </div>
+
       <div>
         <el-form
           enctype="multipart/form-data"
@@ -121,8 +133,13 @@ const uploadImage = (file: any) => {
           </el-form-item>
 
           <el-form-item>
-            <el-button :isLoading="isLoading" class="w-full" type="primary"
-              >Crear
+            <el-button
+              :isLoading="isLoading"
+              class="w-full"
+              type="primary"
+              @click="sendData"
+            >
+              Crear
             </el-button>
           </el-form-item>
         </el-form>
