@@ -3,6 +3,7 @@ import LayoutAuthenticated from "../layouts/LayoutAuthenticated.vue";
 import SectionMain from "../components/SectionMain.vue";
 import SectionTitleLineWithButton from "../components/SectionTitleLineWithButton.vue";
 import { reactive } from "vue";
+
 import { mdiFamilyTree, mdiMicrosoftXboxControllerBatteryAlert } from "@mdi/js";
 
 const menu = reactive({

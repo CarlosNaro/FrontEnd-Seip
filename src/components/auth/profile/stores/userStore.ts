@@ -23,7 +23,7 @@ export default function useUserStore() {
 
   const setUser = async () => {
     try {
-      const { data, status } = await service.get("users/user/");
+      const { data, status } = await service.get("user/user/");
       if (status == 200)
         state.user = data.filter((item: IUser) => item.id == id.user_id);
     } catch (error: any) {

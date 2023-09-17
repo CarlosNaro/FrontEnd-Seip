@@ -26,7 +26,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authObj = getItem("token") !== null;
+  const authObj = getItem("user") !== null;
   const { auth } = to.meta;
   if (auth && !authObj) {
     next(routesConfig.Login);

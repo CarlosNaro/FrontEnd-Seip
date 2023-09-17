@@ -6,9 +6,6 @@ import menuNavBar from "../actions/menuNavBar";
 import BaseIcon from "../../../components/BaseIcon.vue";
 import NavBarMenuList from "./NavBarMenuList.vue";
 
-import { Search } from "@element-plus/icons-vue";
-const input1 = ref("");
-
 const isMenuNavBarActive = ref(false);
 </script>
 
@@ -22,7 +19,7 @@ const isMenuNavBarActive = ref(false);
       </div>
 
       <div class="flex items-center h-14 lg:hidden">
-        <span @click.prevent="isMenuNavBarActive = !isMenuNavBarActive">
+        <span @click="isMenuNavBarActive = !isMenuNavBarActive">
           <BaseIcon
             :path="isMenuNavBarActive ? mdiClose : mdiDotsVertical"
             size="24"

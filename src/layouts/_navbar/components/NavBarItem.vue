@@ -14,25 +14,11 @@ import { getItem } from "../../../core/interceptors/localStorage";
 import { IMenuNavbar } from "../models/IMenu";
 import routesConfig from "../../../router/routesConfig";
 
-// export interface Imenu{
-//   to: string;
-//   icon: string;
-//   label: string;
-//   isCurrentUser: boolean;
-//   isDesktopNoLabel:boolean
-
-//   menu: {
-//     icon: string;
-//     label: string;
-//     to: string;
-
-//   };
-// }
 const props = defineProps<{
   item: IMenuNavbar;
 }>();
 
-const token = getItem("token");
+const user = getItem("user");
 
 const is = computed(() => {
   if (props.item.to) {
@@ -46,8 +32,6 @@ const emit = defineEmits(["menu-click"]);
 
 const isDropdownActive = ref(false);
 
-// // const styleStore = useStyleStore();
-
 // const componentClass = computed(() => {
 //   const base = [props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3"];
 //   return base;
@@ -55,20 +39,18 @@ const isDropdownActive = ref(false);
 
 const componentClass = computed(() => {
   const base = [
-    // isDropdownActive.value,
-    props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3",
+    isDropdownActive.value,
+    props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3 hover:bg-gray-100 ",
   ];
-
   return base;
 });
 
-// const itemLabel = computed(() => (props.item.isCurrentUser ? nombre : props.item.label));
-
 const itemLabel = computed(() =>
-  props.item.isCurrentUser ? token.username : props.item.label
+  props.item.isCurrentUser ? user.username : props.item.label
 );
 
 const router = useRouter();
+
 const menuClick = (event: any) => {
   emit("menu-click", event, props.item);
 
@@ -106,10 +88,8 @@ const menuClick = (event: any) => {
       <Base-Icon
         v-if="item.icon"
         :path="item.icon"
-        class="rounded-md hover:bg-indigo-400 transition-colors"
+        class="rounded-md transition-colors"
       />
-
-      <!-- <span class="px-2 transition-colors">{{ itemLabel }}</span> -->
 
       <span
         class="px-2 transition-colors"
