@@ -23,9 +23,11 @@ export default function useUserStore() {
 
   const setUser = async () => {
     try {
-      const { data, status } = await service.get("user/user/");
+      const { data, status } = await service.post(` user/getUserById/${id}/ `);
       if (status == 200)
-        state.user = data.filter((item: IUser) => item.id == id.user_id);
+        state.user = data as IUser;
+      console.log(state.user);
+      
     } catch (error: any) {
       console.log(error);
       ElMessage.error(error.message);

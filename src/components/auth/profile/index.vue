@@ -20,26 +20,28 @@ import { getItem } from "../../../core/interceptors/localStorage";
 
 const user = getItem("user");
 const { setUser, getUser } = useUserStore();
-const userInfo = computed(() => getUser());
 
-setUser();
+const model =  ref<IUser | null>(null);
 
-// recorrer el userInfo y almacenar sus datos en una nueva variable para poder agregarlo aun modelo
-const UserData = userInfo.value?.map((item: any) => item)[0];
+onMounted( async () => {
+ await setUser();
 
-const model = ref<IUserUpdate>({
-  id: userInfo.value?.map((item: any) => item.id)[0],
-  username: userInfo.value?.map((item: any) => item.username)[0],
-  first_name: userInfo.value?.map((item: any) => item.first_name)[0],
-  last_name: userInfo.value?.map((item: any) => item.last_name)[0],
-  email: userInfo.value?.map((item: any) => item.email)[0],
+ const userInfo =   getUser();
+
+ if (!userInfo) {
+   return;
+ }
+
+ model.value = userInfo;
+
 });
 
-console.log(userInfo.value);
 
-// const UserData = userInfo.value?.map((item: any) => item.id)[0];
+console.log("model", model.value);
 
-console.log("vv ");
+
+
+
 //inicio cambiar contraseña
 const view = ref(false);
 const type = ref("password");
@@ -106,22 +108,22 @@ console.log("Model**", model);
         :model="model"
       >
         <el-form-item label="Nombre(s) ">
-          <el-input v-model="model.first_name" placeholder="Nombre Completo" />
+          <el-input  placeholder="Nombre Completo" />
         </el-form-item>
 
         <el-form-item label="Apellido(s) ">
           <el-input
-            v-model="model.last_name"
+          
             placeholder="Apellido Completo "
           />
         </el-form-item>
 
         <el-form-item label="Usuario">
-          <el-input v-model="model.username" placeholder="User " />
+          <el-input  placeholder="User " />
         </el-form-item>
 
         <el-form-item label="Correo Electrónico ">
-          <el-input v-model="model.email" placeholder="exemplo@gmail.com" />
+          <el-input  placeholder="exemplo@gmail.com" />
         </el-form-item>
 
         <el-form-item class="lg:col-start-2 justify-self-end bg-yellow-200">
