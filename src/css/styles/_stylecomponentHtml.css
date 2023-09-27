@@ -28,3 +28,6 @@
 .el-form-item__label {
   @apply font-semibold  !important;
 }
+.forms_password .el-input__inner {
+  @apply pl-2;
+}

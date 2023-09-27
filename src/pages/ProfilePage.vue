@@ -19,11 +19,7 @@ const menu = reactive({
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton
-        :icon="menu.icon"
-        :title="menu.title"
-        :main="menu.main"
-      />
+      <SectionTitleLineWithButton :icon="menu.icon" :title="menu.title" main />
       <Profile />
     </SectionMain>
   </LayoutAuthenticated>

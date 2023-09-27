@@ -36,7 +36,7 @@ const recoveryPassword = () => {
 <template>
   <div class="h-screen bg-gray-100 flex items-center justify-center p-4">
     <div
-      class="flex bg-white p-4 flex-col md:flex-row w-full sm:w-3/6 justify-center"
+      class="flex bg-white p-4 py-8 w-full md:w-4/6 lg:w-3/6 flex-col md:flex-row justify-center"
     >
       <div class="w-full">
         <div class="flex justify-center md:justify-start pb-4">

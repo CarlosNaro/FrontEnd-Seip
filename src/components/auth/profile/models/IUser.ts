@@ -1,9 +1,10 @@
 export interface IUser {
   id: number;
-  username: string;
   first_name: string;
   last_name: string;
+  username: string;
   email: string;
+  image: any;
   is_active: boolean;
   is_staff: boolean;
   is_superuser: boolean;
@@ -15,10 +16,11 @@ export interface IUser {
 
 export interface IUserUpdate {
   id: number;
-  username: string;
   first_name?: string;
   last_name?: string;
-  email: string;
+  username: string;
+  email?: string;
+  image?: any;
 }
 
 export interface userStore {

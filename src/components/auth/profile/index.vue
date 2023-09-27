@@ -1,48 +1,195 @@
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, watch } from "vue";
-import { mdiClose } from "@mdi/js";
+import {
+  ref,
+  reactive,
+  computed,
+  onMounted,
+  watch,
+  onBeforeMount,
+  watchEffect,
+} from "vue";
+import {
+  mdiClose,
+  mdiCameraWireless,
+  mdiAsterisk,
+  mdiFormTextboxPassword,
+} from "@mdi/js";
 import useUserStore from "./stores/userStore";
-import { IUser, IUserUpdate, userStore } from "./models/IUser";
+import { IUser, IUserUpdate, IChangePassword, userStore } from "./models/IUser";
 import { getItem } from "../../../core/interceptors/localStorage";
 
-const user = getItem("token");
-const isModalActiveUserUpdate = ref(false);
-const isModalActiveChangePassword = ref(false);
-
+const user = getItem("user");
 const { setUser, getUser } = useUserStore();
-const userInfo = computed(() => getUser() as userStore);
-const set_User = setUser();
+const userInfo = computed(() => getUser());
 
-// watch(isModalActive, (nuevoValor, viejoValor) => {
-//   // isModalActive.value = true;
-//   console.log(`La variable cambió de** ${viejoValor} a ${nuevoValor}`);
-//   // Aquí puedes ejecutar cualquier otra lógica que desees realizar cuando la variable cambia.
-// });
+setUser();
 
-const isActiveUserUpdate = () => {
-  isModalActiveUserUpdate.value = !isModalActiveUserUpdate.value;
+// recorrer el userInfo y almacenar sus datos en una nueva variable para poder agregarlo aun modelo
+const UserData = userInfo.value?.map((item: any) => item)[0];
+
+const model = ref<IUserUpdate>({
+  id: userInfo.value?.map((item: any) => item.id)[0],
+  username: userInfo.value?.map((item: any) => item.username)[0],
+  first_name: userInfo.value?.map((item: any) => item.first_name)[0],
+  last_name: userInfo.value?.map((item: any) => item.last_name)[0],
+  email: userInfo.value?.map((item: any) => item.email)[0],
+});
+
+console.log(userInfo.value);
+
+// const UserData = userInfo.value?.map((item: any) => item.id)[0];
+
+console.log("vv ");
+//inicio cambiar contraseña
+const view = ref(false);
+const type = ref("password");
+
+const modelPass = reactive<IChangePassword>({
+  current_password: "",
+  new_password: "",
+  confirm_password: "",
+}) as IChangePassword;
+
+const viewPassword = () => {
+  if (view.value) {
+    type.value = "text";
+  } else {
+    type.value = "password";
+  }
 };
-const isActiveChangePassword = () => {
-  isModalActiveChangePassword.value = !isModalActiveChangePassword.value;
-};
+
+watch(view, () => {
+  viewPassword();
+});
+
+// cambiar contraseña fin
+
+console.log("Model**", model);
 </script>
 <template>
-  <FormChangePassword
-    v-if="isModalActiveChangePassword"
-    title="Cambiar Contraseña"
-    :icon="mdiClose"
-    v-model="isModalActiveChangePassword"
-  />
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <CardBox class="lg:justify-self-center lg:w-10/12 hover-Card">
+      <div
+        class="flex py-5 lg:py-2 md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
+      >
+        <div class="flex flex-col items-center justify-center">
+          <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
+          <UserAvatar class="relative w-8/12 lg:w-3/5" username="paulo">
+            <button class="btnCamera">
+              <BaseIcon
+                class="hover:-12"
+                size="20"
+                w=""
+                h="10"
+                :path="mdiCameraWireless"
+              />
+            </button>
+          </UserAvatar>
+        </div>
 
-  <FormProfile
-    v-if="isModalActiveUserUpdate"
-    v-for="(item, index) in userInfo"
-    :key="index"
-    title="Actualizar Datos"
-    v-model="isModalActiveUserUpdate"
-    :icon="mdiClose"
-    :user="item"
-  />
+        <div>
+          <h1 class="font-bold text-lg mt-5">{{ user.username }}</h1>
+          <p class="text-sm">
+            Last login <b>12 mins ago</b> from <b>127.0.0.1</b>
+          </p>
+        </div>
+      </div>
+    </CardBox>
+    <pre class="text-black">{{ userInfo }}</pre>
+    <CardBox
+      class="lg:col-start-2 lg:col-span-2 justify-center px-8 hover-Card"
+    >
+      <el-form
+        label-position="top"
+        size="large"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
+        :model="model"
+      >
+        <el-form-item label="Nombre(s) ">
+          <el-input v-model="model.first_name" placeholder="Nombre Completo" />
+        </el-form-item>
+
+        <el-form-item label="Apellido(s) ">
+          <el-input
+            v-model="model.last_name"
+            placeholder="Apellido Completo "
+          />
+        </el-form-item>
+
+        <el-form-item label="Usuario">
+          <el-input v-model="model.username" placeholder="User " />
+        </el-form-item>
+
+        <el-form-item label="Correo Electrónico ">
+          <el-input v-model="model.email" placeholder="exemplo@gmail.com" />
+        </el-form-item>
+
+        <el-form-item class="lg:col-start-2 justify-self-end bg-yellow-200">
+          <el-button type="primary">Save</el-button>
+        </el-form-item>
+      </el-form>
+    </CardBox>
+
+    <CardBox class="lg:col-start-2 lg:col-span-2 p-8 hover-Card">
+      <el-form
+        ref="form"
+        label-position="top"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
+        :model="modelPass"
+      >
+        <el-form-item label="Contraseña actual" prop="current_password">
+          <el-input
+            class="forms_password"
+            size="large"
+            :type="type"
+            placeholder="Contraseña actual"
+            v-model="modelPass.current_password"
+          />
+          <BaseIcon
+            class="absolute z-10 pointer-events-none text-gray-500"
+            :path="mdiAsterisk"
+          />
+        </el-form-item>
+
+        <el-form-item label="Nueva contraseña" prop="new_password">
+          <el-input
+            class="forms_password"
+            size="large"
+            :type="type"
+            placeholder="Nueva contraseña"
+            v-model="modelPass.new_password"
+          />
+          <BaseIcon
+            class="absolute z-10 pointer-events-none text-gray-500"
+            :path="mdiFormTextboxPassword"
+          />
+        </el-form-item>
+
+        <!-- :rules="checkPassword" -->
+        <el-form-item label="Confirmar contraseña" prop="confirm_password">
+          <el-input
+            class="forms_password"
+            size="large"
+            :type="type"
+            placeholder="Confirmar contraseña"
+            v-model="modelPass.confirm_password"
+          />
+          <BaseIcon
+            class="absolute z-10 pointer-events-none text-gray-500"
+            :path="mdiFormTextboxPassword"
+          />
+        </el-form-item>
+
+        <el-form-item class="self-end justify-self-end">
+          <el-button type="primary">Actualizar</el-button>
+        </el-form-item>
+
+        <!-- <el-form-item>
+          <el-checkbox v-model="view">Mostrar contraseña</el-checkbox>
+        </el-form-item> -->
+      </el-form>
+    </CardBox>
+  </div>
 
   <div class="flex w-auto flex-col items-center">
     <div class="mb-5 text-center">
@@ -51,8 +198,6 @@ const isActiveChangePassword = () => {
         {{ user.username }}
       </h1>
     </div>
-
-    <!-- <UserCard :avatar="avatar"> </UserCard> -->
 
     <div class="bg-white md:w-8/12 rounded-lg text-sm md:text-base">
       <ol v-for="(item, index) in userInfo" :key="index" class="mx-4 my-4">
@@ -66,13 +211,21 @@ const isActiveChangePassword = () => {
     </div>
   </div>
 
-  <div class="flex flex-col md:flex-row md:justify-evenly mt-3 py-2">
+  <!-- <div class="flex flex-col md:flex-row md:justify-evenly mt-3 py-2">
     <button class="positive-button mb-2 md:mb-0" @click="isActiveUserUpdate">
       Update Profile
     </button>
     <button class="positive-button" @click="isActiveChangePassword">
       Change Password
     </button>
-  </div>
+  </div> -->
 </template>
-<style></style>
+<style scoped>
+.btnCamera {
+  @apply flex items-center absolute p-2 shadow-xl border-none  -bottom-1 right-5 rounded-full bg-blue-500 text-white transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300;
+}
+
+.hover-Card {
+  @apply hover:shadow-lg ease-in-out delay-150 transition duration-300;
+}
+</style>

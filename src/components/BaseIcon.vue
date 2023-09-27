@@ -19,7 +19,6 @@ const props = defineProps({
   },
 });
 
-
 const spanClass = computed(
   () => `inline-flex justify-center items-center ${props.w} ${props.h}`
 );

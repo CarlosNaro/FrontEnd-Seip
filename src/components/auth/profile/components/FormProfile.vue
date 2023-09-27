@@ -39,7 +39,6 @@ const value = computed({
 
 const confirmCancel = () => {
   value.value = false;
-  
 };
 
 const Cancel = () => confirmCancel();
@@ -62,9 +61,10 @@ const sendData = async (): Promise<void> => {
 };
 </script>
 <template>
-  <OverlayLayer v-show="value" @overlay-click="Cancel">
-    <CardBox>
-      <!-- <pre>{{ model }}</pre> -->
+  <!-- <OverlayLayer v-show="value" @overlay-click="Cancel">
+    <CardBox
+      class="p-4 shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50"
+    >
       <CardBoxComponentTitle :title="props.title">
         <span
           class="flex hover:bg-slate-200 rounded-full items-center p-1"
@@ -116,9 +116,6 @@ const sendData = async (): Promise<void> => {
           </el-form-item>
 
           <el-form-item>
-            <!-- <button type="submit" class="positive-button font-bold w-full">
-              Save
-            </button> -->
             <el-button
               class="w-full"
               type="primary"
@@ -130,7 +127,7 @@ const sendData = async (): Promise<void> => {
         </el-form>
       </div>
     </CardBox>
-  </OverlayLayer>
+  </OverlayLayer> -->
 </template>
 
 <style></style>

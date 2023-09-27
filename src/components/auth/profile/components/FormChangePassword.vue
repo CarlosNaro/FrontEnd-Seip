@@ -79,7 +79,9 @@ watch(view, () => {
 
 <template>
   <OverlayLayer v-show="value" @overlay-click="confirmCancel">
-    <CardBox>
+    <CardBox
+      class="p-4 shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50"
+    >
       <CardBox-Component-Title :title="props.title">
         <span
           @click="confirmCancel"

@@ -1,23 +1,38 @@
 <script setup lang="ts">
 import BaseIcon from "./BaseIcon.vue";
+
 import { useSlots, computed } from "vue";
-const props = defineProps<{
+
+// defineProps({
+//   icon: {
+//     type: String,
+//     default: null,
+//   },
+//   title: {
+//     type: String,
+//     required: true,
+//   },
+//   main: Boolean,
+// });
+
+defineProps<{
   icon?: string;
-  title: String;
-  main: Boolean;
+  title?: string;
+  main?: boolean;
 }>();
+
 const hasSlot = computed(() => useSlots().default);
 </script>
 
 <template>
   <section
-    :class="{ 'pt-6': !props.main }"
+    :class="{ 'pt-6': !main }"
     class="mb-6 flex items-center justify-between"
   >
     <div class="flex items-center">
-      <BaseIcon v-if="props.icon" :path="props.icon" class="mr-2" size="25" />
-      <h1 :class="props.main ? 'text-3xl ' : 'text-2xl'" class="leading-tight">
-        {{ props.title }}
+      <BaseIcon v-if="icon" :path="icon" class="mr-2" size="25" />
+      <h1 :class="main ? 'text-3xl ' : 'text-2xl'" class="leading-tight">
+        {{ title }}
       </h1>
     </div>
 

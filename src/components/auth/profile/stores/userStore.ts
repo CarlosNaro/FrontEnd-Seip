@@ -39,7 +39,6 @@ export default function useUserStore() {
       ElMessage.success("Usuario actualizado correctamente");
       return true;
     } catch (error: any) {
-      // console.log(error);
       ElMessage.error(error.message);
       return false;
     }
