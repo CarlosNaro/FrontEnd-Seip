@@ -23,6 +23,7 @@ export interface IUserUpdate {
   image?: any;
 }
 
+
 export interface userStore {
   user: IUser | null;
 }

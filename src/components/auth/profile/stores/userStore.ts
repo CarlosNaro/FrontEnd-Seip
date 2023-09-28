@@ -23,6 +23,7 @@ export default function useUserStore() {
       const { data, status } = await service.post("user/getUserByID/");
       console.log("data", data);
       if (status == 200) state.user = data as IUser;
+      console.log("state", data);
     } catch (error: any) {
       console.log(error);
       ElMessage.error(error.message);
@@ -31,7 +32,8 @@ export default function useUserStore() {
 
   const userUpdate = async (model: IUserUpdate): Promise<boolean> => {
     try {
-      await service.put(`users/user/${model.id}/`, model);
+      console.log("Nuevo Datos", model);
+      await service.put(`user/user/${model.id}/`, model);
       setUser();
       ElMessage.success("Usuario actualizado correctamente");
       return true;

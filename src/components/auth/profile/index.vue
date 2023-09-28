@@ -1,26 +1,39 @@
 <script setup lang="ts">
+import useUserStore from "./stores/userStore";
+import { IUserUpdate, IChangePassword } from "./models/IUser";
+import { getItem } from "../../../core/interceptors/localStorage";
+import userRules from "./rules/userRules";
+import { ElMessage } from "element-plus";
+import type { UploadProps, UploadRawFile } from "element-plus";
 import {
   ref,
   reactive,
   computed,
   onMounted,
   watch,
-  onBeforeMount,
-  watchEffect,
 } from "vue";
 import {
-  mdiClose,
   mdiCameraWireless,
   mdiAsterisk,
   mdiFormTextboxPassword,
 } from "@mdi/js";
-import useUserStore from "./stores/userStore";
-import { IUser, IUserUpdate, IChangePassword, userStore } from "./models/IUser";
-import { getItem } from "../../../core/interceptors/localStorage";
 
 const user = getItem("user");
-const { setUser, getUser } = useUserStore();
-const model = ref<IUserUpdate | null>(null);
+const { setUser, getUser, userUpdate } = useUserStore();
+const model = ref<IUserUpdate>({} as IUserUpdate);
+const view = ref(false);
+const type = ref("password");
+const form = ref();
+const isLoading = ref(false);
+const upload = ref();
+const image = ref() 
+const visibleImg = ref(false)
+
+const modelPass = reactive<IChangePassword>({
+  current_password: "",
+  new_password: "",
+  confirm_password: "",
+}) as IChangePassword;
 
 onMounted(async () => {
   await setUser();
@@ -38,16 +51,6 @@ onMounted(async () => {
   };
 });
 
-//inicio cambiar contraseña
-const view = ref(false);
-const type = ref("password");
-
-const modelPass = reactive<IChangePassword>({
-  current_password: "",
-  new_password: "",
-  confirm_password: "",
-}) as IChangePassword;
-
 const viewPassword = () => {
   if (view.value) {
     type.value = "text";
@@ -60,18 +63,64 @@ watch(view, () => {
   viewPassword();
 });
 
-// cambiar contraseña fin
+const sendData = async (): Promise<void> =>{
+  form.value.validate(async (valid: boolean) => {
+    if (!valid) {
+      ElMessage.warning("Por favor, rellenar los campos correctamente");
+      return;
+    }
+    isLoading.value = true;
+    const status = await userUpdate(model.value);
+    isLoading.value = false;
+  });
+
+} 
+
+const handleExceed: UploadProps["onExceed"] = (files) => {
+  upload.value!.clearFiles();
+  const file = files[0] as UploadRawFile;
+  upload.value!.handleStart(file);
+};
+// función que lee el archivo y lo muestra en miniatura en el componente
+const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
+  const dataUpdate = uploadFile.raw;
+  model.value.image = uploadFile.raw;
+  uploadImage(dataUpdate);
+};
+
+// lectura de imgen para poder mostrar lo en el img:src
+const uploadImage = (file: any) => {
+  let reader = new FileReader();
+  reader.onload = (e: any) => {
+    image.value = e.target.result;
+    visibleImg.value = true;
+  };
+  reader.readAsDataURL(file);
+};
+
 </script>
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <pre>{{model}}</pre>
     <CardBox class="lg:justify-self-center lg:w-10/12 hover-Card">
       <div
         class="flex py-5 lg:py-2 md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
       >
         <div class="flex flex-col items-center justify-center">
           <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
-          <UserAvatar class="relative w-8/12 lg:w-3/5" username="paulo">
-            <button class="btnCamera">
+          <UserAvatar class="relative w-8/12 lg:w-3/5" :username="user.username"  >
+            <img v-if="visibleImg" :src="image" alt="">
+            <el-upload
+              ref="upload"
+              class="btnCamera"
+              :limit="1"
+              :on-exceed="handleExceed"
+              :on-change="handleChanges"
+              :auto-upload="false"
+              :show-file-list="false"
+            >
+            <template #trigger>
+
               <BaseIcon
                 class="hover:-12"
                 size="20"
@@ -79,7 +128,12 @@ watch(view, () => {
                 h="10"
                 :path="mdiCameraWireless"
               />
-            </button>
+            </template>
+           
+            
+
+          </el-upload>
+            
           </UserAvatar>
         </div>
 
@@ -91,7 +145,6 @@ watch(view, () => {
         </div>
       </div>
     </CardBox>
-    <pre class="text-black">{{ model }}</pre>
     <CardBox
       class="lg:col-start-2 lg:col-span-2 justify-center px-8 hover-Card"
     >
@@ -99,25 +152,28 @@ watch(view, () => {
         label-position="top"
         size="large"
         class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
+        :model="model"
+        :rules="userRules"
+        ref="form"
       >
-        <el-form-item label="Nombre(s) ">
-          <el-input placeholder="Nombre Completo" />
+        <el-form-item label="Nombre(s) " prop="first_name" >
+          <el-input v-model="model.first_name" placeholder="Nombre Completo" />
         </el-form-item>
 
-        <el-form-item label="Apellido(s) ">
-          <el-input placeholder="Apellido Completo " />
+        <el-form-item label="Apellido(s) " prop="last_name" >
+          <el-input v-model="model.last_name" placeholder="Apellido Completo " />
         </el-form-item>
 
-        <el-form-item label="Usuario">
-          <el-input placeholder="User " />
+        <el-form-item label="Usuario" prop="username" >
+          <el-input v-model="model.username" placeholder="User " />
         </el-form-item>
 
-        <el-form-item label="Correo Electrónico ">
-          <el-input placeholder="exemplo@gmail.com" />
+        <el-form-item label="Correo Electrónico" prop="email" >
+          <el-input v-model="model.email" placeholder="exemplo@gmail.com" />
         </el-form-item>
 
         <el-form-item class="lg:col-start-2 justify-self-end bg-yellow-200">
-          <el-button type="primary">Save</el-button>
+          <el-button @click="sendData" :loading="isLoading" type="primary">Save</el-button>
         </el-form-item>
       </el-form>
     </CardBox>
@@ -183,34 +239,7 @@ watch(view, () => {
     </CardBox>
   </div>
 
-  <!-- <div class="flex w-auto flex-col items-center">
-    <div class="mb-5 text-center">
-      <h1 class="text-3xl font-semibold text-indigo-600">Bienvenido</h1>
-      <h1 class="text-lg md:text-5xl font-semibold text-indigo-600">
-        {{ user.username }}
-      </h1>
-    </div>
-
-    <div class="bg-white md:w-8/12 rounded-lg text-sm md:text-base">
-      <ol v-for="(item, index) in userInfo" :key="index" class="mx-4 my-4">
-        <li>Nombre: {{ item?.first_name }}</li>
-        <li>Apellido: {{ item?.last_name }}</li>
-
-        <li>Correo: {{ item?.email }}</li>
-        <li>Usuario: {{ item?.username }}</li>
-        <li>Ultimo acceso: {{ item?.last_login }}</li>
-      </ol>
-    </div>
-  </div> -->
-
-  <!-- <div class="flex flex-col md:flex-row md:justify-evenly mt-3 py-2">
-    <button class="positive-button mb-2 md:mb-0" @click="isActiveUserUpdate">
-      Update Profile
-    </button>
-    <button class="positive-button" @click="isActiveChangePassword">
-      Change Password
-    </button>
-  </div> -->
+ 
 </template>
 <style scoped>
 .btnCamera {

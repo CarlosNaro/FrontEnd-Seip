@@ -26,6 +26,7 @@ declare module 'vue' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     FormChangePassword: typeof import('./components/auth/profile/components/FormChangePassword.vue')['default']
     FormProfile: typeof import('./components/auth/profile/components/FormProfile.vue')['default']
     Login: typeof import('./components/auth/login/index.vue')['default']
