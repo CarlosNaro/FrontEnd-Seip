@@ -15,19 +15,14 @@ const state = reactive<userStore>({
   user: null,
 });
 
-const token = getItem("token");
-const id = jwtDecode(token.access) as IJwtDecode;
-
 export default function useUserStore() {
   const getUser = () => state.user;
 
   const setUser = async () => {
     try {
-      const { data, status } = await service.post(` user/getUserById/${id}/ `);
-      if (status == 200)
-        state.user = data as IUser;
-      console.log(state.user);
-      
+      const { data, status } = await service.post("user/getUserByID/");
+      console.log("data", data);
+      if (status == 200) state.user = data as IUser;
     } catch (error: any) {
       console.log(error);
       ElMessage.error(error.message);

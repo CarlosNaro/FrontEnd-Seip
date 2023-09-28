@@ -20,27 +20,23 @@ import { getItem } from "../../../core/interceptors/localStorage";
 
 const user = getItem("user");
 const { setUser, getUser } = useUserStore();
+const model = ref<IUserUpdate | null>(null);
 
-const model =  ref<IUser | null>(null);
-
-onMounted( async () => {
- await setUser();
-
- const userInfo =   getUser();
-
- if (!userInfo) {
-   return;
- }
-
- model.value = userInfo;
-
+onMounted(async () => {
+  await setUser();
+  const data = computed(() => getUser());
+  if (!data.value) {
+    return;
+  }
+  model.value = {
+    id: data.value.id,
+    first_name: data.value.first_name,
+    last_name: data.value.last_name,
+    email: data.value.email,
+    username: data.value.username,
+    image: data.value.image,
+  };
 });
-
-
-console.log("model", model.value);
-
-
-
 
 //inicio cambiar contraseña
 const view = ref(false);
@@ -65,8 +61,6 @@ watch(view, () => {
 });
 
 // cambiar contraseña fin
-
-console.log("Model**", model);
 </script>
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -97,7 +91,7 @@ console.log("Model**", model);
         </div>
       </div>
     </CardBox>
-    <pre class="text-black">{{ userInfo }}</pre>
+    <pre class="text-black">{{ model }}</pre>
     <CardBox
       class="lg:col-start-2 lg:col-span-2 justify-center px-8 hover-Card"
     >
@@ -105,25 +99,21 @@ console.log("Model**", model);
         label-position="top"
         size="large"
         class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
-        :model="model"
       >
         <el-form-item label="Nombre(s) ">
-          <el-input  placeholder="Nombre Completo" />
+          <el-input placeholder="Nombre Completo" />
         </el-form-item>
 
         <el-form-item label="Apellido(s) ">
-          <el-input
-          
-            placeholder="Apellido Completo "
-          />
+          <el-input placeholder="Apellido Completo " />
         </el-form-item>
 
         <el-form-item label="Usuario">
-          <el-input  placeholder="User " />
+          <el-input placeholder="User " />
         </el-form-item>
 
         <el-form-item label="Correo Electrónico ">
-          <el-input  placeholder="exemplo@gmail.com" />
+          <el-input placeholder="exemplo@gmail.com" />
         </el-form-item>
 
         <el-form-item class="lg:col-start-2 justify-self-end bg-yellow-200">
@@ -193,7 +183,7 @@ console.log("Model**", model);
     </CardBox>
   </div>
 
-  <div class="flex w-auto flex-col items-center">
+  <!-- <div class="flex w-auto flex-col items-center">
     <div class="mb-5 text-center">
       <h1 class="text-3xl font-semibold text-indigo-600">Bienvenido</h1>
       <h1 class="text-lg md:text-5xl font-semibold text-indigo-600">
@@ -211,7 +201,7 @@ console.log("Model**", model);
         <li>Ultimo acceso: {{ item?.last_login }}</li>
       </ol>
     </div>
-  </div>
+  </div> -->
 
   <!-- <div class="flex flex-col md:flex-row md:justify-evenly mt-3 py-2">
     <button class="positive-button mb-2 md:mb-0" @click="isActiveUserUpdate">
