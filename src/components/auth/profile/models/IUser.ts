@@ -4,7 +4,7 @@ export interface IUser {
   last_name: string;
   username: string;
   email: string;
-  image: any;
+  image: string;
   is_active: boolean;
   is_staff: boolean;
   is_superuser: boolean;
@@ -15,14 +15,13 @@ export interface IUser {
 }
 
 export interface IUserUpdate {
-  id: number;
+  id?: number;
   first_name?: string;
   last_name?: string;
-  username: string;
+  username?: string;
   email?: string;
-  image?: any;
+  image?: any | null;
 }
-
 
 export interface userStore {
   user: IUser | null;

@@ -5,13 +5,7 @@ import { getItem } from "../../../core/interceptors/localStorage";
 import userRules from "./rules/userRules";
 import { ElMessage } from "element-plus";
 import type { UploadProps, UploadRawFile } from "element-plus";
-import {
-  ref,
-  reactive,
-  computed,
-  onMounted,
-  watch,
-} from "vue";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 import {
   mdiCameraWireless,
   mdiAsterisk,
@@ -26,8 +20,8 @@ const type = ref("password");
 const form = ref();
 const isLoading = ref(false);
 const upload = ref();
-const image = ref() 
-const visibleImg = ref(false)
+const image = ref();
+const visibleImg = ref(false);
 
 const modelPass = reactive<IChangePassword>({
   current_password: "",
@@ -37,17 +31,17 @@ const modelPass = reactive<IChangePassword>({
 
 onMounted(async () => {
   await setUser();
-  const data = computed(() => getUser());
-  if (!data.value) {
+  const data = getUser();
+  if (!data) {
     return;
   }
   model.value = {
-    id: data.value.id,
-    first_name: data.value.first_name,
-    last_name: data.value.last_name,
-    email: data.value.email,
-    username: data.value.username,
-    image: data.value.image,
+    id: data?.id,
+    first_name: data?.first_name,
+    last_name: data?.last_name,
+    email: data?.email,
+    username: data?.username,
+    image: data?.image,
   };
 });
 
@@ -63,7 +57,7 @@ watch(view, () => {
   viewPassword();
 });
 
-const sendData = async (): Promise<void> =>{
+const sendData = async (): Promise<void> => {
   form.value.validate(async (valid: boolean) => {
     if (!valid) {
       ElMessage.warning("Por favor, rellenar los campos correctamente");
@@ -73,8 +67,7 @@ const sendData = async (): Promise<void> =>{
     const status = await userUpdate(model.value);
     isLoading.value = false;
   });
-
-} 
+};
 
 const handleExceed: UploadProps["onExceed"] = (files) => {
   upload.value!.clearFiles();
@@ -84,7 +77,7 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 // función que lee el archivo y lo muestra en miniatura en el componente
 const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
   const dataUpdate = uploadFile.raw;
-  model.value.image = uploadFile.raw;
+  // model.value.image = uploadFile.raw;
   uploadImage(dataUpdate);
 };
 
@@ -97,43 +90,41 @@ const uploadImage = (file: any) => {
   };
   reader.readAsDataURL(file);
 };
-
 </script>
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <pre>{{model}}</pre>
+    <pre>{{ model }}</pre>
+    <img :src="model.image" :alt="model.username" />
     <CardBox class="lg:justify-self-center lg:w-10/12 hover-Card">
       <div
         class="flex py-5 lg:py-2 md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
       >
         <div class="flex flex-col items-center justify-center">
           <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
-          <UserAvatar class="relative w-8/12 lg:w-3/5" :username="user.username"  >
-            <img v-if="visibleImg" :src="image" alt="">
+          <img :src="model.image" alt="model.image" />
+          <UserAvatar
+            class="relative w-8/12 lg:w-3/5"
+            :username="user?.username"
+          >
             <el-upload
               ref="upload"
               class="btnCamera"
               :limit="1"
               :on-exceed="handleExceed"
               :on-change="handleChanges"
-              :auto-upload="false"
               :show-file-list="false"
+              :auto-upload="false"
             >
-            <template #trigger>
-
-              <BaseIcon
-                class="hover:-12"
-                size="20"
-                w=""
-                h="10"
-                :path="mdiCameraWireless"
-              />
-            </template>
-           
-            
-
-          </el-upload>
-            
+              <template #trigger>
+                <BaseIcon
+                  class="hover:-12"
+                  size="20"
+                  w=""
+                  h="10"
+                  :path="mdiCameraWireless"
+                />
+              </template>
+            </el-upload>
           </UserAvatar>
         </div>
 
@@ -156,24 +147,29 @@ const uploadImage = (file: any) => {
         :rules="userRules"
         ref="form"
       >
-        <el-form-item label="Nombre(s) " prop="first_name" >
+        <el-form-item label="Nombre(s) " prop="first_name">
           <el-input v-model="model.first_name" placeholder="Nombre Completo" />
         </el-form-item>
 
-        <el-form-item label="Apellido(s) " prop="last_name" >
-          <el-input v-model="model.last_name" placeholder="Apellido Completo " />
+        <el-form-item label="Apellido(s) " prop="last_name">
+          <el-input
+            v-model="model.last_name"
+            placeholder="Apellido Completo "
+          />
         </el-form-item>
 
-        <el-form-item label="Usuario" prop="username" >
+        <el-form-item label="Usuario" prop="username">
           <el-input v-model="model.username" placeholder="User " />
         </el-form-item>
 
-        <el-form-item label="Correo Electrónico" prop="email" >
+        <el-form-item label="Correo Electrónico" prop="email">
           <el-input v-model="model.email" placeholder="exemplo@gmail.com" />
         </el-form-item>
 
         <el-form-item class="lg:col-start-2 justify-self-end bg-yellow-200">
-          <el-button @click="sendData" :loading="isLoading" type="primary">Save</el-button>
+          <el-button @click="sendData" :loading="isLoading" type="primary"
+            >Save</el-button
+          >
         </el-form-item>
       </el-form>
     </CardBox>
@@ -238,8 +234,6 @@ const uploadImage = (file: any) => {
       </el-form>
     </CardBox>
   </div>
-
- 
 </template>
 <style scoped>
 .btnCamera {

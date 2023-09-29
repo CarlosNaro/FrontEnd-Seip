@@ -16,8 +16,6 @@ const props = defineProps({
   },
 });
 
-console.log("nombre user ", props.username);
-
 const avatar = computed(
   () =>
     props.avatar ??
