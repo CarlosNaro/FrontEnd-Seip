@@ -31,17 +31,17 @@ const modelPass = reactive<IChangePassword>({
 
 onMounted(async () => {
   await setUser();
-  const data = getUser();
-  if (!data) {
+  const data = computed(() => getUser());
+  if (!data.value) {
     return;
   }
   model.value = {
-    id: data?.id,
-    first_name: data?.first_name,
-    last_name: data?.last_name,
-    email: data?.email,
-    username: data?.username,
-    image: data?.image,
+    id: data.value.id,
+    first_name: data.value.first_name,
+    last_name: data.value.last_name,
+    email: data.value.email,
+    username: data.value.username,
+    image: data.value.image,
   };
 });
 
@@ -94,17 +94,17 @@ const uploadImage = (file: any) => {
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <pre>{{ model }}</pre>
-    <img :src="model.image" :alt="model.username" />
+
     <CardBox class="lg:justify-self-center lg:w-10/12 hover-Card">
       <div
         class="flex py-5 lg:py-2 md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
       >
         <div class="flex flex-col items-center justify-center">
           <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
-          <img :src="model.image" alt="model.image" />
+
           <UserAvatar
             class="relative w-8/12 lg:w-3/5"
-            :username="user?.username"
+            :username="user.username"
           >
             <el-upload
               ref="upload"
