@@ -21,7 +21,7 @@ export default function useUserStore() {
   const setUser = async () => {
     try {
       const { data, status } = await service.post("user/getUserByID/");
-      console.log("data", data);
+      console.log("data nuevos ", data);
       if (status == 200) state.user = data as IUser;
       console.log("state", data);
     } catch (error: any) {

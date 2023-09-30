@@ -102,6 +102,7 @@ const uploadImage = (file: any) => {
         <div class="flex flex-col items-center justify-center">
           <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
 
+          <img :src="model.image"  :alt="model.first_name">
           <UserAvatar
             class="relative w-8/12 lg:w-3/5"
             :username="user.username"
