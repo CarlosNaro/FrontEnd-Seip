@@ -94,8 +94,6 @@ const uploadImage = (file: any) => {
 </script>
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- <pre>  {{ model }}</pre> -->
-
     <CardBox class="lg:justify-self-center lg:w-10/12 px-2 hover-Card">
       <div
         class="flex py-5 lg:py-2 flex-col md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"

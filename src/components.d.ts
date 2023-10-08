@@ -21,6 +21,7 @@ declare module 'vue' {
     DeleteProduct: typeof import('./components/product/components/DeleteProduct.vue')['default']
     EditClient: typeof import('./components/client/components/EditClient.vue')['default']
     EditProduct: typeof import('./components/product/components/EditProduct.vue')['default']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
