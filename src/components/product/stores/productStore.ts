@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import service from "../../../core/modules/axios";
+import service from "../../../modules/axios";
 import { IProductStore, IFProduct, IFProductEdit } from "../models/IProduct";
 import { ElMessage } from "element-plus";
 

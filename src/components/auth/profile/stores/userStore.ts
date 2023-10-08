@@ -1,13 +1,5 @@
-import { getItem } from "../../../../core/interceptors/localStorage";
-import {
-  userStore,
-  IUser,
-  IJwtDecode,
-  IUserUpdate,
-  IChangePassword,
-} from "../models/IUser";
-import service from "../../../../core/modules/axios";
-import jwtDecode from "jwt-decode";
+import { userStore, IUser, IUserEdit, IChangePassword } from "../models/IUser";
+import service from "../../../../modules/axios";
 import { ElMessage } from "element-plus";
 /* create state  */
 
@@ -21,8 +13,9 @@ export default function useUserStore() {
   const setUser = async () => {
     try {
       const { data, status } = await service.post("user/getUserByID/");
-      console.log("data nuevos ", data);
+      console.log("data del perfil ", data);
       if (status == 200) state.user = data as IUser;
+
       console.log("state", data);
     } catch (error: any) {
       console.log(error);
@@ -30,10 +23,10 @@ export default function useUserStore() {
     }
   };
 
-  const userUpdate = async (model: IUserUpdate): Promise<boolean> => {
+  const userUpdate = async (model: IUserEdit): Promise<boolean> => {
     try {
-      console.log("Nuevo Datos", model);
-      await service.put(`user/user/${model.id}/`, model);
+      console.log("perfil actualizar", model);
+      await service.put(`user/profile/${model.id}/`, model);
       setUser();
       ElMessage.success("Usuario actualizado correctamente");
       return true;

@@ -1,5 +1,5 @@
 // import api from "../../../../stores/indexApi";
-import service from "../../../../core/modules/axios";
+import service from "../../../../modules/axios";
 const resetPasswordStore = async (model: any): Promise<boolean> => {
   try {
     console.log("entrando al store ", model);

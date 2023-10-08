@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import useUserStore from "./stores/userStore";
-import { IUserUpdate, IChangePassword } from "./models/IUser";
-import { getItem } from "../../../core/interceptors/localStorage";
-import userRules from "./rules/userRules";
-import { ElMessage } from "element-plus";
-import type { UploadProps, UploadRawFile } from "element-plus";
-import { ref, reactive, computed, onMounted, watch } from "vue";
 import {
   mdiCameraWireless,
   mdiAsterisk,
   mdiFormTextboxPassword,
 } from "@mdi/js";
+import useUserStore from "./stores/userStore";
+import { IUserEdit, IChangePassword } from "./models/IUser";
+import { getItem } from "../../../core/actions/localStorage";
+import userRules from "./rules/userRules";
+import { ElMessage } from "element-plus";
+import type { UploadProps, UploadRawFile } from "element-plus";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 
-const user = getItem("user");
 const { setUser, getUser, userUpdate } = useUserStore();
-const model = ref<IUserUpdate>({} as IUserUpdate);
+const model = ref<IUserEdit>({} as IUserEdit);
 const view = ref(false);
 const type = ref("password");
 const form = ref();
@@ -22,6 +21,9 @@ const isLoading = ref(false);
 const upload = ref();
 const image = ref();
 const visibleImg = ref(false);
+const basePath = import.meta.env.VITE_APP_API_URL_LOCAL as string;
+const user =
+  getItem(`${import.meta.env.VITE_APP_APP_NAME}_user`) || ("" as string);
 
 const modelPass = reactive<IChangePassword>({
   current_password: "",
@@ -40,8 +42,7 @@ onMounted(async () => {
     first_name: data.value.first_name,
     last_name: data.value.last_name,
     email: data.value.email,
-    username: data.value.username,
-    image: data.value.image,
+    image: basePath + data.value.image,
   };
 });
 
@@ -77,7 +78,7 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 // función que lee el archivo y lo muestra en miniatura en el componente
 const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
   const dataUpdate = uploadFile.raw;
-  // model.value.image = uploadFile.raw;
+  model.value.image = uploadFile.raw;
   uploadImage(dataUpdate);
 };
 
@@ -93,19 +94,21 @@ const uploadImage = (file: any) => {
 </script>
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <pre>{{ model }}</pre>
+    <!-- <pre>  {{ model }}</pre> -->
 
-    <CardBox class="lg:justify-self-center lg:w-10/12 hover-Card">
+    <CardBox class="lg:justify-self-center lg:w-10/12 px-2 hover-Card">
       <div
-        class="flex py-5 lg:py-2 md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
+        class="flex py-5 lg:py-2 flex-col md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
       >
-        <div class="flex flex-col items-center justify-center">
+        <div
+          class="flex flex-col items-center justify-center mx-2 w-3/6 md:w-3/12 lg:w-3/5"
+        >
           <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
 
-          <img :src="model.image"  :alt="model.first_name">
           <UserAvatar
-            class="relative w-8/12 lg:w-3/5"
-            :username="user.username"
+            class="flex justify-center relative"
+            :username="user?.username"
+            :avatar="model.image"
           >
             <el-upload
               ref="upload"
@@ -116,21 +119,19 @@ const uploadImage = (file: any) => {
               :show-file-list="false"
               :auto-upload="false"
             >
-              <template #trigger>
-                <BaseIcon
-                  class="hover:-12"
-                  size="20"
-                  w=""
-                  h="10"
-                  :path="mdiCameraWireless"
-                />
-              </template>
+              <BaseIcon
+                class="hover:-12"
+                size="20"
+                w=""
+                h="10"
+                :path="mdiCameraWireless"
+              />
             </el-upload>
           </UserAvatar>
         </div>
 
-        <div>
-          <h1 class="font-bold text-lg mt-5">{{ user.username }}</h1>
+        <div class="text-center md:text-left">
+          <h1 class="font-bold text-lg mt-2 md:mt-5">{{ user?.username }}</h1>
           <p class="text-sm">
             Last login <b>12 mins ago</b> from <b>127.0.0.1</b>
           </p>
@@ -238,7 +239,7 @@ const uploadImage = (file: any) => {
 </template>
 <style scoped>
 .btnCamera {
-  @apply flex items-center absolute p-2 shadow-xl border-none  -bottom-1 right-5 rounded-full bg-blue-500 text-white transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300;
+  @apply flex items-center bottom-0  p-2 absolute   rounded-full bg-blue-500 text-white transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300;
 }
 
 .hover-Card {

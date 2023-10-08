@@ -1,19 +1,19 @@
-import useAuthStore from '../stores/Prueba/AuthStore'
+// import useAuthStore from '../stores/Prueba/AuthStore'
 
-const useAuth = ()=>{
+// const useAuth = ()=>{
 
-    const AuthStore = useAuthStore()
+//     const AuthStore = useAuthStore()
 
-    const createUser = async(user:any)=>{
+//     const createUser = async(user:any)=>{
 
-        console.log("usuario creado", user)
+//         console.log("usuario creado", user)
 
-        return{ok:false, message:"EMAIL_EXISTS"}
-    }
+//         return{ok:false, message:"EMAIL_EXISTS"}
+//     }
 
-    return{
-        createUser
-    }
-}
+//     return{
+//         createUser
+//     }
+// }
 
-export default useAuth
+// export default useAuth

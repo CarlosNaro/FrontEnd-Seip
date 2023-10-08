@@ -25,7 +25,7 @@ const form = ref();
 const emit = defineEmits(["update:modelValue"]);
 const upload = ref();
 const imageNew = ref();
-const valueImage = model.value.image!;
+
 const visibleImg = model.value.image ? ref(true) : ref(false);
 
 const value = computed({

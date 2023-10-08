@@ -6,7 +6,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routesConfig from "./routesConfig";
-import { getItem } from "../core/interceptors/localStorage";
+import { getItem } from "../core/actions/localStorage";
 
 //************ */
 
@@ -19,16 +19,18 @@ let routes = [
   routesConfig.Profile,
 ] as RouteRecordRaw[];
 
-const history = createWebHistory();
+const history = createWebHistory(import.meta.env.BASE_URL);
 const router = createRouter({
   history,
   routes,
 });
 
 router.beforeEach((to, from, next) => {
-  const authObj = getItem("user") !== null;
+  const APPNAME = import.meta.env.VITE_APP_APP_NAME as string;
+  // const authObj = getItem("user") !== null;
+  const isAuth = getItem(`${APPNAME}_token`) !== null;
   const { auth } = to.meta;
-  if (auth && !authObj) {
+  if (auth && !isAuth) {
     next(routesConfig.Login);
     return;
   }

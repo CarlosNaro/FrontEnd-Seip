@@ -7,10 +7,10 @@ import {
   mdiAccount,
 } from "@mdi/js";
 import { RouterLink } from "vue-router";
-import { computed, ref, onMounted, onBeforeUnmount } from "vue";
+import { computed, ref } from "vue";
 import BaseIcon from "../../../components/BaseIcon.vue";
 import NavBarMenuList from "./NavBarMenuList.vue";
-import { getItem } from "../../../core/interceptors/localStorage";
+import { getItem } from "../../../core/actions/localStorage";
 import { IMenuNavbar } from "../models/IMenu";
 import routesConfig from "../../../router/routesConfig";
 
@@ -18,24 +18,19 @@ const props = defineProps<{
   item: IMenuNavbar;
 }>();
 
-const user = getItem("user");
+const user =
+  getItem(`${import.meta.env.VITE_APP_APP_NAME}_user`) || ("" as string);
 
 const is = computed(() => {
   if (props.item.to) {
     return RouterLink;
   }
-
   return "div";
 });
 
 const emit = defineEmits(["menu-click"]);
 
 const isDropdownActive = ref(false);
-
-// const componentClass = computed(() => {
-//   const base = [props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3"];
-//   return base;
-// });
 
 const componentClass = computed(() => {
   const base = [
@@ -113,3 +108,4 @@ const menuClick = (event: any) => {
     </div>
   </component>
 </template>
+../../../core/actions/localStorage

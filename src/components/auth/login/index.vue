@@ -4,7 +4,7 @@ import { ILogin } from "./models/ILogin";
 import loginRules from "./rules/loginRules";
 import { ElMessage } from "element-plus";
 import routesConfig from "../../../router/routesConfig";
-import authStore from "./stores/AuthStore";
+import authLogin from "./stores/authLogin";
 
 const router = useRouter();
 const form = ref();
@@ -22,7 +22,7 @@ const setLogin = async (): Promise<void> => {
       return;
     }
     isLoading.value = true;
-    const status = await authStore(model.value);
+    const status = await authLogin(model.value);
     isLoading.value = false;
     if (status) router.push(routesConfig.Home);
   });
@@ -113,3 +113,4 @@ const recoveryPassword = () => {
     width: 60%;
 } */
 </style>
+./stores/authLogin

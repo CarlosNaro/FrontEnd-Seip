@@ -1,6 +1,6 @@
 import { reactive } from "vue";
 import { IMClientStore, IFClient, IFClientEdit } from "../models/IClient";
-import service from "../../../core/modules/axios";
+import service from "../../../modules/axios";
 import { ElMessage } from "element-plus";
 
 const state = reactive<IMClientStore>({
