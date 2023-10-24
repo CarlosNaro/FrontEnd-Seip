@@ -14,6 +14,10 @@ const props = defineProps({
     type: String,
     default: "avataaars",
   },
+  size: {
+    type: Number,
+    default: 50,
+  },
 });
 
 const avatar = computed(
@@ -30,11 +34,20 @@ const username = computed(() => props.username);
 
 <template>
   <div class="shadow-lg rounded-full">
-    <img
+    <!-- <img
       :src="avatar"
       :alt="username"
       class="rounded-full block h-auto w-full max-w-full bg-gray-100"
-    />
+    /> -->
+
+    <el-avatar :size="props.size">
+      <img
+        :src="avatar"
+        :alt="username"
+        class="rounded-full h-auto w-full max-w-full"
+      />
+    </el-avatar>
+
     <slot />
   </div>
 </template>

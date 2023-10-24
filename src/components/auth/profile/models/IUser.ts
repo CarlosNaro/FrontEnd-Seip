@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IProfile {
   id: number;
   first_name: string;
   last_name: string;
@@ -14,15 +14,23 @@ export interface IUser {
   // "user_permissions": []
 }
 
-export interface IUserEdit {
+export interface IUser {
+  id: number;
+  is_admin?: boolean;
+  username: string;
+}
+
+export interface IProfileEdit {
   id: number;
   first_name: string;
   last_name: string;
   email: string;
-  image: any;
+  image?: any;
+  user_id: number;
 }
 
 export interface userStore {
+  profile: IProfile | null;
   user: IUser | null;
 }
 

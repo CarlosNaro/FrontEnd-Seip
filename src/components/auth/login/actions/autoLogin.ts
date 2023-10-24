@@ -1,5 +1,6 @@
 // import store from "../stores";
-// import { getItem } from "../../../../core/interceptors/localStorage";
+
+// import { getItem } from "../../../../core/actions/localStorage";
 
 // const autoLogin = async (): Promise<void> => {
 //   try {

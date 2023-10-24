@@ -8,12 +8,6 @@ import passwordRules from "../rules/changePasswordRules";
 import { ElMessage } from "element-plus";
 import { IChangePassword } from "../models/IUser";
 
-const props = defineProps<{
-  title: string;
-  modelValue: boolean;
-  icon: string;
-}>();
-
 const model = reactive<IChangePassword>({
   current_password: "",
   new_password: "",
@@ -41,27 +35,15 @@ const checkPassword = computed(() => {
   ];
 });
 
-const value = computed({
-  get: () => props.modelValue,
-  set: (value) => emit("update:modelValue", value),
-});
-
-const confirmCancel = () => {
-  value.value = false;
-};
-window.addEventListener("keydown", (e: any) => {
-  if (e.key == "Escape") confirmCancel();
-});
-
-const sendPassword = async (): Promise<void> => {
+const sendData = async (): Promise<void> => {
   form.value.validate(async (valid: boolean) => {
     if (!valid) {
       ElMessage.warning("Por favor, rellenar los campos correctamente");
       return;
     }
   });
-  const status = await changePassword(model);
-  if (status) value.value = false;
+  // const status = await changePassword(model);
+  // if (status) ElMessage.success("Contraseña actualizada correctamente");
 };
 
 const viewPassword = () => {
@@ -78,90 +60,73 @@ watch(view, () => {
 </script>
 
 <template>
-  <OverlayLayer v-show="value" @overlay-click="confirmCancel">
-    <CardBox
-      class="p-4 shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50"
+  <CardBox>
+    <el-form
+      ref="form"
+      label-position="top"
+      class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
+      :model="model"
+      :rules="passwordRules"
     >
-      <CardBox-Component-Title :title="props.title">
-        <span
-          @click="confirmCancel"
-          class="flex hover:bg-slate-200 rounded-full items-center p-1"
-        >
-          <Base-Icon class="w-auto h-auto" :path="props.icon" />
-        </span>
-      </CardBox-Component-Title>
-      <hr />
+      <el-form-item label="Contraseña actual" prop="current_password">
+        <el-input
+          class="forms_password"
+          size="large"
+          :type="type"
+          placeholder="Contraseña actual"
+          v-model="model.current_password"
+        />
+        <BaseIcon
+          class="absolute z-10 pointer-events-none text-gray-500"
+          :path="mdiAsterisk"
+        />
+      </el-form-item>
 
-      <div>
-        <el-form
-          :model="model"
-          :rules="passwordRules"
-          ref="form"
-          label-position="top"
-        >
-          <el-form-item label="Contraseña actual" prop="current_password">
-            <el-input
-              class="forms_password"
-              size="large"
-              :type="type"
-              placeholder="Contraseña actual"
-              v-model="model.current_password"
-            />
-            <BaseIcon
-              class="absolute z-10 pointer-events-none text-gray-500"
-              :path="mdiAsterisk"
-            />
-          </el-form-item>
+      <el-form-item label="Nueva contraseña" prop="new_password">
+        <el-input
+          class="forms_password"
+          size="large"
+          :type="type"
+          placeholder="Nueva contraseña"
+          v-model="model.new_password"
+        />
+        <BaseIcon
+          class="absolute z-10 pointer-events-none text-gray-500"
+          :path="mdiFormTextboxPassword"
+        />
+      </el-form-item>
 
-          <el-form-item label="Nueva contraseña" prop="new_password">
-            <el-input
-              class="forms_password"
-              size="large"
-              :type="type"
-              placeholder="Nueva contraseña"
-              v-model="model.new_password"
-            />
-            <BaseIcon
-              class="absolute z-10 pointer-events-none text-gray-500"
-              :path="mdiFormTextboxPassword"
-            />
-          </el-form-item>
+      <el-form-item
+        :rules="checkPassword"
+        label="Confirmar contraseña"
+        prop="confirm_password"
+      >
+        <el-input
+          class="forms_password"
+          size="large"
+          :type="type"
+          placeholder="Confirmar contraseña"
+          v-model="model.confirm_password"
+        />
+        <BaseIcon
+          class="absolute z-10 pointer-events-none text-gray-500"
+          :path="mdiFormTextboxPassword"
+        />
+      </el-form-item>
 
-          <el-form-item
-            :rules="checkPassword"
-            label="Confirmar contraseña"
-            prop="confirm_password"
-          >
-            <el-input
-              class="forms_password"
-              size="large"
-              :type="type"
-              placeholder="Confirmar contraseña"
-              v-model="model.confirm_password"
-            />
-            <BaseIcon
-              class="absolute z-10 pointer-events-none text-gray-500"
-              :path="mdiFormTextboxPassword"
-            />
-          </el-form-item>
+      <el-form-item class="self-end justify-self-end">
+        <el-button @click="sendData" type="primary">Actualizar</el-button>
+      </el-form-item>
 
-          <el-form-item>
-            <el-checkbox v-model="view">Mostrar contraseña</el-checkbox>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button @click="sendPassword" class="w-full" type="primary"
-              >Actualizar</el-button
-            >
-          </el-form-item>
-        </el-form>
-      </div>
-    </CardBox>
-  </OverlayLayer>
+      <!-- <el-form-item>
+          <el-checkbox v-model="view">Mostrar contraseña</el-checkbox>
+        </el-form-item> -->
+    </el-form>
+  </CardBox>
 </template>
 
-<style>
+<!-- <style>
 .forms_password .el-input__wrapper {
   @apply pl-6;
 }
-</style>
+</style> -->

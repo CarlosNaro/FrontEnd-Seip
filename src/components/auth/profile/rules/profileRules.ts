@@ -1,5 +1,5 @@
 const trigger = "blur";
-const userRules = {
+const profileRules = {
   first_name: [
     {
       required: true,
@@ -25,15 +25,7 @@ const userRules = {
       message: "Por favor ingrese un correo electrónico válido",
       trigger: trigger,
     },
-    {},
-  ],
-  username: [
-    {
-      required: true,
-      message: "Campo requerido",
-      trigger: trigger,
-    },
   ],
 } as Record<string, any>;
 
-export default userRules;
+export default profileRules;

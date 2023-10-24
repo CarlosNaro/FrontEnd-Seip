@@ -1,74 +1,51 @@
 <script setup lang="ts">
-import {
-  mdiCameraWireless,
-  mdiAsterisk,
-  mdiFormTextboxPassword,
-} from "@mdi/js";
+import { mdiCameraWireless } from "@mdi/js";
 import useUserStore from "./stores/userStore";
-import { IUserEdit, IChangePassword } from "./models/IUser";
+import { IProfileEdit, IUser } from "./models/IUser";
 import { getItem } from "../../../core/actions/localStorage";
-import userRules from "./rules/userRules";
+import profileRules from "./rules/profileRules";
 import { ElMessage } from "element-plus";
 import type { UploadProps, UploadRawFile } from "element-plus";
-import { ref, reactive, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 
-const { setUser, getUser, userUpdate } = useUserStore();
-const model = ref<IUserEdit>({} as IUserEdit);
-const view = ref(false);
-const type = ref("password");
+const { uploadProfile, getData, updateProfile } = useUserStore();
+const modelProfile = ref<IProfileEdit>({} as IProfileEdit);
+const modelUser = ref<IUser>({} as IUser);
 const form = ref();
 const isLoading = ref(false);
 const upload = ref();
 const image = ref();
-const visibleImg = ref(false);
 const basePath = import.meta.env.VITE_APP_API_URL_LOCAL as string;
-const user =
-  getItem(`${import.meta.env.VITE_APP_APP_NAME}_user`) || ("" as string);
-
-const modelPass = reactive<IChangePassword>({
-  current_password: "",
-  new_password: "",
-  confirm_password: "",
-}) as IChangePassword;
+const appName = import.meta.env.VITE_APP_APP_NAME;
+const userLocal = getItem(`${appName}_user`);
+const cargo = ref();
+cargo.value = userLocal.is_admin ? "Administrador" : "Trabajador";
 
 onMounted(async () => {
-  await setUser();
-  const data = computed(() => getUser());
-  if (!data.value) {
+  await uploadProfile();
+  const profile = computed(() => getData().profile);
+  const user = computed(() => getData().user);
+
+  if (!profile.value || !user.value) {
     return;
   }
-  model.value = {
-    id: data.value.id,
-    first_name: data.value.first_name,
-    last_name: data.value.last_name,
-    email: data.value.email,
-    image: basePath + data.value.image,
+
+  modelProfile.value = {
+    id: profile.value.id,
+    first_name: profile.value.first_name,
+    last_name: profile.value.last_name,
+    email: profile.value.email,
+    image: basePath + profile.value.image,
+    user_id: profile.value.user_id,
+  };
+  image.value = modelProfile.value.image;
+
+  modelUser.value = {
+    id: user.value.id,
+    is_admin: user.value.is_admin,
+    username: user.value.username,
   };
 });
-
-const viewPassword = () => {
-  if (view.value) {
-    type.value = "text";
-  } else {
-    type.value = "password";
-  }
-};
-
-watch(view, () => {
-  viewPassword();
-});
-
-const sendData = async (): Promise<void> => {
-  form.value.validate(async (valid: boolean) => {
-    if (!valid) {
-      ElMessage.warning("Por favor, rellenar los campos correctamente");
-      return;
-    }
-    isLoading.value = true;
-    const status = await userUpdate(model.value);
-    isLoading.value = false;
-  });
-};
 
 const handleExceed: UploadProps["onExceed"] = (files) => {
   upload.value!.clearFiles();
@@ -78,7 +55,7 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
 // función que lee el archivo y lo muestra en miniatura en el componente
 const handleChanges: UploadProps["onChange"] = (uploadFile, uploadFiles) => {
   const dataUpdate = uploadFile.raw;
-  model.value.image = uploadFile.raw;
+  modelProfile.value.image = uploadFile.raw;
   uploadImage(dataUpdate);
 };
 
@@ -87,26 +64,54 @@ const uploadImage = (file: any) => {
   let reader = new FileReader();
   reader.onload = (e: any) => {
     image.value = e.target.result;
-    visibleImg.value = true;
+    // visibleImg.value = true;
   };
   reader.readAsDataURL(file);
+};
+
+const checkUser = computed(() => {
+  return [
+    {
+      validator: (rule: any, value: string, callback: any) => {
+        if (!modelUser.value.username) {
+          callback(new Error("Campo requerido"));
+        } else {
+          callback();
+        }
+      },
+      trigger: "blur",
+    },
+  ];
+});
+
+const sendData = async (): Promise<void> => {
+  form.value.validate(async (valid: boolean) => {
+    if (!valid) {
+      ElMessage.warning("Por favor, rellenar los campos correctamente");
+      return;
+    }
+    isLoading.value = true;
+    const status = await updateProfile(modelProfile.value, modelUser.value);
+    isLoading.value = false;
+  });
 };
 </script>
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <CardBox class="lg:justify-self-center lg:w-10/12 px-2 hover-Card">
+    <CardBox id="CardBox" class="lg:justify-self-center lg:w-10/12 px-2">
       <div
         class="flex py-5 lg:py-2 flex-col md:flex-row lg:flex-col items-center lg:text-center rounded-3xl"
       >
-        <div
-          class="flex flex-col items-center justify-center mx-2 w-3/6 md:w-3/12 lg:w-3/5"
-        >
-          <p class="text-slate-400 font-bold text-lg mb-2">Administrador</p>
+        <div class="flex flex-col items-center justify-center mx-2">
+          <p class="text-slate-400 font-bold text-lg mb-2">
+            {{ cargo }}
+          </p>
 
           <UserAvatar
             class="flex justify-center relative"
-            :username="user?.username"
-            :avatar="model.image"
+            :username="userLocal.username"
+            :avatar="image"
+            :size="200"
           >
             <el-upload
               ref="upload"
@@ -128,42 +133,52 @@ const uploadImage = (file: any) => {
           </UserAvatar>
         </div>
 
-        <div class="text-center md:text-left">
-          <h1 class="font-bold text-lg mt-2 md:mt-5">{{ user?.username }}</h1>
+        <div class="text-center md:text-left md:ml-5 lg:text-center lg:ml-0">
+          <h1 class="font-bold text-lg mt-2 md:mt-5">
+            {{ userLocal.username }}
+          </h1>
           <p class="text-sm">
             Last login <b>12 mins ago</b> from <b>127.0.0.1</b>
           </p>
         </div>
       </div>
     </CardBox>
+
     <CardBox
-      class="lg:col-start-2 lg:col-span-2 justify-center px-8 hover-Card"
+      id="CardBox"
+      class="lg:col-start-2 lg:col-span-2 justify-center px-8"
     >
       <el-form
         label-position="top"
         size="large"
         class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
-        :model="model"
-        :rules="userRules"
+        :model="modelProfile"
+        :rules="profileRules"
         ref="form"
       >
         <el-form-item label="Nombre(s) " prop="first_name">
-          <el-input v-model="model.first_name" placeholder="Nombre Completo" />
+          <el-input
+            v-model="modelProfile.first_name"
+            placeholder="Nombre Completo"
+          />
         </el-form-item>
 
         <el-form-item label="Apellido(s) " prop="last_name">
           <el-input
-            v-model="model.last_name"
+            v-model="modelProfile.last_name"
             placeholder="Apellido Completo "
           />
         </el-form-item>
 
-        <el-form-item label="Usuario" prop="username">
-          <el-input v-model="model.username" placeholder="User " />
+        <el-form-item :rules="checkUser" label="Usuario" prop="username">
+          <el-input v-model="modelUser.username" placeholder="username" />
         </el-form-item>
 
         <el-form-item label="Correo Electrónico" prop="email">
-          <el-input v-model="model.email" placeholder="exemplo@gmail.com" />
+          <el-input
+            v-model="modelProfile.email"
+            placeholder="exemplo@gmail.com"
+          />
         </el-form-item>
 
         <el-form-item class="lg:col-start-2 justify-self-end bg-yellow-200">
@@ -174,65 +189,12 @@ const uploadImage = (file: any) => {
       </el-form>
     </CardBox>
 
-    <CardBox class="lg:col-start-2 lg:col-span-2 p-8 hover-Card">
-      <el-form
-        ref="form"
-        label-position="top"
-        class="grid grid-cols-1 lg:grid-cols-2 gap-x-10"
-        :model="modelPass"
-      >
-        <el-form-item label="Contraseña actual" prop="current_password">
-          <el-input
-            class="forms_password"
-            size="large"
-            :type="type"
-            placeholder="Contraseña actual"
-            v-model="modelPass.current_password"
-          />
-          <BaseIcon
-            class="absolute z-10 pointer-events-none text-gray-500"
-            :path="mdiAsterisk"
-          />
-        </el-form-item>
-
-        <el-form-item label="Nueva contraseña" prop="new_password">
-          <el-input
-            class="forms_password"
-            size="large"
-            :type="type"
-            placeholder="Nueva contraseña"
-            v-model="modelPass.new_password"
-          />
-          <BaseIcon
-            class="absolute z-10 pointer-events-none text-gray-500"
-            :path="mdiFormTextboxPassword"
-          />
-        </el-form-item>
-
-        <!-- :rules="checkPassword" -->
-        <el-form-item label="Confirmar contraseña" prop="confirm_password">
-          <el-input
-            class="forms_password"
-            size="large"
-            :type="type"
-            placeholder="Confirmar contraseña"
-            v-model="modelPass.confirm_password"
-          />
-          <BaseIcon
-            class="absolute z-10 pointer-events-none text-gray-500"
-            :path="mdiFormTextboxPassword"
-          />
-        </el-form-item>
-
-        <el-form-item class="self-end justify-self-end">
-          <el-button type="primary">Actualizar</el-button>
-        </el-form-item>
-
-        <!-- <el-form-item>
-          <el-checkbox v-model="view">Mostrar contraseña</el-checkbox>
-        </el-form-item> -->
-      </el-form>
-    </CardBox>
+    <div
+      id="CardBox"
+      class="lg:col-start-2 lg:col-span-2 rounded-2xl p-8 bg-white"
+    >
+      <FormChangePassword />
+    </div>
   </div>
 </template>
 <style scoped>
@@ -240,7 +202,7 @@ const uploadImage = (file: any) => {
   @apply flex items-center bottom-0  p-2 absolute   rounded-full bg-blue-500 text-white transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300;
 }
 
-.hover-Card {
+#CardBox {
   @apply hover:shadow-lg ease-in-out delay-150 transition duration-300;
 }
 </style>

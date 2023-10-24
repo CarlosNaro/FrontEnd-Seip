@@ -1,33 +1,73 @@
-import { userStore, IUser, IUserEdit, IChangePassword } from "../models/IUser";
+import {
+  userStore,
+  IUser,
+  IProfile,
+  IProfileEdit,
+  IChangePassword,
+} from "../models/IUser";
 import service from "../../../../modules/axios";
 import { ElMessage } from "element-plus";
-/* create state  */
+import { getItem, setItem } from "../../../../core/actions/localStorage";
 
+const APPNAME = import.meta.env.VITE_APP_APP_NAME as string;
+
+/* create state  */
 const state = reactive<userStore>({
+  profile: null,
   user: null,
 });
 
 export default function useUserStore() {
-  const getUser = () => state.user;
+  const getData = () => state;
 
-  const setUser = async () => {
+  const uploadProfile = async () => {
     try {
       const { data, status } = await service.post("user/getUserByID/");
-      console.log("data del perfil ", data);
-      if (status == 200) state.user = data as IUser;
+      if (status == 200) {
+        state.profile = data.profile as IProfile;
+        state.user = data.user as IUser;
+        console.log("login ", data.user);
 
-      console.log("state", data);
+        // setItem(`${APPNAME}_user`, data.user);
+      }
     } catch (error: any) {
-      console.log(error);
       ElMessage.error(error.message);
     }
   };
 
-  const userUpdate = async (model: IUserEdit): Promise<boolean> => {
+  const updateProfile = async (
+    modelProfile: IProfileEdit,
+    modelUser: IUser
+  ): Promise<boolean> => {
     try {
-      console.log("perfil actualizar", model);
-      await service.put(`user/profile/${model.id}/`, model);
-      setUser();
+      if (!modelProfile && !modelUser) return false;
+
+      const formData = new FormData();
+
+      if (typeof modelProfile.image === "string") {
+        formData.append("id", modelProfile.id.toString());
+        formData.append("first_name", modelProfile.first_name);
+        formData.append("last_name", modelProfile.last_name);
+        formData.append("email", modelProfile.email);
+        formData.append("user_id", modelProfile.user_id.toString());
+      } else {
+        formData.append("id", modelProfile.id.toString());
+        formData.append("first_name", modelProfile.first_name);
+        formData.append("last_name", modelProfile.last_name);
+        formData.append("email", modelProfile.email);
+        formData.append("image", modelProfile.image);
+        formData.append("user_id", modelProfile.user_id.toString());
+      }
+
+      await service.put(`user/profile/${modelProfile.id}/`, formData);
+      console.log("edit: user ", modelUser);
+
+      // await service.put(`user/django/${modelUser.id}/`, modelUser);
+
+      uploadProfile();
+      console.log("state ", state.profile);
+      console.log("User ", state.user);
+
       ElMessage.success("Usuario actualizado correctamente");
       return true;
     } catch (error: any) {
@@ -47,5 +87,5 @@ export default function useUserStore() {
       return false;
     }
   };
-  return { setUser, getUser, userUpdate, changePassword };
+  return { uploadProfile, getData, updateProfile, changePassword };
 }
