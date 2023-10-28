@@ -9,7 +9,6 @@ import routesConfig from "./routesConfig";
 import { getItem } from "../core/actions/localStorage";
 
 //************ */
-
 let routes = [
   routesConfig.Login,
   routesConfig.RecoverPassword,
@@ -26,9 +25,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const APPNAME = import.meta.env.VITE_APP_APP_NAME as string;
+  const APP_NAME = import.meta.env.VITE_APP_APP_NAME as string;
   // const authObj = getItem("user") !== null;
-  const isAuth = getItem(`${APPNAME}_token`) !== null;
+  const isAuth = getItem(`${APP_NAME}_token`) !== null;
   const { auth } = to.meta;
   if (auth && !isAuth) {
     next(routesConfig.Login);

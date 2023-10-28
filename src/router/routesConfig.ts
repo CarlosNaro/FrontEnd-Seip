@@ -29,7 +29,7 @@ export default {
     meta: {
       title: "Home",
       auth: true,
-      isAdmin: true,
+      // isAdmin: true,
     },
     path: "/",
     name: "Dashboard",
@@ -41,7 +41,7 @@ export default {
     meta: {
       title: "Client",
       auth: true,
-      isAdmin: true,
+      // isAdmin: true,
     },
     path: "/cliente",
     name: "Client",
@@ -53,7 +53,7 @@ export default {
     meta: {
       title: "Product",
       auth: true,
-      isAdmin: true,
+      // isAdmin: true,
     },
     path: "/producto",
     name: "Product",
@@ -62,25 +62,14 @@ export default {
   },
 
   Profile: {
+    meta: {
+      title: "Perfil",
+      auth: true,
+      // isAdmin: true,
+    },
     path: "/perfil",
     name: "Profile",
     icon: mdiAccount,
     component: () => import("../pages/ProfilePage.vue"),
-    meta: {
-      title: "Perfil",
-      auth: true,
-      isAdmin: true,
-    },
   },
 };
-
-// Procedure: {
-//   path: "/tramites",
-//   name: "procedure",
-//   component: () => import("../pages/ProcedurePage.vue"),
-//   meta: {
-//     title: "Tramites",
-//     layout: defaultLayout,
-//     auth: true,
-//   },
-// },

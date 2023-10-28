@@ -170,3 +170,17 @@ export const menuSidebar = (): IMenu[] => {
 //   //   target: "_blank",
 //   // },
 // ];
+
+
+
+// verfiicacion sim es admin
+// Object.values(iconsArray).forEach((route) => {
+//   if (route.meta?.isAdmin) {
+//     const sidebar: IMenu = {
+//       name: route.name,
+//       path: route.path,
+//       icon: route.icon,
+//     };
+//     adminRoutes.push(sidebar);
+//   }
+// });
